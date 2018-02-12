@@ -13,14 +13,14 @@ class App extends Component {
         super();
         this.state = {
             isSignedIn: true,
-            hasSearched: true
+            hasSearched: false
         };
     }
     render() {
         const { isSignedIn, hasSearched } = this.state;
         return !hasSearched ? (
             <div className="App ">
-                <Navigation />
+                <Navigation signedIn={isSignedIn} />
                 <div
                     style={{
                         marginTop: '20vh'
