@@ -1,0 +1,23 @@
+{
+  "name": "alibay",
+  "version": "1.0.0",
+  "description": "The greatest Alibay project to ever see the light of day",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JodyPSmith/AliBay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JodyPSmith/AliBay/issues"
+  },
+  "homepage": "https://github.com/JodyPSmith/AliBay#readme"
+}
