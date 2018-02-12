@@ -7,17 +7,35 @@ import Navigation from './components/Navigation/Navigation';
 import logo from './images/Alibay.png';
 
 class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            isSignedIn: true
+        };
+    }
     render() {
+        const { isSignedIn } = this.state;
         return (
             <div className="App ">
                 <Navigation />
-                <div className="">
-                    <img alt="logo" src={logo} />
+                <div
+                    style={{
+                        marginTop: '20vh'
+                    }}
+                >
+                    <div className="">
+                        <img alt="logo" src={logo} />
+                    </div>{' '}
+                    <div className="mt3">
+                        <SearchBar onChange={''} />
+                        {isSignedIn ? (
+                            <p className="dim pointer f4">Selling an item?</p>
+                        ) : null}
+                    </div>
                 </div>
-                <SearchBar onChange={''} />
                 {/*<LogIn />*/}
 
-                <CardList />
+                {/*<CardList />*/}
             </div>
         );
     }
