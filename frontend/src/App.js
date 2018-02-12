@@ -5,17 +5,18 @@ import SearchBar from './components/searchBar/searchBar';
 import CardList from './components/Card/CardList';
 import Navigation from './components/Navigation/Navigation';
 import logo from './images/Alibay.png';
-
+import SearchPage from './Containers/SearchPage/SearchPage';
 class App extends Component {
     constructor() {
         super();
         this.state = {
-            isSignedIn: true
+            isSignedIn: true,
+            hasSearched: true
         };
     }
     render() {
-        const { isSignedIn } = this.state;
-        return (
+        const { isSignedIn, hasSearched } = this.state;
+        return !hasSearched ? (
             <div className="App ">
                 <Navigation />
                 <div
@@ -33,10 +34,9 @@ class App extends Component {
                         ) : null}
                     </div>
                 </div>
-                {/*<LogIn />*/}
-
-                {/*<CardList />*/}
             </div>
+        ) : (
+            <SearchPage />
         );
     }
 }
