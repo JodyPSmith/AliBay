@@ -13,12 +13,13 @@ class App extends Component {
         super();
         this.state = {
             isSignedIn: true,
-            hasSearched: false
+            hasSearched: true,
+            route: 'itemPage'
         };
     }
     sendLogin = () => {};
     render() {
-        const { isSignedIn, hasSearched } = this.state;
+        const { isSignedIn, hasSearched, route } = this.state;
         return !hasSearched ? (
             <div className="App ">
                 <Navigation signedIn={isSignedIn} />
@@ -39,7 +40,7 @@ class App extends Component {
                 </div>
             </div>
         ) : (
-            <SearchPage />
+            <SearchPage signedIn={isSignedIn} />
         );
     }
 }
