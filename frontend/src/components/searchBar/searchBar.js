@@ -18,7 +18,7 @@ class SearchBar extends Component {
                     />
                     <button
                         onClick={onSubmit}
-                        className="w-20  f4 link ph3 pv2 dib black bg-white shadow-5 ml1 dim br1"
+                        className="w-20  f4 link ph3 pv2 dib black bg-white shadow-5 ml1 dim br1 pointer"
                         style={{ border: 'none', minWidth: '90px' }}
                     >
                         Go
