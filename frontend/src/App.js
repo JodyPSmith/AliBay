@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
-import LogIn from './components/google-OAuth/googleOauth';
-import SearchBar from './components/searchBar/searchBar';
-import Dashboard from './components/dashboard/dashboard'
+// import LogIn from './components/google-OAuth/googleOauth';
+// import SearchBar from './components/searchBar/searchBar';
+// import Dashboard from './components/dashboard/dashboard';
+import Signup from './components/signup/signup';
+import Login from './components/login/login';
+//import logo from './images/Alibay.png';
 
 class App extends Component {
     render() {
         return (
             <div className="App">
-                <img alt="logo" src={logo} />
-                <SearchBar />
-            
-                <LogIn />
-                <Dashboard />
+
+                <Login/>
             </div>
         );
     }
