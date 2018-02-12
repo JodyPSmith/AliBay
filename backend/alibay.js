@@ -32,7 +32,7 @@ returns: undefined
 function initializeUserIfNeeded(uid) {
     var items = getItemsBought[uid];
     if (items == undefined) {
-        putItemsBought(uid, {});
+        putItemsBought(uid, []);
     }
 }
 
@@ -66,9 +66,9 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and blurb properties.
 */
 function getItemDescription(listingID) {
-    var obj = {description: productsMap[listingID].description, price:productsMap[listingID].price }
+    var obj = { description: productsMap[listingID].description, price: productsMap[listingID].price }
     return obj;
- }
+}
 
 /* 
 buy changes the global state.
@@ -83,6 +83,14 @@ The seller will see the listing in his history of items sold
     returns: undefined
 */
 function buy(buyerID, sellerID, listingID) {
+
+    itemsBought[buyerID].push({ purchaseID: listingID, seller: sellerID });
+    console.log("before delete: ", productsMap)
+    console.log('LISTING ID', listingID)
+   //TODO: add boolean to listing and update boolean instead
+    delete productsMap[listingID];
+    console.log("after delete: ", productsMap)
+    console.log("ITEMS BOUGHT: ", itemsBought)
 }
 
 
@@ -119,6 +127,9 @@ module.exports = {
     initializeUserIfNeeded,
     putItemsBought,
     getItemsBought,
-    createListing
+    createListing,
+    buy,
+    getItemDescription,
+    allItemsBought
     // Add all the other functions that need to be exported
 }
