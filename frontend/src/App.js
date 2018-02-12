@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import LogIn from './components/google-OAuth/googleOauth';
 import SearchBar from './components/searchBar/searchBar';
-import Card from './components/Card/Card';
+import CardList from './components/Card/CardList';
 
 class App extends Component {
     render() {
@@ -11,7 +11,8 @@ class App extends Component {
                 {/*<Navigation />*/}
                 <SearchBar onChange={''} />
                 {/*<LogIn />*/}
-                <Card />
+
+                <CardList />
             </div>
         );
     }
