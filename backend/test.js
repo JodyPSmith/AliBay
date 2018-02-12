@@ -1,4 +1,5 @@
 const alibay = require('./alibay');
+const assert = require('assert')
 
 function test() {
     let sellerID = alibay.genUID();
@@ -16,17 +17,16 @@ function test() {
     alibay.buy(buyerID, sellerID, listing3ID)
 
     let allBought = alibay.allItemsBought(buyerID)
-    console.log(allBought)
     
     let allSold = alibay.allItemsSold(sellerID)
     let soldDescriptions = allSold.map(alibay.getItemDescription)
     
-    let allBoughtDescriptions = allBought.map(getItemDescription)
-    let listings =  allListings()
-    let boatListings = searchForListings("boat")
-    let shoeListings = searchForListings("shoes")
-    let boatDescription = getItemDescription(listings[0])
-    let boatBlurb = boatDescription.blurb;
+    let allBoughtDescriptions = allBought.map(alibay.getItemDescription)
+    let listings =  alibay.allListings()
+    let boatListings = alibay.searchForListings("boat")
+    let shoeListings = alibay.searchForListings("shoes")
+    let boatDescription = alibay.getItemDescription(listings[0])
+    let boatBlurb = boatDescription.description;
     let boatPrice = boatDescription.price;
     assert(allSold.length == 2); // The seller has sold 2 items
     assert(allBought.length == 2); // The buyer has bought 2 items

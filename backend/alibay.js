@@ -2,8 +2,9 @@ const assert = require('assert');
 const fs = require('fs');
 
 var itemsBought = {}; // map that keeps track of all the items a user has bought
-var userMap = {};
-var productsMap = {};
+var itemsSold = {}; // map that keeps track of all the items a user has sold
+var userMap = {}; // map that keeps track of user information
+var productsMap = {}; // map that keeps track of all products
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
 */
@@ -13,6 +14,7 @@ function genUID() {
 
 function putItemsBought(userID, value) {
     itemsBought[userID] = value;
+    itemsSold[userID] = value;
 }
 
 function getItemsBought(userID) {
@@ -56,7 +58,8 @@ This function is incomplete. You need to complete it.
 */
 function createListing(sellerID, price, blurb) {
     var pID = genUID();
-    productsMap[pID] = { sellerID: sellerID, price: price, description: blurb }
+    productsMap[pID] = { sellerID: sellerID, price: price, description: blurb, isSold: false};
+    // console.log(`listing created: ${pID}`)
     return pID;
 }
 
@@ -66,6 +69,8 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and blurb properties.
 */
 function getItemDescription(listingID) {
+    // console.log(`1. listingID: ${listingID}`)
+    // console.log(`2. productsMap: ${JSON.stringify(productsMap)}`)
     var obj = { description: productsMap[listingID].description, price: productsMap[listingID].price }
     return obj;
 }
@@ -84,13 +89,10 @@ The seller will see the listing in his history of items sold
 */
 function buy(buyerID, sellerID, listingID) {
 
-    itemsBought[buyerID].push({ purchaseID: listingID, seller: sellerID });
-    console.log("before delete: ", productsMap)
-    console.log('LISTING ID', listingID)
+    itemsBought[buyerID].push(listingID);
+    itemsSold[sellerID].push(listingID);
    //TODO: add boolean to listing and update boolean instead
-    delete productsMap[listingID];
-    console.log("after delete: ", productsMap)
-    console.log("ITEMS BOUGHT: ", itemsBought)
+    productsMap[listingID].isSold = true;
 }
 
 
@@ -100,7 +102,7 @@ allItemsSold returns the IDs of all the items sold by a seller
     returns: an array of listing IDs
 */
 function allItemsSold(sellerID) {
-
+return itemsSold[sellerID];
 }
 
 /*
@@ -109,7 +111,8 @@ Once an item is sold, it will not be returned by allListings
     returns: an array of listing IDs
 */
 function allListings() {
-
+    let productIds = Object.keys(productsMap); // array of all productIds in map
+    return productIds.filter(x=> !productsMap[x].isSold) // for each, check if isSold, then push
 }
 
 /*
@@ -119,7 +122,9 @@ Once an item is sold, it will not be returned by searchForListings
     returns: an array of listing IDs
 */
 function searchForListings(searchTerm) {
-
+let allItems = allListings();
+let results = allItems.filter(x => productsMap[x].description.includes(searchTerm))
+return results
 }
 
 module.exports = {
@@ -129,7 +134,10 @@ module.exports = {
     getItemsBought,
     createListing,
     buy,
+    allItemsSold,
     getItemDescription,
-    allItemsBought
+    allItemsBought,
+    allListings,
+    searchForListings
     // Add all the other functions that need to be exported
 }
