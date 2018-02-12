@@ -16,6 +16,7 @@ class App extends Component {
             hasSearched: false
         };
     }
+    sendLogin = () => {};
     render() {
         const { isSignedIn, hasSearched } = this.state;
         return !hasSearched ? (
