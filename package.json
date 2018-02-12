@@ -4,7 +4,8 @@
   "description": "The greatest Alibay project to ever see the light of day",
   "main": "index.js",
   "dependencies": {
-    "bcrypt": "^1.0.3"
+    "bcrypt": "^1.0.3",
+    "express": "^4.16.2"
   },
   "devDependencies": {},
   "scripts": {
