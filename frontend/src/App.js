@@ -3,6 +3,7 @@ import './App.css';
 import logo from './images/Alibay.png';
 import LogIn from './components/google-OAuth/googleOauth';
 import SearchBar from './components/searchBar/searchBar';
+import Dashboard from './components/dashboard/dashboard'
 
 class App extends Component {
     render() {
@@ -10,7 +11,9 @@ class App extends Component {
             <div className="App">
                 <img alt="logo" src={logo} />
                 <SearchBar />
-                {/*<LogIn />*/}
+            
+                <LogIn />
+                <Dashboard />
             </div>
         );
     }
