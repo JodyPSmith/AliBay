@@ -2,14 +2,9 @@ const alibay = require('./alibay')
 const bodyParser = require('body-parser')
 var express = require('express');
 var app = express();
-<<<<<<< HEAD
-const bodyParser = require('body-parser')
-app.use(bodyParser.raw({ type: '*/*' }))
-=======
 
 app.use(bodyParser.raw({ type: '*/*' }))
 
->>>>>>> d8ade1ac3da935e4de6dc8ef07de0e27d6124472
 app.get('/', (req, res) => {
     var x = alibay.genUID();
     res.send("" + x)
@@ -20,7 +15,6 @@ app.get('/itemsBought', (req, res) => {
     res.send(JSON.stringify(alibay.getItemsBought(uid)));
 });
 
-<<<<<<< HEAD
 app.post('/createListing', (req, res) => {
     let request = JSON.parse(req.body.toString());
     let sellerID = request.sellerID;
@@ -54,7 +48,6 @@ app.post('/search', (req, res) => {
         res.send('success')
     }
 })
-=======
 app.get('/itemDescription', (req, res) => { // Returns object with price and blurb
     let item = req.query.item;
     let description = alibay.getItemDescription(item);
@@ -65,7 +58,6 @@ app.post('/itemsSold', (req,res) => { // takes single string in body, returns ar
     res.send(JSON.stringify(alibay.allItemsSold(req.body.toString())));
 })
 
->>>>>>> d8ade1ac3da935e4de6dc8ef07de0e27d6124472
 app.listen(4000, () => {
     console.log('Listening on port 4000')
 })
