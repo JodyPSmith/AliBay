@@ -69,8 +69,6 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and blurb properties.
 */
 function getItemDescription(listingID) {
-    // console.log(`1. listingID: ${listingID}`)
-    // console.log(`2. productsMap: ${JSON.stringify(productsMap)}`)
     var obj = { description: productsMap[listingID].description, price: productsMap[listingID].price }
     return obj;
 }
