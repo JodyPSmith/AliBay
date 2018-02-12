@@ -1,4 +1,5 @@
 const assert = require('assert');
+const fs = require('fs');
 
 var itemsBought = {}; // map that keeps track of all the items a user has bought
 var userMap = {};
@@ -54,9 +55,9 @@ This function is incomplete. You need to complete it.
     returns: The ID of the new listing
 */
 function createListing(sellerID, price, blurb) {
-    var pid = genUID();
-    productsMap[pid] = { sellerID: sellerID, price: price, description: blurb }
-    return productsMap[sellerID];
+    var pID = genUID();
+    productsMap[pID] = { sellerID: sellerID, price: price, description: blurb }
+    return pID;
 }
 
 /* 
@@ -65,8 +66,9 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and blurb properties.
 */
 function getItemDescription(listingID) {
-
-}
+    var obj = {description: productsMap[listingID].description, price:productsMap[listingID].price }
+    return obj;
+ }
 
 /* 
 buy changes the global state.
@@ -81,7 +83,6 @@ The seller will see the listing in his history of items sold
     returns: undefined
 */
 function buy(buyerID, sellerID, listingID) {
-
 }
 
 
@@ -117,6 +118,7 @@ module.exports = {
     genUID, // This is just a shorthand. It's the same as genUID: genUID. 
     initializeUserIfNeeded,
     putItemsBought,
-    getItemsBought
+    getItemsBought,
+    createListing
     // Add all the other functions that need to be exported
 }
