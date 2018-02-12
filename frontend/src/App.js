@@ -3,14 +3,13 @@ import './App.css';
 // import LogIn from './components/google-OAuth/googleOauth';
 // import SearchBar from './components/searchBar/searchBar';
 // import Dashboard from './components/dashboard/dashboard';
-import Signup from './components/signup/signup';
-import Login from './components/login/login';
+//import Signup from './components/signup/signup';
 //import logo from './images/Alibay.png';
-import LogIn from './components/google-OAuth/googleOauth';
-import SearchBar from './components/searchBar/searchBar';
-import CardList from './components/Card/CardList';
-import Navigation from './components/Navigation/Navigation';
-import logo from './images/Alibay.png';
+import Login from './components/login/login';
+// import SearchBar from './components/searchBar/searchBar';
+// import CardList from './components/Card/CardList';
+// import Navigation from './components/Navigation/Navigation';
+// import logo from './images/Alibay.png';
 
 class App extends Component {
     constructor() {
@@ -23,8 +22,8 @@ class App extends Component {
         const { isSignedIn } = this.state;
         return (
             <div className="App ">
-                <Navigation />
-                <div
+                {/* <Navigation /> */}
+                {/* <div
                     style={{
                         marginTop: '20vh'
                     }}
@@ -38,8 +37,8 @@ class App extends Component {
                             <p className="dim pointer f4">Selling an item?</p>
                         ) : null}
                     </div>
-                </div>
-                {/*<LogIn />*/}
+                </div> */}
+                <Login />
 
                 {/*<CardList />*/}
             </div>
