@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import logo from './images/Alibay.png';
 import LogIn from './components/google-OAuth/googleOauth';
 import SearchBar from './components/searchBar/searchBar';
 import Dashboard from './components/dashboard/dashboard'
