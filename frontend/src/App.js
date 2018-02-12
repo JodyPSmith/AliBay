@@ -4,7 +4,7 @@ import SearchBar from './components/searchBar/searchBar';
 // import Dashboard from './components/dashboard/dashboard';
 // import Signup from './components/signup/signup';
 import logo from './images/Alibay.png';
-// import Login from './components/login/login';
+import Login from './components/login/login';
 import Navigation from './components/Navigation/Navigation';
 import SearchPage from './Containers/SearchPage/SearchPage';
 
@@ -17,7 +17,7 @@ class App extends Component {
             route: 'itemPage'
         };
     }
-    sendLogin = () => {};
+
     render() {
         const { isSignedIn, hasSearched, route } = this.state;
         return !hasSearched ? (
@@ -37,6 +37,7 @@ class App extends Component {
                             <p className="dim pointer f4">Selling an item?</p>
                         ) : null}
                     </div>
+                    <Login />
                 </div>
             </div>
         ) : (
