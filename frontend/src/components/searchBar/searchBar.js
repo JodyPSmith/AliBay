@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import logo from '../../images/Alibay.png';
 
 class SearchBar extends Component {
     render() {
         const { onInputChange, onSubmit } = this.props;
         return (
             <div className="flex flex-column justify-center content-center ">
-                <div className="">
-                    <img alt="logo" src={logo} />
-                </div>
                 <div className="center" style={{ width: '35vw' }}>
                     <input
                         onChange={onInputChange}
