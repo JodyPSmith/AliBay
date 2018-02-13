@@ -1,35 +1,39 @@
-const assert = require('assert');
-const fs = require('fs');
+const assert = require("assert");
+const fs = require("fs");
 
+// map that keeps track of all the items a user has bought
+var itemsBought = {};
 
+// map that keeps track of all the items a user has sold
+var itemsSold = {};
 
-var itemsBought = {
-    '8589344': [{ purchaseID: 25645015, seller: 89809829 }],
-    '89809829': []
-}; // map that keeps track of all the items a user has bought
-var itemsSold = {}; // map that keeps track of all the items a user has sold
-var userMap = {}; // map that keeps track of user information
-var productsMap = {}; // map that keeps track of all products
+// map that keeps track of user information
+var userMap = {};
+
+// map that keeps track of all products
+var productsMap = {};
+
+// initialize maps from data file
+
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
 */
 function genUID() {
-    return Math.floor(Math.random() * 100000000);
+  return Math.floor(Math.random() * 100000000);
 }
 
 function putItemsBought(userID, value) {
-    itemsBought[userID] = value;
-    itemsSold[userID] = value;
+  itemsBought[userID] = value;
+  itemsSold[userID] = value;
 }
 
 function getItemsBought(userID) {
-    var ret = itemsBought[userID];
-    if (ret == undefined) {
-        return null;
-    }
-    return ret;
+  var ret = itemsBought[userID];
+  if (ret == undefined) {
+    return null;
+  }
+  return ret;
 }
-
 
 /*
 initializeUserIfNeeded adds the UID to our database unless it's already there
@@ -37,10 +41,10 @@ parameter: [uid] the UID of the user.
 returns: undefined
 */
 function initializeUserIfNeeded(uid) {
-    var items = getItemsBought[uid];
-    if (items == undefined) {
-        putItemsBought(uid, []);
-    }
+  var items = getItemsBought[uid];
+  if (items == undefined) {
+    putItemsBought(uid, []);
+  }
 }
 
 /*
@@ -49,7 +53,7 @@ allItemsBought returns the IDs of all the items bought by a buyer
     returns: an array of listing IDs
 */
 function allItemsBought(buyerID) {
-    return itemsBought[buyerID];
+  return itemsBought[buyerID];
 }
 
 /* 
@@ -61,10 +65,16 @@ This function is incomplete. You need to complete it.
       [blurb] A blurb describing the item
     returns: The ID of the new listing
 */
-function createListing(sellerID, price, blurb) {
-    var pID = genUID();
-    productsMap[pID] = { sellerID: sellerID, price: price, description: blurb, isSold: false };
-    return pID;
+function createListing(title, sellerID, price, blurb) {
+  var pID = genUID();
+  productsMap[pID] = {
+    title: title,
+    sellerID: sellerID,
+    price: price,
+    description: blurb,
+    isSold: false
+  };
+  return pID;
 }
 
 /* 
@@ -73,8 +83,11 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and blurb properties.
 */
 function getItemDescription(listingID) {
-    var obj = { description: productsMap[listingID].description, price: productsMap[listingID].price }
-    return obj;
+  var obj = {
+    description: productsMap[listingID].description,
+    price: productsMap[listingID].price
+  };
+  return obj;
 }
 
 /* 
@@ -90,11 +103,10 @@ The seller will see the listing in his history of items sold
     returns: undefined
 */
 function buy(buyerID, sellerID, listingID) {
-    itemsBought[buyerID].push(listingID);
-    itemsSold[sellerID].push(listingID);
-    productsMap[listingID].isSold = true;
+  itemsBought[buyerID].push(listingID);
+  itemsSold[sellerID].push(listingID);
+  productsMap[listingID].isSold = true;
 }
-
 
 /* 
 allItemsSold returns the IDs of all the items sold by a seller
@@ -102,7 +114,7 @@ allItemsSold returns the IDs of all the items sold by a seller
     returns: an array of listing IDs
 */
 function allItemsSold(sellerID) {
-    return itemsSold[sellerID];
+  return itemsSold[sellerID];
 }
 
 /*
@@ -111,8 +123,8 @@ Once an item is sold, it will not be returned by allListings
     returns: an array of listing IDs
 */
 function allListings() {
-    let productIds = Object.keys(productsMap); // array of all productIds in map
-    return productIds.filter(x => !productsMap[x].isSold) // return new array with all products where isSold == true
+  let productIds = Object.keys(productsMap); // array of all productIds in map
+  return productIds.filter(x => !productsMap[x].isSold); // return new array with all products where isSold == true
 }
 
 /*
@@ -122,22 +134,27 @@ Once an item is sold, it will not be returned by searchForListings
     returns: an array of listing IDs
 */
 function searchForListings(searchTerm) {
-    let allItems = allListings();
-    let results = allItems.filter(x => productsMap[x].description.includes(searchTerm))
-    return results
+  let allItems = allListings();
+  let results = allItems.filter(x => {
+    return (
+      productsMap[x].description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      productsMap[x].title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+  return results;
 }
 
 module.exports = {
-    genUID, // This is just a shorthand. It's the same as genUID: genUID. 
-    initializeUserIfNeeded,
-    putItemsBought,
-    getItemsBought,
-    createListing,
-    buy,
-    allItemsSold,
-    getItemDescription,
-    allItemsBought,
-    allListings,
-    searchForListings
-    // Add all the other functions that need to be exported
-}
+  genUID, // This is just a shorthand. It's the same as genUID: genUID.
+  initializeUserIfNeeded,
+  putItemsBought,
+  getItemsBought,
+  createListing,
+  buy,
+  allItemsSold,
+  getItemDescription,
+  allItemsBought,
+  allListings,
+  searchForListings
+  // Add all the other functions that need to be exported
+};
