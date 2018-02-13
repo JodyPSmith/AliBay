@@ -1,46 +1,48 @@
 const assert = require("assert");
 const fs = require("fs");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 // Maps:
 // map that keeps track of all the items a user has bought
-var itemsBought = {};
+let itemsBought = {};
 
 // map that keeps track of all the items a user has sold
-var itemsSold = {};
+let itemsSold = {};
 
 // map that keeps track of user information
-var userMap = {test:       {
-  first_name: 'fname',
-  last_name: 'lname',
-  username: 'username',
-  email_address: 'email',
-  address: 'address',
-  city: 'city',
-  province: 'province',
-  postal_code: 'pcode',
-  country: 'country'
-}};
+let userMap = {
+  test: {
+    first_name: "fname",
+    last_name: "lname",
+    username: "username",
+    email_address: "email",
+    address: "address",
+    city: "city",
+    province: "province",
+    postal_code: "pcode",
+    country: "country"
+  }
+};
 
 //map that keeps track of passwords
-var passMap = {};
+let passMap = {};
 
 // map that keeps track of all products
-var productsMap = {};
+let productsMap = {};
 
 // initialize maps from data file
-// try {
-//   console.log('Reading files...')
-//   itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
-//   itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
-//   userMap = JSON.parse(fs.readFileSync('userMap.txt'));
-//   passMap = JSON.parse(fs.readFileSync('passMap.txt'));
-//   productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
-// }
-// catch (err) {
-//   console.log('error encountered; data file probably not initialized')
-//   console.log(`error: ${err}`)
-// }
+try {
+  console.log('Reading files...')
+  itemsBought = JSON.parse(fs.readFileSync('./datafiles/Bought.txt'));
+  itemsSold = JSON.parse(fs.readFileSync('./datafiles/itemsSold.txt'));
+  userMap = JSON.parse(fs.readFileSync('./datafiles/userMap.txt'));
+  passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
+  productsMap = JSON.parse(fs.readFileSync('./datafiles/productsMap.txt'));
+}
+catch (err) {
+  console.log('error encountered; data file probably not initialized')
+  console.log(`error: ${err}`)
+}
 
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
@@ -50,35 +52,45 @@ function genUID() {
 }
 
 function genPID() {
-  return `P${Math.floor(Math.random()*10000000)}`
+  return `P${Math.floor(Math.random() * 10000000)}`;
 }
 
 //Sign-up/Login functions
 
-function signUp(fname, lname, username, pwd, email, address, city, province, pcode, country) {
+function signUp(
+  fname,
+  lname,
+  username,
+  pwd,
+  email,
+  address,
+  city,
+  province,
+  pcode,
+  country
+) {
   if (checkUsername(username)) {
-    var userID = genUID();
-    var passHash = bcrypt.hash(pwd, 12);
+    let userID = genUID();
+    let passHash = bcrypt.hashSync(pwd, 12);
     passMap[username] = passHash;
-    userMap[userID] =
-      {
-        first_name: fname,
-        last_name: lname,
-        username: username,
-        email_address: email,
-        address: address,
-        city: city,
-        province: province,
-        postal_code: pcode,
-        country: country
-      }
-      itemsBought[userID] = [];
-      itemsSold[userID] = [];
-      fs.writeFileSync('itemsBought.txt', JSON.stringify(itemsBought));
-      fs.writeFileSync('itemsSold.txt', JSON.stringify(itemsSold));
-      fs.writeFileSync('userMap.txt', JSON.stringify(userMap));
-      fs.writeFileSync('passMap.txt', JSON.stringify(passMap));
-    console.log(`${userID} user created`)
+    userMap[userID] = {
+      first_name: fname,
+      last_name: lname,
+      username: username,
+      email_address: email,
+      address: address,
+      city: city,
+      province: province,
+      postal_code: pcode,
+      country: country
+    };
+    itemsBought[userID] = [];
+    itemsSold[userID] = [];
+    fs.writeFileSync("./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+    fs.writeFileSync("./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+    fs.writeFileSync("./datafiles/userMap.txt", JSON.stringify(userMap));
+    fs.writeFileSync("./datafiles/passMap.txt", JSON.stringify(passMap));
+    console.log(`${userID} user created`);
     return true;
   } else {
     return false;
@@ -101,10 +113,13 @@ function checkUsername(username) {
   }
 }
 
-function getUserID(username) { //takes username and searches all userIDs for a matching username, then returns userID
+function getUserID(username) {
+  //takes username and searches all userIDs for a matching username, then returns userID
   let allUserIDs = Object.keys(userMap);
-  var ret;
-  allUserIDs.forEach(x => {if (username == userMap[x].username) ret = x})
+  let ret;
+  allUserIDs.forEach(x => {
+    if (username == userMap[x].username) ret = x;
+  });
   return ret;
 }
 
@@ -120,7 +135,7 @@ This function is incomplete. You need to complete it.
     returns: The ID of the new listing
 */
 function createListing(title, sellerID, price, desc) {
-  var pID = genPID();
+  let pID = genPID();
   productsMap[pID] = {
     title: title,
     sellerID: sellerID,
@@ -128,7 +143,7 @@ function createListing(title, sellerID, price, desc) {
     description: desc,
     isSold: false
   };
-  fs.writeFileSync('productsMap.txt', JSON.stringify(productsMap));
+  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
   return pID;
 }
 
@@ -148,10 +163,10 @@ function buy(buyerID, sellerID, listingID) {
   itemsBought[buyerID].push(listingID);
   itemsSold[sellerID].push(listingID);
   productsMap[listingID].isSold = true;
-  
-  fs.writeFileSync('itemsBought.txt', JSON.stringify(itemsBought))
-  fs.writeFileSync('itemsSold.txt', JSON.stringify(itemsSold))
-  fs.writeFileSync('productsMap.txt', JSON.stringify(productsMap))
+
+  fs.writeFileSync("./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+  fs.writeFileSync("./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
 //Search/return functions
@@ -190,7 +205,7 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and description properties.
 */
 function getItemDescription(listingID) {
-  var itemDesc = {
+  let itemDesc = {
     description: productsMap[listingID].description,
     price: productsMap[listingID].price
   };
@@ -207,13 +222,14 @@ function searchForListings(searchTerm) {
   let allItems = allListings();
   let results = allItems.filter(x => {
     return (
-      productsMap[x].description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      productsMap[x].description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
       productsMap[x].title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
   return results;
 }
-
 
 module.exports = {
   itemsBought,
