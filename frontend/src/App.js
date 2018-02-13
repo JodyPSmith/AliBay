@@ -25,8 +25,8 @@ class App extends Component {
     }
 
     renderItemPage = data => {
-        //TODO: this function is undefined, find out how to get payload from CardList component to App.js
-        this.setState({ item: this.props.item });
+        //TODO: this function is undefined, Use this.props.children to find payload from CardList!
+        this.setState({ item: this.props.children.item });
     };
 
     render() {
