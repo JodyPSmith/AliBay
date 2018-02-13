@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from './searchBar';
 import logo from '../../images/Alibay.png';
 import miniLogo from '../../images/mini.png';
+
 class InAppSearchBar extends Component {
     render() {
         return (

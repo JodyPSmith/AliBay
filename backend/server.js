@@ -1,5 +1,5 @@
-const alibay = require('./alibay')
-const bodyParser = require('body-parser')
+const alibay = require('./alibay');
+const bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
@@ -15,12 +15,13 @@ app.get('/itemsBought', (req, res) => { // takes userID in query, returns array 
     res.send(JSON.stringify(alibay.getItemsBought(uid)));
 });
 
-app.post('/createListing', (req, res) => { // takes a JSON object in body, with sellerID, price, desc, and returns productID string
+app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, sellerID, price, desc, and returns productID string
     let request = JSON.parse(req.body);
+    let listTitle = request.title;
     let sellerID = request.sellerID;
     let price = request.price;
     let desc = request.description;
-    res.send('your product ID is: '+alibay.createListing(sellerID, price, desc));
+    res.send('your product ID is: '+alibay.createListing(title, sellerID, price, desc));
 })
 
 app.post('/buy', (req, res) => { // takes a JSON object in body, with buyerID, sellerID, listingID ***Returns UNDEFINED***
@@ -41,7 +42,6 @@ app.post('/search', (req, res) => { // returns new array where description inclu
     let searchTerm = request.searchTerm;
     let results = alibay.searchForListings(searchTerm);
     res.send(JSON.stringify(results)) // return the array (could be empty) to be processed in front-end
-    }
 })
 app.get('/itemDescription', (req, res) => { // Returns object with price and blurb
     let item = req.query.item;
