@@ -12,6 +12,7 @@ app.get('/', (req, res) => { // returns a userID as string
 
 app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, sellerID, price, desc, and returns productID string
     let request = JSON.parse(req.body);
+    console.log(JSON.parse(req.body))
     let title = request.title;
     let sellerID = request.sellerID;
     let price = request.price;
