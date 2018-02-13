@@ -7,3 +7,6 @@ body {
 .itemList {
     display: 'flex';
 }
+#ItemPage {
+    margin: 2vh 5vw;
+}

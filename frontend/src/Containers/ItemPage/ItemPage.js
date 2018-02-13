@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
 import Scroll from '../../Containers/scroll';
-import './itemPage.css';
 class ItemPage extends Component {
     constructor() {
         super();
@@ -43,6 +42,7 @@ class ItemPage extends Component {
                                                 }}
                                             >
                                                 <img
+                                                    alt="product"
                                                     onClick={() =>
                                                         this.setState({
                                                             image: item
