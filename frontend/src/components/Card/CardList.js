@@ -7,10 +7,11 @@ class CardList extends Component {
         // const { items } = this.props;
         return (
             <div
-                className="flex justify-center flex-wrap"
+                className="flex justify-start center flex-wrap"
                 style={{
                     minWidth: '10vw',
-                    minHeight: 'auto'
+                    minHeight: 'auto',
+                    marginLeft: '1vw'
                 }}
             >
                 {items.map((item, index) => {

@@ -7,7 +7,7 @@ class ItemPage extends Component {
         const { signedIn } = this.props;
         return (
             <div>
-                <div className="flex justify-between">
+                <div className="flex justify-between ">
                     <Navigation signedIn={signedIn} />
                 </div>
                 <div id="ItemPage">

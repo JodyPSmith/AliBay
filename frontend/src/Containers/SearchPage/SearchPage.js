@@ -3,7 +3,6 @@ import CardList from '../../components/Card/CardList';
 import Navigation from '../../components/Navigation/Navigation';
 import Scroll from '../scroll';
 import './SearchPage.css';
-import InAppSearchBar from '../../components/searchBar/inAppSearchBar';
 class SearchPage extends Component {
     constructor() {
         super();

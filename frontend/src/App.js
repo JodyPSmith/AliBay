@@ -3,8 +3,8 @@ import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 // import Signup from './components/signup/signup';
 // import Login from './components/login/login';
-import LoginPage from './Containers/LoginPage/LoginPage';
-import AddListingPage from './Containers/AddListingPage/AddListingPage';
+// import LoginPage from './Containers/LoginPage/LoginPage';
+// import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
@@ -18,7 +18,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'itemPage'
+            route: ''
         };
     }
 

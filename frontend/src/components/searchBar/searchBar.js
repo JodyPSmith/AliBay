@@ -21,7 +21,7 @@ class SearchBar extends Component {
                     />
                     <button
                         //this param, this.props.onSubmit will submit the input value from above
-                        onClick={() => console.log('hello')}
+                        onClick={onSubmit}
                         className="  f4 link ph3 pv2 dib black bg-white   dim br1 pointer  "
                         style={{
                             border: 'none',
