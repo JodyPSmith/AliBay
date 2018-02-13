@@ -111,12 +111,20 @@ function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, c
         postal_code: pcode,
         country: country
       }
-      console.log(passMap[usr])
+    console.log(passMap[usr])
     return true;
   } else {
     return false;
   }
-  
+
+}
+
+function login(username, password) {
+  if (password !== undefined && bcrypt.compareSync(password, passMap[username])) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function checkUsername(username) {
@@ -181,6 +189,7 @@ function searchForListings(searchTerm) {
   return results;
 }
 
+
 module.exports = {
   genUID, // This is just a shorthand. It's the same as genUID: genUID.
   initializeUserIfNeeded,
@@ -193,6 +202,7 @@ module.exports = {
   allItemsBought,
   allListings,
   searchForListings,
-  signUp
+  signUp,
+  login
   // Add all the other functions that need to be exported
 };

@@ -3,11 +3,25 @@ const bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
+var cookieMap = {};
+
 app.use(bodyParser.raw({ type: '*/*' }))
 
 app.get('/', (req, res) => { // returns a userID as string
     var x = alibay.genUID();
     res.send("" + x)
+})
+
+app.post('/login', (req, res) => {
+    let payload = JSON.parse(req.body.toString());
+    let username = payload.username;
+    let pass = payload.password;
+    if (alibay.login(username, pass)) {
+        res.set('Set-Cookie', "sessionId=5555")
+        res.send('login success');
+    } else {
+        res.send('user or pass invalid')
+    }
 })
 
 
@@ -71,9 +85,19 @@ app.post('/signUp', (req, res) => {
     }
 })
 
+
+
 app.post('/itemsSold', (req, res) => { // takes single string in body, returns arrray of listing IDs
     res.send(JSON.stringify(alibay.allItemsSold(req.body.toString())));
 })
+
+//Special function used to parse the inputted Cookies
+var parseCookies = (str) => {
+    let asArray = str.split('; ').map(x => x.split('='));
+    let ret = {};
+    asArray.forEach(lst => ret[lst[0]] = lst[1])
+    return ret;
+}
 
 app.listen(4000, () => {
     console.log('Listening on port 4000')
