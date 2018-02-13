@@ -22,9 +22,10 @@ class SearchBar extends Component {
                     <button
                         //this param, this.props.onSubmit will submit the input value from above
                         onClick={onSubmit}
-                        className="f4 link ph3 pv2 dib black bg-white dim pointer flex justify-center self-center "
+                        className="f4 link ph3 pv2 dib bg-white dim pointer flex justify-center self-center "
                         style={{
                             // border: 'none',
+                            color: '#F6841F',
                             height: '22px',
                             borderBottom: 'none',
                             borderRight: 'none',

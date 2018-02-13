@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 
 class Scroll extends Component {
     render() {
-        const { children } = this.props;
+        const { children, height } = this.props;
         return (
             <div
                 className="shadow-5"
@@ -13,7 +13,7 @@ class Scroll extends Component {
                 style={{
                     overflowY: 'scroll',
                     border: 'none',
-                    height: '71vh'
+                    height: height
                 }}
             >
                 {' '}

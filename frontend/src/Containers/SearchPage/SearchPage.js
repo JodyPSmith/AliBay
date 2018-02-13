@@ -20,7 +20,7 @@ class SearchPage extends Component {
                     <Navigation route={route} signedIn={signedIn} />
                 </div>
                 <div id="SearchPage" className="mt5">
-                    <Scroll>
+                    <Scroll height="71vh">
                         <CardList setItemPage={setItemPage} />
                     </Scroll>
                 </div>
