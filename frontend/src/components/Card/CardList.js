@@ -19,9 +19,11 @@ class CardList extends Component {
                     //items will be fetched through the server, now it is fetched from a fakeData object. See line 3
                     return (
                         <Card
-                            renderItemPage={this.props.renderItemPage}
-                            key={items[index].id}
-                            item={items[index]}
+                            onClick={() => {
+                                this.props.setItemPage(item);
+                            }}
+                            key={index}
+                            item={item}
                         />
                     );
                 })}

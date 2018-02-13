@@ -4,7 +4,7 @@ class Card extends Component {
     render() {
         return (
             <div
-                onClick={this.props.renderItemPage}
+                onClick={this.props.onClick}
                 className="tc dib br3 pa3 ma2 dim bw2 shadow-5 pointer"
             >
                 <img

@@ -10,20 +10,18 @@ class SearchPage extends Component {
     }
 
     render() {
+        const { route, signedIn, setItemPage } = this.props;
         return (
             <div>
                 {' '}
                 <div className="flex justify-between">
                     {/* this prop will check if the state in the parent container, isSignedIn, is true or false
                         see documentaion in Navigation component*/}
-                    <Navigation
-                        route={this.props.route}
-                        signedIn={this.props.signedIn}
-                    />
+                    <Navigation route={route} signedIn={signedIn} />
                 </div>
                 <div id="SearchPage" className="mt5">
                     <Scroll>
-                        <CardList renderItemPage={this.props.renderItemPage} />
+                        <CardList setItemPage={setItemPage} />
                     </Scroll>
                 </div>
             </div>

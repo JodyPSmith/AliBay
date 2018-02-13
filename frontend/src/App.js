@@ -24,9 +24,9 @@ class App extends Component {
         };
     }
 
-    renderItemPage = data => {
+    setItemPage = data => {
         //TODO: this function is undefined, Use this.props.children to find payload from CardList!
-        this.setState({ item: this.props.children.item });
+        this.setState({ item: data });
     };
 
     render() {
@@ -44,7 +44,7 @@ class App extends Component {
             <div>
                 {' '}
                 <SearchPage
-                    renderItemPage={this.renderItemPage}
+                    setItemPage={this.setItemPage}
                     route={route}
                     signedIn={isSignedIn}
                 />
