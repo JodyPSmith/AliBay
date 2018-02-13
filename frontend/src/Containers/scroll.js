@@ -16,7 +16,6 @@ class Scroll extends Component {
                     height: height
                 }}
             >
-                {' '}
                 {children}
             </div>
         );

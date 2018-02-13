@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
-// import Signup from './components/signup/signup';
+import Signup from './components/signup/signup';
 // import Login from './components/login/login';
 // import LoginPage from './Containers/LoginPage/LoginPage';
-// import AddListingPage from './Containers/AddListingPage/AddListingPage';
+import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
-
+import { items } from './components/Card/fakeData';
 class App extends Component {
     constructor() {
         super();
@@ -18,17 +18,9 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'itemPage',
+            route: 'home',
             //needed to pass in data from specific item page
-            item: {
-                id: 1,
-                name: 'name',
-                price: 'PRICE',
-                image:
-                    'http://www.gadgetreview.com/wp-content/uploads/2016/01/Epson-Home-Cinema-2040-1.jpg',
-                desc:
-                    'Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu.'
-            }
+            item: items[0]
         };
     }
 
@@ -46,21 +38,17 @@ class App extends Component {
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
             <div className="App ">
-                <HomePage route={route} signedIn={isSignedIn} />
+                {/* <Navigation signedIn={isSignedIn} />
+                <HomePage signedIn={isSignedIn} /> */}
+                <AddListingPage />
+
+                <Signup />
             </div>
         ) : route === 'itemPage' ? (
             <ItemPage item={item} route={route} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
-            <div>
-                {' '}
-                <SearchPage
-                    setItemPage={this.setItemPage}
-                    route={route}
-                    signedIn={isSignedIn}
-                />
-                {/* <AddListingPage /> */}
-            </div>
+            <SearchPage signedIn={isSignedIn} />
         ) : null;
     }
 }
