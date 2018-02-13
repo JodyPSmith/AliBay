@@ -40,16 +40,15 @@ class App extends Component {
             <div className="App ">
                 {/* <Navigation signedIn={isSignedIn} />
                 <HomePage signedIn={isSignedIn} /> */}
-                <AddListingPage/>
+                <AddListingPage />
 
-                <Signup/>
+                <Signup />
             </div>
         ) : route === 'itemPage' ? (
             <ItemPage item={item} route={route} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage signedIn={isSignedIn} />
-            
         ) : null;
     }
 }
