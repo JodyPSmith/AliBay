@@ -7,17 +7,18 @@ class HomePage extends Component {
     render() {
         const { signedIn, route } = this.props;
         return (
-            <div>
+            <div className="center">
                 {' '}
                 <Navigation route={route} signedIn={signedIn} />
                 <div
-                    className=""
+                    className="center"
                     style={{
                         marginTop: '20vh'
                     }}
                 >
-                    <div className="center">
+                    <div className="flex justify-center">
                         <img
+                            className="center"
                             style={{
                                 width: '30vw',
                                 maxWidth: '400px',
@@ -26,7 +27,7 @@ class HomePage extends Component {
                             alt="logo"
                             src={logo}
                         />
-                    </div>{' '}
+                    </div>
                     <div
                         style={{
                             width: '30vw'
@@ -35,9 +36,8 @@ class HomePage extends Component {
                     >
                         <SearchBar onChange={''} />
                         {signedIn ? (
-                            <div className="mt3">
-                                {' '}
-                                <a className="dim pointer f4 ">
+                            <div className="mt3 flex justify-center">
+                                <a className="dim pointer f4 mr3">
                                     Selling an item?
                                 </a>
                             </div>

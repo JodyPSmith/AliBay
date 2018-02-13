@@ -10,7 +10,7 @@ try {cookieMap = fs.readFileSync('cookieMap.txt')}
 catch(err) {console.log('cookieMap.txt not found')}
 
 var generateCookie = () => {
-    let sessionID = Math.floor(Math.random()*10000);
+    let sessionID = 's'+Math.floor(Math.random()*10000);
     if (cookieMap[sessionID]) {return generateCookie()} //if sessionID exists, re-generate sessionID
     else return sessionID;
 }
@@ -18,7 +18,7 @@ var generateCookie = () => {
 app.use(bodyParser.raw({ type: '*/*' }))
 
 //should change this
-app.get('/', (req, res) => { // returns a userID as string
+app.get('/', (req, res) => { //
     var x = alibay.genUID();
     res.send("" + x)
 })
