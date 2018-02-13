@@ -7,7 +7,7 @@ class AddListing extends Component {
         var newItem = { "sellerID": 12345, "title": this.title.value, "price": this.price.value, "description": this.desc.value, "location": this.location.value }
         console.log(newItem);
         // need to add redirect to for sale items in the below fetch once the end point is ready
-        fetch('http://localhost:4000/createListing', {
+        fetch('/createListing', {
             method: "POST",
             body: JSON.stringify(newItem),
             credentials: "include"
