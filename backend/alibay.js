@@ -20,11 +20,11 @@ var productsMap = {};
 
 // initialize maps from data file
 try {
-  itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
-  itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
-  userMap = JSON.parse(fs.readFileSync('userMap.txt'));
-  passMap = JSON.parse(fs.readFileSync('passMap.txt'));
-  productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
+  itemsBought = JSON.parse(fs.readFileSync('./Database Files/itemsBought.txt'));
+  itemsSold = JSON.parse(fs.readFileSync('./Database Files/itemsSold.txt'));
+  userMap = JSON.parse(fs.readFileSync('./Database Files/userMap.txt'));
+  passMap = JSON.parse(fs.readFileSync('./Database Files/passMap.txt'));
+  productsMap = JSON.parse(fs.readFileSync('./Database Files/productsMap.txt'));
 }
 catch (err) {
   console.log('error encountered; data file probably not initialized')
@@ -59,8 +59,8 @@ function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, c
         postal_code: pcode,
         country: country
       }
-      fs.writeFileSync('userMap.txt', JSON.stringify(userMap));
-      fs.writeFileSync('passMap.txt', JSON.stringify(passMap));
+      fs.writeFileSync('./Database Files/userMap.txt', JSON.stringify(userMap));
+      fs.writeFileSync('./Database Files/passMap.txt', JSON.stringify(passMap));
     console.log(`${userID} user created`)
     return true;
   } else {
@@ -113,26 +113,26 @@ This function is incomplete. You need to complete it.
     parameters: 
       [sellerID] The ID of the seller
       [price] The price of the item
-      [blurb] A blurb describing the item
+      [desc] A desc describing the item
     returns: The ID of the new listing
 */
-function createListing(title, sellerID, price, blurb) {
+function createListing(title, sellerID, price, desc) {
   var pID = genPID();
   productsMap[pID] = {
     title: title,
     sellerID: sellerID,
     price: price,
-    description: blurb,
+    description: desc,
     isSold: false
   };
-  fs.writeFileSync('productsMap.txt', JSON.stringify(productsMap));
+  fs.writeFileSync('./Database Files/productsMap.txt', JSON.stringify(productsMap));
   return pID;
 }
 
 /* 
 getItemDescription returns the description of a listing
     parameter: [listingID] The ID of the listing
-    returns: An object containing the price and blurb properties.
+    returns: An object containing the price and description properties.
 */
 function getItemDescription(listingID) {
   var itemDesc = {
@@ -193,9 +193,9 @@ function buy(buyerID, sellerID, listingID) {
   itemsSold[sellerID].push(listingID);
   productsMap[listingID].isSold = true;
   
-  fs.writeFileSync('itemsBought.txt', JSON.stringify(itemsBought))
-  fs.writeFileSync('itemsSold.txt', JSON.stringify(itemsSold))
-  fs.writeFileSync('productsMap.txt', JSON.stringify(productsMap))
+  fs.writeFileSync('./Database Files/itemsBought.txt', JSON.stringify(itemsBought))
+  fs.writeFileSync('./Database Files/itemsSold.txt', JSON.stringify(itemsSold))
+  fs.writeFileSync('./Database Files/productsMap.txt', JSON.stringify(productsMap))
 }
 
 /* 

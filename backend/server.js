@@ -10,13 +10,6 @@ app.get('/', (req, res) => { // returns a userID as string
     res.send("" + x)
 })
 
-
-
-app.get('/itemsBought', (req, res) => { // takes userID in query, returns array of all items bought buy the user
-    let uid = req.query.uid;
-    res.send(JSON.stringify(alibay.getItemsBought(uid)));
-});
-
 app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, sellerID, price, desc, and returns productID string
     let request = JSON.parse(req.body);
     let title = request.title;
