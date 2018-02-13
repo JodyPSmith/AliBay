@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 import Signup from './components/signup/signup';
-// import Login from './components/login/login';
+import Login from './components/login/login';
 // import LoginPage from './Containers/LoginPage/LoginPage';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
