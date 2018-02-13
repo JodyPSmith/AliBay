@@ -19,17 +19,18 @@ app.get('/', (req, res) => { // returns a userID as string
     res.send("" + x)
 })
 
-app.post('/login', (req, res) => {
+app.post('/login', (req, res) => { // takes object with username & password, attempts to match with database
     let payload = JSON.parse(req.body.toString());
     let username = payload.username;
     let password = payload.password;
     if (alibay.login(username, password)) {
         let sessionID = generateCookie();
-        res.set('Set-Cookie', "sessionId="+sessionID)
-        res.send('login success');
+        cookieMap[sessionID] = 
+        res.set('Set-Cookie', "sessionID="+sessionID)
+        res.send(JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
     }
     else {
-        res.send('user or pass invalid')
+        res.send(JSON.stringify({res: false})) //if failed login, send JSON object with sessionID false
     }
 })
 
