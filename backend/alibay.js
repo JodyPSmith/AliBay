@@ -10,6 +10,9 @@ var itemsSold = {};
 // map that keeps track of user information
 var userMap = {};
 
+//map that keeps track of passwords
+var passMap = {};
+
 // map that keeps track of all products
 var productsMap = {};
 
@@ -91,21 +94,35 @@ function getItemDescription(listingID) {
 }
 
 function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
-  var userID = genUID();
-  var passHash = bcrypt.hash(pwd, 12);
-  userMap[userID] =
-    {
-      first_name: fname,
-      last_name: lname,
-      username: usr,
-      password: passHash,
-      email_address: email,
-      address: address,
-      city: city,
-      province: province,
-      postal_code: pcode,
-      country: country
-    };
+  if (checkUsername(usr)) {
+    var userID = genUID();
+    var passHash = bcrypt.hash(pwd, 12);
+    passMap[usr] = passHash;
+    userMap[userID] =
+      {
+        first_name: fname,
+        last_name: lname,
+        username: usr,
+        email_address: email,
+        address: address,
+        city: city,
+        province: province,
+        postal_code: pcode,
+        country: country
+      }
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+function checkUsername(username) {
+  if (passMap[username] === undefined) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 /* 
