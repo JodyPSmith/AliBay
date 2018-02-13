@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 // import Signup from './components/signup/signup';
-import Login from './components/login/login';
+// import Login from './components/login/login';
+import LoginPage from './Containers/LoginPage/LoginPage'
 import Navigation from './components/Navigation/Navigation';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -27,7 +28,8 @@ class App extends Component {
         ) : route === 'itemPage' ? (
             <ItemPage />
         ) : hasSearched ? (
-            <SearchPage signedIn={isSignedIn} />
+            // <SearchPage signedIn={isSignedIn} />
+            <LoginPage/>
         ) : null;
     }
 }
