@@ -19,7 +19,7 @@ class App extends Component {
             hasSearched: true,
             //needed to simulate url change, default is home
             route: '',
-            //need to pass in data from specific item page
+            //needed to pass in data from specific item page
             item: {}
         };
     }
