@@ -16,7 +16,7 @@ class HomePage extends Component {
                     <img
                         style={{
                             width: '40vw',
-                            maxWidth: '500px',
+                            maxWidth: '450px',
                             height: 'auto'
                         }}
                         alt="logo"
@@ -31,7 +31,10 @@ class HomePage extends Component {
                 >
                     <SearchBar onChange={''} />
                     {signedIn ? (
-                        <p className="dim pointer f4">Selling an item?</p>
+                        <div className="mt3">
+                            {' '}
+                            <a className="dim pointer f4 ">Selling an item?</a>
+                        </div>
                     ) : null}
                 </div>
             </div>
