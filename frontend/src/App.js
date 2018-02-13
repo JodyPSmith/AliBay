@@ -39,8 +39,7 @@ class App extends Component {
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
             <div className="App ">
-                {/* <Navigation signedIn={isSignedIn} />
-                <HomePage signedIn={isSignedIn} /> */}
+                {<HomePage signedIn={isSignedIn} route={route} />}
                 <AddListingPage />
 
                 <Signup />
