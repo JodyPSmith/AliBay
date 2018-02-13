@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
-// import Signup from './components/signup/signup';
+import Signup from './components/signup/signup';
 // import Login from './components/login/login';
 // import LoginPage from './Containers/LoginPage/LoginPage';
-// import AddListingPage from './Containers/AddListingPage/AddListingPage';
+import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
@@ -18,7 +18,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'itemPage',
+            route: 'home',
             //needed to pass in data from specific item page
             item: items[0]
         };
@@ -38,21 +38,18 @@ class App extends Component {
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
             <div className="App ">
-                <HomePage route={route} signedIn={isSignedIn} />
+                {/* <Navigation signedIn={isSignedIn} />
+                <HomePage signedIn={isSignedIn} /> */}
+                <AddListingPage/>
+
+                <Signup/>
             </div>
         ) : route === 'itemPage' ? (
             <ItemPage item={item} route={route} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
-            <div>
-                {' '}
-                <SearchPage
-                    setItemPage={this.setItemPage}
-                    route={route}
-                    signedIn={isSignedIn}
-                />
-                {/* <AddListingPage /> */}
-            </div>
+            <SearchPage signedIn={isSignedIn} />
+            
         ) : null;
     }
 }
