@@ -4,6 +4,7 @@ import './App.css';
 // import Signup from './components/signup/signup';
 // import Login from './components/login/login';
 import LoginPage from './Containers/LoginPage/LoginPage'
+import AddListingPage from './Containers/AddListingPage/AddListingPage'
 import Navigation from './components/Navigation/Navigation';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -29,7 +30,7 @@ class App extends Component {
             <ItemPage />
         ) : hasSearched ? (
             // <SearchPage signedIn={isSignedIn} />
-            <LoginPage/>
+            <AddListingPage/>
         ) : null;
     }
 }
