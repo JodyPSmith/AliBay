@@ -6,7 +6,7 @@ class Login extends Component {
     sendLogin = () => {
         let data = {"username" : this.loginName.value, "password" : this.loginPW.value}
         console.log(data)
-        
+        fetch( )
     };
     
     render() {

@@ -15,6 +15,39 @@ app.get('/itemsBought', (req, res) => {
     res.send(JSON.stringify(alibay.getItemsBought(uid)));
 });
 
+app.post('/createListing', (req, res) => {
+    let request = JSON.parse(req.body.toString());
+    let sellerID = request.sellerID;
+    let price = request.price;
+    let desc = request.description;
+    alibay.createListing(sellerID, price, desc);
+    res.send('success');
+})
+
+app.post('/buy', (req, res) => {
+    let request = JSON.parse(req.body.toString());
+    let buyerID = request.buyerID;
+    let sellerID = request.sellerID;
+    let listingID = request.listingID;
+    alibay.buy(buyerID, sellerID, listingID);
+    res.send('success')
+
+})
+
+app.get('/allListings', (req, res) => {
+    res.send(JSON.stringify(alibay.allListings()));
+})
+
+app.post('/search', (req, res) => {
+    let request = JSON.parse(req.body.toString());
+    let searchTerm = request.searchTerm;
+    let results = alibay.searchForListings(searchTerm);
+    if (results === []) {
+        res.send('fail')
+    } else {
+        res.send('success')
+    }
+})
 app.get('/itemDescription', (req, res) => { // Returns object with price and blurb
     let item = req.query.item;
     let description = alibay.getItemDescription(item);

@@ -1,7 +1,12 @@
 const assert = require('assert');
 const fs = require('fs');
 
-var itemsBought = {}; // map that keeps track of all the items a user has bought
+
+
+var itemsBought = {
+    '8589344': [{ purchaseID: 25645015, seller: 89809829 }],
+    '89809829': []
+}; // map that keeps track of all the items a user has bought
 var itemsSold = {}; // map that keeps track of all the items a user has sold
 var userMap = {}; // map that keeps track of user information
 var productsMap = {}; // map that keeps track of all products
@@ -58,7 +63,7 @@ This function is incomplete. You need to complete it.
 */
 function createListing(sellerID, price, blurb) {
     var pID = genUID();
-    productsMap[pID] = { sellerID: sellerID, price: price, description: blurb, isSold: false};
+    productsMap[pID] = { sellerID: sellerID, price: price, description: blurb, isSold: false };
     // console.log(`listing created: ${pID}`)
     return pID;
 }
@@ -89,7 +94,6 @@ function buy(buyerID, sellerID, listingID) {
 
     itemsBought[buyerID].push(listingID);
     itemsSold[sellerID].push(listingID);
-   //TODO: add boolean to listing and update boolean instead
     productsMap[listingID].isSold = true;
 }
 
@@ -100,7 +104,7 @@ allItemsSold returns the IDs of all the items sold by a seller
     returns: an array of listing IDs
 */
 function allItemsSold(sellerID) {
-return itemsSold[sellerID];
+    return itemsSold[sellerID];
 }
 
 /*
@@ -110,7 +114,7 @@ Once an item is sold, it will not be returned by allListings
 */
 function allListings() {
     let productIds = Object.keys(productsMap); // array of all productIds in map
-    return productIds.filter(x=> !productsMap[x].isSold) // for each, check if isSold, then push
+    return productIds.filter(x => !productsMap[x].isSold) // for each, check if isSold, then push
 }
 
 /*
@@ -120,9 +124,9 @@ Once an item is sold, it will not be returned by searchForListings
     returns: an array of listing IDs
 */
 function searchForListings(searchTerm) {
-let allItems = allListings();
-let results = allItems.filter(x => productsMap[x].description.includes(searchTerm))
-return results
+    let allItems = allListings();
+    let results = allItems.filter(x => productsMap[x].description.includes(searchTerm))
+    return results
 }
 
 module.exports = {
