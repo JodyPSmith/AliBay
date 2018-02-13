@@ -1,30 +1,43 @@
 const assert = require("assert");
 const fs = require("fs");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 // Maps:
 // map that keeps track of all the items a user has bought
-var itemsBought = {};
+let itemsBought = {};
 
 // map that keeps track of all the items a user has sold
-var itemsSold = {};
+let itemsSold = {};
 
 // map that keeps track of user information
-var userMap = {};
+let userMap = {
+  test: {
+    first_name: "fname",
+    last_name: "lname",
+    username: "username",
+    email_address: "email",
+    address: "address",
+    city: "city",
+    province: "province",
+    postal_code: "pcode",
+    country: "country"
+  }
+};
 
 //map that keeps track of passwords
-var passMap = {};
+let passMap = {};
 
 // map that keeps track of all products
-var productsMap = {};
+let productsMap = {};
 
 // initialize maps from data file
 try {
-  itemsBought = JSON.parse(fs.readFileSync('./Database Files/itemsBought.txt'));
-  itemsSold = JSON.parse(fs.readFileSync('./Database Files/itemsSold.txt'));
-  userMap = JSON.parse(fs.readFileSync('./Database Files/userMap.txt'));
-  passMap = JSON.parse(fs.readFileSync('./Database Files/passMap.txt'));
-  productsMap = JSON.parse(fs.readFileSync('./Database Files/productsMap.txt'));
+  console.log('Reading files...')
+  itemsBought = JSON.parse(fs.readFileSync('./datafiles/Bought.txt'));
+  itemsSold = JSON.parse(fs.readFileSync('./datafiles/itemsSold.txt'));
+  userMap = JSON.parse(fs.readFileSync('./datafiles/userMap.txt'));
+  passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
+  productsMap = JSON.parse(fs.readFileSync('./datafiles/productsMap.txt'));
 }
 catch (err) {
   console.log('error encountered; data file probably not initialized')
@@ -39,120 +52,34 @@ function genUID() {
 }
 
 function genPID() {
-  return `P${Math.floor(Math.random()*10000000)}`
+  return `P${Math.floor(Math.random() * 10000000)}`;
 }
 
-function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
-  if (checkUsername(usr)) {
+//Sign-up/Login functions
+
+function signUp(
+  fname,
+  lname,
+  username,
+  pwd,
+  email,
+  address,
+  city,
+  province,
+  pcode,
+  country
+) {
+  if (checkUsername(username)) {
+<<<<<<< HEAD
     var userID = genUID();
-    var passHash = bcrypt.hash(pwd, 12);
-    passMap[usr] = passHash;
-    userMap[userID] =
-      {
-        first_name: fname,
-        last_name: lname,
-        username: usr,
-        email_address: email,
-        address: address,
-        city: city,
-        province: province,
-        postal_code: pcode,
-        country: country
-      }
-      fs.writeFileSync('./Database Files/userMap.txt', JSON.stringify(userMap));
-      fs.writeFileSync('./Database Files/passMap.txt', JSON.stringify(passMap));
-    console.log(`${userID} user created`)
-    return true;
-  } else {
-    return false;
-  }
-
-}
-
-/*don't think we need this anymore because of signup:
---------------------------------------------------------------------------------
-function getItemsBought(userID) {
-  var ret = itemsBought[userID];
-  if (ret == undefined) {
-    return null;
-  }
-  return ret;
-}
-
-function putItemsBought(userID, value) {
-  itemsBought[userID] = value;
-  itemsSold[userID] = value;
-  //write to file
-}
-
-initializeUserIfNeeded adds the UID to our database unless it's already there
-parameter: [uid] the UID of the user.
-returns: undefined
-
-function initializeUserIfNeeded(uid) {
-  var items = getItemsBought[uid];
-  if (items == undefined) {
-    putItemsBought(uid, []);
-  }
-}
---------------------------------------------------------------------------------
-*/
-
-/*
-allItemsBought returns the IDs of all the items bought by a buyer
-    parameter: [buyerID] The ID of the buyer
-    returns: an array of listing IDs
-*/
-function allItemsBought(buyerID) {
-  return itemsBought[buyerID];
-}
-
-/* 
-createListing adds a new listing to our global state.
-This function is incomplete. You need to complete it.
-    parameters: 
-      [sellerID] The ID of the seller
-      [price] The price of the item
-      [desc] A desc describing the item
-    returns: The ID of the new listing
-*/
-function createListing(title, sellerID, price, desc) {
-  var pID = genPID();
-  productsMap[pID] = {
-    title: title,
-    sellerID: sellerID,
-    price: price,
-    description: desc,
-    isSold: false
-  };
-  fs.writeFileSync('./Database Files/productsMap.txt', JSON.stringify(productsMap));
-  return pID;
-}
-
-/* 
-getItemDescription returns the description of a listing
-    parameter: [listingID] The ID of the listing
-    returns: An object containing the price and description properties.
-*/
-function getItemDescription(listingID) {
-  var itemDesc = {
-    description: productsMap[listingID].description,
-    price: productsMap[listingID].price
-  };
-  return itemDesc;
-}
-
-function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
-  if (checkUsername(usr)) {
-    var userID = genUID();
-    console.log(pwd)
     var passHash = bcrypt.hashSync(pwd, 12);
-    passMap[usr] = passHash;
+    passMap[username] = passHash;
+    console.log(passMap)
     userMap[userID] =
       {
         first_name: fname,
         last_name: lname,
-        username: usr,
+        username: username,
         email_address: email,
         address: address,
         city: city,
@@ -160,16 +87,44 @@ function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, c
         postal_code: pcode,
         country: country
       }
-    console.log(passMap[usr])
+      itemsBought[userID] = [];
+      itemsSold[userID] = [];
+      fs.writeFileSync('itemsBought.txt', JSON.stringify(itemsBought));
+      fs.writeFileSync('itemsSold.txt', JSON.stringify(itemsSold));
+      fs.writeFileSync('userMap.txt', JSON.stringify(userMap));
+      fs.writeFileSync('passMap.txt', JSON.stringify(passMap));
+    console.log(`${userID} user created`)
+=======
+    let userID = genUID();
+    let passHash = bcrypt.hashSync(pwd, 12);
+    passMap[username] = passHash;
+    userMap[userID] = {
+      first_name: fname,
+      last_name: lname,
+      username: username,
+      email_address: email,
+      address: address,
+      city: city,
+      province: province,
+      postal_code: pcode,
+      country: country
+    };
+    itemsBought[userID] = [];
+    itemsSold[userID] = [];
+    fs.writeFileSync("./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+    fs.writeFileSync("./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+    fs.writeFileSync("./datafiles/userMap.txt", JSON.stringify(userMap));
+    fs.writeFileSync("./datafiles/passMap.txt", JSON.stringify(passMap));
+    console.log(`${userID} user created`);
+>>>>>>> fa92df0545b16a4c0400169a150fbce803b47586
     return true;
   } else {
     return false;
   }
-
 }
 
 function login(username, password) {
-  if (password !== undefined && bcrypt.compareSync(password, passMap[username])) {
+  if (bcrypt.compareSync(password, passMap[username])) {
     return true;
   } else {
     return false;
@@ -182,6 +137,40 @@ function checkUsername(username) {
   } else {
     return false;
   }
+}
+
+function getUserID(username) {
+  //takes username and searches all userIDs for a matching username, then returns userID
+  let allUserIDs = Object.keys(userMap);
+  let ret;
+  allUserIDs.forEach(x => {
+    if (username == userMap[x].username) ret = x;
+  });
+  return ret;
+}
+
+//Functions that write to file
+
+/* 
+createListing adds a new listing to our global state.
+This function is incomplete. You need to complete it.
+    parameters: 
+      [sellerID] The ID of the seller
+      [price] The price of the item
+      [desc] A desc describing the item
+    returns: The ID of the new listing
+*/
+function createListing(title, sellerID, price, desc) {
+  let pID = genPID();
+  productsMap[pID] = {
+    title: title,
+    sellerID: sellerID,
+    price: price,
+    description: desc,
+    isSold: false
+  };
+  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
+  return pID;
 }
 
 /* 
@@ -200,10 +189,21 @@ function buy(buyerID, sellerID, listingID) {
   itemsBought[buyerID].push(listingID);
   itemsSold[sellerID].push(listingID);
   productsMap[listingID].isSold = true;
-  
-  fs.writeFileSync('./Database Files/itemsBought.txt', JSON.stringify(itemsBought))
-  fs.writeFileSync('./Database Files/itemsSold.txt', JSON.stringify(itemsSold))
-  fs.writeFileSync('./Database Files/productsMap.txt', JSON.stringify(productsMap))
+
+  fs.writeFileSync("./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+  fs.writeFileSync("./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
+}
+
+//Search/return functions
+
+/*
+allItemsBought returns the IDs of all the items bought by a buyer
+    parameter: [buyerID] The ID of the buyer
+    returns: an array of listing IDs
+*/
+function allItemsBought(buyerID) {
+  return itemsBought[buyerID];
 }
 
 /* 
@@ -225,6 +225,19 @@ function allListings() {
   return productIds.filter(x => !productsMap[x].isSold); // return new array with all products where isSold == true
 }
 
+/* 
+getItemDescription returns the description of a listing
+    parameter: [listingID] The ID of the listing
+    returns: An object containing the price and description properties.
+*/
+function getItemDescription(listingID) {
+  let itemDesc = {
+    description: productsMap[listingID].description,
+    price: productsMap[listingID].price
+  };
+  return itemDesc;
+}
+
 /*
 searchForListings returns the IDs of all the listings currently on the market
 Once an item is sold, it will not be returned by searchForListings
@@ -235,25 +248,33 @@ function searchForListings(searchTerm) {
   let allItems = allListings();
   let results = allItems.filter(x => {
     return (
-      productsMap[x].description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      productsMap[x].description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
       productsMap[x].title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
   return results;
 }
 
-
 module.exports = {
-  genUID, // This is just a shorthand. It's the same as genUID: genUID.
+  itemsBought,
+  itemsSold,
+  productsMap,
+  userMap,
+  passMap,
+  genUID,
   genPID,
+  signUp,
+  login,
+  checkUsername,
+  getUserID,
   createListing,
   buy,
-  allItemsSold,
-  getItemDescription,
   allItemsBought,
+  allItemsSold,
   allListings,
-  searchForListings,
-  signUp,
-  login
+  getItemDescription,
+  searchForListings
   // Add all the other functions that need to be exported
 };

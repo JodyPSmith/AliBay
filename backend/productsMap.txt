@@ -1,1 +1,5 @@
-{"P76703":{"title":"sadfdf","sellerID":12345,"price":"22.22","description":"zdcdsafasd","isSold":false}}
+<<<<<<< HEAD
+{"P51274":{"title":"","sellerID":12345,"price":"","description":"","isSold":false},"P5727309":{"title":"","sellerID":12345,"price":"","description":"","isSold":false},"P9011885":{"title":"","sellerID":12345,"price":"","description":"","isSold":false},"P9956012":{"title":"facebook","sellerID":12345,"price":"12123","description":"fafdgtgrtgh","isSold":false}}
+=======
+{"P3350397":{"title":"test","sellerID":12345,"price":"22","description":"help","isSold":false},"P2767150":{"title":"test","sellerID":12345,"price":"22","description":"help","isSold":false},"P7549183":{"title":"sss","sellerID":12345,"price":"22","description":"","isSold":false},"P7121752":{"title":"sss","sellerID":12345,"price":"22","description":"","isSold":false}}
+>>>>>>> 7a651429c0588f5e40b082057e00988623afc35a

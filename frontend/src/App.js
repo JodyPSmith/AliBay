@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Dashboard from './components/dashboard/dashboard';
 import Signup from './components/signup/signup';
-// import Login from './components/login/login';
+import Login from './components/login/login';
 // import LoginPage from './Containers/LoginPage/LoginPage';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
@@ -20,7 +20,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'confirmationPage',
+            route: 'home',
             //needed to pass in data from specific item page
             item: items[0],
             user: userMap.test
@@ -28,7 +28,6 @@ class App extends Component {
     }
 
     setItemPage = data => {
-        //TODO: this function is undefined, Use this.props.children to find payload from CardList!
         this.setState({
             item: data,
             route: 'itemPage'

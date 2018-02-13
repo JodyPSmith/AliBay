@@ -27,11 +27,12 @@ class AddListing extends Component {
     render() {
         var newListing = (
             <div>
-                <input ref={r => this.title = r} placeholder="Title" />
-                <input ref={r => this.price = r} placeholder="Price" type="number" min="0" step="0.01" />
-                <input ref={r => this.desc = r} placeholder="Description" />
-                <input ref={r => this.location = r} placeholder="Location" />
                 <Imageupload onImageDrop={this.onImageDrop} />
+                <input required ref={r => this.title = r} placeholder="Title" />
+                <input required ref={r => this.price = r} placeholder="Price" type="number" min="0" step="0.01" />
+                <input required ref={r => this.desc = r} placeholder="Description" />
+                <input ref={r => this.location = r} placeholder="Location" />
+                
                 <br/>
                 <button onClick={this.createListing}>Add Listing</button>
             </div>

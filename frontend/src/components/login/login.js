@@ -7,7 +7,12 @@ class Login extends Component {
     sendLogin = () => {
         let data = { "username": this.loginName.value, "password": this.loginPW.value }
         console.log(data)
-        fetch()
+        fetch('/login', {
+            method : "POST",
+            body : JSON.stringify(data)
+        })
+        .then(x => x.text())
+        .then(y => console.log(y))
     };
 
     render() {
