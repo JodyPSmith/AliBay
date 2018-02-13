@@ -8,7 +8,7 @@ import './App.css';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
-
+import { items } from './components/Card/fakeData';
 class App extends Component {
     constructor() {
         super();
@@ -20,15 +20,7 @@ class App extends Component {
             //needed to simulate url change, default is home
             route: 'itemPage',
             //needed to pass in data from specific item page
-            item: {
-                id: 1,
-                name: 'name',
-                price: 'PRICE',
-                image:
-                    'http://www.gadgetreview.com/wp-content/uploads/2016/01/Epson-Home-Cinema-2040-1.jpg',
-                desc:
-                    'Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu.'
-            }
+            item: items[0]
         };
     }
 
