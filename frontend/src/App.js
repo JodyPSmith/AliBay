@@ -8,17 +8,18 @@ import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
+import ConfirmationPage from './Containers/ConfirmationPage/ConfirmationPage';
 import { items } from './components/Card/fakeData';
 class App extends Component {
     constructor() {
         super();
         this.state = {
-            //checks to see if user is signed in
+            //needed to check if user is signed in
             isSignedIn: true,
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'home',
+            route: 'confirmationPage',
             //needed to pass in data from specific item page
             item: items[0]
         };
@@ -45,7 +46,9 @@ class App extends Component {
                 <Signup />
             </div>
         ) : route === 'itemPage' ? (
-            <ItemPage item={item} route={route} signedIn={isSignedIn} />
+            <ItemPage item={item} signedIn={isSignedIn} />
+        ) : route === 'confirmationPage' ? (
+            <ConfirmationPage item={item} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage signedIn={isSignedIn} />
