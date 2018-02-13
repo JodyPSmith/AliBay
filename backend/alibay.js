@@ -207,7 +207,7 @@ module.exports = {
   passMap,
   genUID,
   genPID,
-  signUP,
+  signUp,
   login,
   checkUsername,
   createListing,
