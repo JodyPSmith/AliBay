@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 import Signup from './components/signup/signup';
 // import Login from './components/login/login';
@@ -10,6 +9,8 @@ import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
 import ConfirmationPage from './Containers/ConfirmationPage/ConfirmationPage';
 import { items } from './components/Card/fakeData';
+import userMap from './placeholderData/user';
+
 class App extends Component {
     constructor() {
         super();
@@ -21,7 +22,8 @@ class App extends Component {
             //needed to simulate url change, default is home
             route: 'confirmationPage',
             //needed to pass in data from specific item page
-            item: items[0]
+            item: items[0],
+            user: userMap.test
         };
     }
 
@@ -35,19 +37,16 @@ class App extends Component {
 
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
-        const { isSignedIn, hasSearched, route, item } = this.state;
+        const { isSignedIn, hasSearched, route, item, user } = this.state;
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
-            <div className="App ">
-                {<HomePage signedIn={isSignedIn} route={route} />}
-                <AddListingPage />
-
-                <Signup />
-            </div>
-        ) : route === 'itemPage' ? (
+            <HomePage signedIn={isSignedIn} route={route} />
+        ) : /* <AddListingPage />
+                <Signup /> */ route ===
+        'itemPage' ? (
             <ItemPage item={item} signedIn={isSignedIn} />
         ) : route === 'confirmationPage' ? (
-            <ConfirmationPage item={item} signedIn={isSignedIn} />
+            <ConfirmationPage user={user} item={item} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage signedIn={isSignedIn} />
