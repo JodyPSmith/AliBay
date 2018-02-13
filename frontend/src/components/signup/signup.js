@@ -3,9 +3,22 @@ import React, { Component } from 'react';
 
 
 class Signup extends Component {
+    constructor () { 
+        super();
+        this.state ={}
+    }
+    
     signUp = () => {
         let data = { "username" : this.signupName.value, "password" : this.signupPW.value, "email" : this.signupEmail.value}
-        console.log(data);
+        this.signupPW.value === this.signupPWconf.value ? 
+        fetch('/signUp', {
+            method : "POST",
+            body : JSON.stringify(data)
+        })
+        .then(x => x.text())
+        .then(y => console.log(y))
+        : console.log("password mismatch");
+        
     }
     
     render() {
@@ -23,7 +36,7 @@ class Signup extends Component {
                     <input className="f4 dim pa2 w-60 center shadow-5 br1" id="signupPWconf" type="password" size="3" placeholder="Re-enter password here" ref={r => this.signupPWconf = r} />
 
                     <h2> Email Address </h2>
-                    <input className="f4 dim pa2 w-60 center shadow-5 br1" id="signupEmail" size="3" placeholder="Enter email address here" ref={r => this.signupEmail = r} />
+                    <input type="email" className="f4 dim pa2 w-60 center shadow-5 br1" id="signupEmail" size="3" placeholder="Enter email address here" ref={r => this.signupEmail = r} />
 
                     <br />
                     <button onClick={this.signUp} className="f4 dim pa2 w-20 center shadow-5 br1" id="signupPW" size="3">Sign Up</button>

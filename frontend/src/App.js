@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
-// import Signup from './components/signup/signup';
+import Signup from './components/signup/signup';
 // import Login from './components/login/login';
 // import LoginPage from './Containers/LoginPage/LoginPage';
 // import AddListingPage from './Containers/AddListingPage/AddListingPage';
@@ -46,21 +46,18 @@ class App extends Component {
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
             <div className="App ">
-                <HomePage route={route} signedIn={isSignedIn} />
+                {/* <Navigation signedIn={isSignedIn} />
+                <HomePage signedIn={isSignedIn} /> */}
+                <AddListingPage/>
+
+                <Signup/>
             </div>
         ) : route === 'itemPage' ? (
             <ItemPage item={item} route={route} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
-            <div>
-                {' '}
-                <SearchPage
-                    setItemPage={this.setItemPage}
-                    route={route}
-                    signedIn={isSignedIn}
-                />
-                {/* <AddListingPage /> */}
-            </div>
+            <SearchPage signedIn={isSignedIn} />
+            
         ) : null;
     }
 }
