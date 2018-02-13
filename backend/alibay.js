@@ -28,19 +28,19 @@ var passMap = {};
 // map that keeps track of all products
 var productsMap = {};
 
-// initialize maps from data file
-// try {
-//   console.log('Reading files...')
-//   itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
-//   itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
-//   userMap = JSON.parse(fs.readFileSync('userMap.txt'));
-//   passMap = JSON.parse(fs.readFileSync('passMap.txt'));
-//   productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
-// }
-// catch (err) {
-//   console.log('error encountered; data file probably not initialized')
-//   console.log(`error: ${err}`)
-// }
+//initialize maps from data file
+try {
+  console.log('Reading files...')
+  itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
+  itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
+  userMap = JSON.parse(fs.readFileSync('userMap.txt'));
+  passMap = JSON.parse(fs.readFileSync('passMap.txt'));
+  productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
+}
+catch (err) {
+  console.log('error encountered; data file probably not initialized')
+  console.log(`error: ${err}`)
+}
 
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
@@ -58,8 +58,9 @@ function genPID() {
 function signUp(fname, lname, username, pwd, email, address, city, province, pcode, country) {
   if (checkUsername(username)) {
     var userID = genUID();
-    var passHash = bcrypt.hash(pwd, 12);
+    var passHash = bcrypt.hashSync(pwd, 12);
     passMap[username] = passHash;
+    console.log(passMap)
     userMap[userID] =
       {
         first_name: fname,
