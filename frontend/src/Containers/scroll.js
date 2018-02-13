@@ -8,11 +8,12 @@ class Scroll extends Component {
         const { children } = this.props;
         return (
             <div
+                className="shadow-5"
                 id="scroll"
                 style={{
                     overflowY: 'scroll',
                     border: 'none',
-                    height: '75vh'
+                    height: '71vh'
                 }}
             >
                 {' '}

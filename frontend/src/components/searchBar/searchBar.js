@@ -12,17 +12,23 @@ class SearchBar extends Component {
                         //ie: search for "books", parent container will receive "books" and POST it to the server
 
                         onChange={onInputChange}
-                        className="f4 dim pa2 w-100 center shadow-5 br1"
+                        className="f4 dim pa2 w-100 center shadow-1 br1"
                         type="text"
                         style={{
-                            border: 'none'
+                            border: 'none',
+                            minWidth: '350px'
                         }}
                     />
                     <button
                         //this param, this.props.onSubmit will submit the input value from above
-                        onClick={onSubmit}
-                        className="  f4 link ph3 pv2 dib black bg-white shadow-5 ml1 dim br1 pointer"
-                        style={{ border: 'none', minWidth: '90px' }}
+                        onClick={() => console.log('hello')}
+                        className="  f4 link ph3 pv2 dib black bg-white   dim br1 pointer  "
+                        style={{
+                            border: 'none',
+                            position: 'relative',
+                            minWidth: '90px',
+                            marginLeft: '-89px'
+                        }}
                     >
                         Go
                     </button>

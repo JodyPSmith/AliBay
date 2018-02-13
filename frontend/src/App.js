@@ -3,8 +3,8 @@ import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 // import Signup from './components/signup/signup';
 // import Login from './components/login/login';
-import LoginPage from './Containers/LoginPage/LoginPage'
-import AddListingPage from './Containers/AddListingPage/AddListingPage'
+import LoginPage from './Containers/LoginPage/LoginPage';
+import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import Navigation from './components/Navigation/Navigation';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -19,7 +19,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'home'
+            route: ''
         };
     }
 
@@ -36,8 +36,11 @@ class App extends Component {
             <ItemPage />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
-            // <SearchPage signedIn={isSignedIn} />
-            <AddListingPage/>
+            <div>
+                {' '}
+                <SearchPage signedIn={isSignedIn} />
+                {/* <AddListingPage /> */}
+            </div>
         ) : null;
     }
 }

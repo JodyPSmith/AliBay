@@ -15,8 +15,8 @@ class HomePage extends Component {
                 <div className="center">
                     <img
                         style={{
-                            width: '40vw',
-                            maxWidth: '450px',
+                            width: '30vw',
+                            maxWidth: '400px',
                             height: 'auto'
                         }}
                         alt="logo"
@@ -25,7 +25,7 @@ class HomePage extends Component {
                 </div>{' '}
                 <div
                     style={{
-                        width: '40vw'
+                        width: '30vw'
                     }}
                     className="mt3 center"
                 >

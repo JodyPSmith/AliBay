@@ -12,7 +12,7 @@ class SearchPage extends Component {
 
     render() {
         return (
-            <div id="SearchPage">
+            <div>
                 {' '}
                 <div className="flex justify-between">
                     <InAppSearchBar />
@@ -20,7 +20,7 @@ class SearchPage extends Component {
                         see documentaion in Navigation component*/}
                     <Navigation signedIn={this.props.signedIn} />
                 </div>
-                <div className="mt5">
+                <div id="SearchPage" className="mt5">
                     <Scroll>
                         <CardList />
                     </Scroll>
