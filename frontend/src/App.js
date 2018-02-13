@@ -3,7 +3,8 @@ import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 // import Signup from './components/signup/signup';
 // import Login from './components/login/login';
-import LoginPage from './Containers/LoginPage/LoginPage';
+import LoginPage from './Containers/LoginPage/LoginPage'
+import AddListingPage from './Containers/AddListingPage/AddListingPage'
 import Navigation from './components/Navigation/Navigation';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -36,7 +37,7 @@ class App extends Component {
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             // <SearchPage signedIn={isSignedIn} />
-            <LoginPage />
+            <AddListingPage/>
         ) : null;
     }
 }

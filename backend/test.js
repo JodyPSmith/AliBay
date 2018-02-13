@@ -8,9 +8,9 @@ function test() {
     alibay.initializeUserIfNeeded(sellerID)
     alibay.initializeUserIfNeeded(buyerID)
 
-    let listing1ID = alibay.createListing(sellerID, 500000, "A very nice boat")
-    let listing2ID = alibay.createListing(sellerID, 1000, "Faux fur gloves")
-    let listing3ID = alibay.createListing(sellerID, 100, "Running shoes")
+    let listing1ID = alibay.createListing('Boat', sellerID, 500000, "A very nice boat")
+    let listing2ID = alibay.createListing('gloves', sellerID, 1000, "Faux fur gloves")
+    let listing3ID = alibay.createListing(`puma shoes 9.5 men's`, sellerID, 100, "Running shoes")
     let product2Description =  alibay.getItemDescription(listing2ID)
 
     alibay.buy(buyerID, sellerID, listing2ID)
