@@ -1,6 +1,6 @@
 const assert = require("assert");
 const fs = require("fs");
-
+const bcrypt = require('bcrypt')
 // map that keeps track of all the items a user has bought
 var itemsBought = {};
 
@@ -88,6 +88,24 @@ function getItemDescription(listingID) {
     price: productsMap[listingID].price
   };
   return obj;
+}
+
+function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
+  var userID = genUID();
+  var passHash = bcrypt.hash(pwd, 12);
+  userMap[userID] =
+    {
+      first_name: fname,
+      last_name: lname,
+      username: usr,
+      password: passHash,
+      email_address: email,
+      address: address,
+      city: city,
+      province: province,
+      postal_code: pcode,
+      country: country
+    };
 }
 
 /* 
