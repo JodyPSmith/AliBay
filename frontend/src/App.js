@@ -13,22 +13,22 @@ class App extends Component {
         this.state = {
             isSignedIn: true,
             hasSearched: true,
-            route: 'itemPage'
+            route: ''
         };
     }
 
     render() {
         const { isSignedIn, hasSearched, route } = this.state;
-        return !hasSearched ? (
+        return route === 'home' ? (
             <div className="App ">
                 <Navigation signedIn={isSignedIn} />
                 <HomePage signedIn={isSignedIn} />
             </div>
         ) : route === 'itemPage' ? (
             <ItemPage />
-        ) : (
+        ) : hasSearched ? (
             <SearchPage signedIn={isSignedIn} />
-        );
+        ) : null;
     }
 }
 

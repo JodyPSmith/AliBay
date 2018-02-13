@@ -5,12 +5,20 @@ class SearchBar extends Component {
         const { onInputChange, onSubmit } = this.props;
         return (
             <div className="flex flex-column justify-center  ">
-                <div className="center flex">
+                <div
+                    style={{
+                        width: '30vw'
+                    }}
+                    className="center flex"
+                >
                     <input
                         onChange={onInputChange}
-                        className="f4 dim pa2 w-100 center shadow-5 br1"
+                        className="f4 dim pa2  center shadow-5 br1"
                         type="text"
-                        style={{ border: 'none' }}
+                        style={{
+                            border: 'none',
+                            width: '100%'
+                        }}
                     />
                     <button
                         onClick={onSubmit}
