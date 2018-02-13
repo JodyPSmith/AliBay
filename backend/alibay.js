@@ -237,7 +237,6 @@ function searchForListings(searchTerm) {
 module.exports = {
   genUID, // This is just a shorthand. It's the same as genUID: genUID.
   genPID,
-  initializeUserIfNeeded,
   putItemsBought,
   getItemsBought,
   createListing,
