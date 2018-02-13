@@ -1,6 +1,8 @@
 const assert = require("assert");
 const fs = require("fs");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
+
+// Maps:
 // map that keeps track of all the items a user has bought
 var itemsBought = {};
 
@@ -17,6 +19,17 @@ var passMap = {};
 var productsMap = {};
 
 // initialize maps from data file
+try {
+  itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
+  itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
+  userMap = JSON.parse(fs.readFileSync('userMap.txt'));
+  passMap = JSON.parse(fs.readFileSync('passMap.txt'));
+  productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
+}
+catch (err) {
+  console.log('error encountered; data file probably not initialized')
+  console.log(`error: ${err}`)
+}
 
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
@@ -25,11 +38,39 @@ function genUID() {
   return Math.floor(Math.random() * 100000000);
 }
 
-function putItemsBought(userID, value) {
-  itemsBought[userID] = value;
-  itemsSold[userID] = value;
+function genPID() {
+  return `P${Math.floor(Math.random()*10000000)}`
 }
 
+function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
+  if (checkUsername(usr)) {
+    var userID = genUID();
+    var passHash = bcrypt.hash(pwd, 12);
+    passMap[usr] = passHash;
+    userMap[userID] =
+      {
+        first_name: fname,
+        last_name: lname,
+        username: usr,
+        email_address: email,
+        address: address,
+        city: city,
+        province: province,
+        postal_code: pcode,
+        country: country
+      }
+      fs.writeFileSync('userMap.txt', JSON.stringify(userMap));
+      fs.writeFileSync('passMap.txt', JSON.stringify(passMap));
+    console.log(`${userID} user created`)
+    return true;
+  } else {
+    return false;
+  }
+
+}
+
+/*don't think we need this anymore because of signup:
+--------------------------------------------------------------------------------
 function getItemsBought(userID) {
   var ret = itemsBought[userID];
   if (ret == undefined) {
@@ -38,17 +79,24 @@ function getItemsBought(userID) {
   return ret;
 }
 
-/*
+function putItemsBought(userID, value) {
+  itemsBought[userID] = value;
+  itemsSold[userID] = value;
+  //write to file
+}
+
 initializeUserIfNeeded adds the UID to our database unless it's already there
 parameter: [uid] the UID of the user.
 returns: undefined
-*/
+
 function initializeUserIfNeeded(uid) {
   var items = getItemsBought[uid];
   if (items == undefined) {
     putItemsBought(uid, []);
   }
 }
+--------------------------------------------------------------------------------
+*/
 
 /*
 allItemsBought returns the IDs of all the items bought by a buyer
@@ -69,7 +117,7 @@ This function is incomplete. You need to complete it.
     returns: The ID of the new listing
 */
 function createListing(title, sellerID, price, blurb) {
-  var pID = genUID();
+  var pID = genPID();
   productsMap[pID] = {
     title: title,
     sellerID: sellerID,
@@ -77,6 +125,7 @@ function createListing(title, sellerID, price, blurb) {
     description: blurb,
     isSold: false
   };
+  fs.writeFileSync('productsMap.txt', JSON.stringify(productsMap));
   return pID;
 }
 
@@ -86,11 +135,11 @@ getItemDescription returns the description of a listing
     returns: An object containing the price and blurb properties.
 */
 function getItemDescription(listingID) {
-  var obj = {
+  var itemDesc = {
     description: productsMap[listingID].description,
     price: productsMap[listingID].price
   };
-  return obj;
+  return itemDesc;
 }
 
 function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
@@ -143,6 +192,10 @@ function buy(buyerID, sellerID, listingID) {
   itemsBought[buyerID].push(listingID);
   itemsSold[sellerID].push(listingID);
   productsMap[listingID].isSold = true;
+  
+  fs.writeFileSync('itemsBought.txt', JSON.stringify(itemsBought))
+  fs.writeFileSync('itemsSold.txt', JSON.stringify(itemsSold))
+  fs.writeFileSync('productsMap.txt', JSON.stringify(productsMap))
 }
 
 /* 
@@ -183,6 +236,7 @@ function searchForListings(searchTerm) {
 
 module.exports = {
   genUID, // This is just a shorthand. It's the same as genUID: genUID.
+  genPID,
   initializeUserIfNeeded,
   putItemsBought,
   getItemsBought,
