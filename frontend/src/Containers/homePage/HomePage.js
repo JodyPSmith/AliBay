@@ -7,14 +7,28 @@ class HomePage extends Component {
         const { signedIn } = this.props;
         return (
             <div
+                className=""
                 style={{
                     marginTop: '20vh'
                 }}
             >
-                <div className="">
-                    <img alt="logo" src={logo} />
+                <div className="center">
+                    <img
+                        style={{
+                            width: '40vw',
+                            maxWidth: '500px',
+                            height: 'auto'
+                        }}
+                        alt="logo"
+                        src={logo}
+                    />
                 </div>{' '}
-                <div className="mt3">
+                <div
+                    style={{
+                        width: '40vw'
+                    }}
+                    className="mt3 center"
+                >
                     <SearchBar onChange={''} />
                     {signedIn ? (
                         <p className="dim pointer f4">Selling an item?</p>

@@ -6,22 +6,16 @@ class SearchBar extends Component {
         const { onInputChange, onSubmit } = this.props;
         return (
             <div className="flex flex-column justify-center  ">
-                <div
-                    style={{
-                        width: '30vw'
-                    }}
-                    className="center flex"
-                >
+                <div className="center flex justify-center w-100">
                     <input
                         //this param, this.props.onInputChange will detect the input value, and be used to pass it to the fetch query in the parent container
                         //ie: search for "books", parent container will receive "books" and POST it to the server
 
                         onChange={onInputChange}
-                        className="f4 dim pa2  center shadow-5 br1"
+                        className="f4 dim pa2 w-100 center shadow-5 br1"
                         type="text"
                         style={{
-                            border: 'none',
-                            width: '100%'
+                            border: 'none'
                         }}
                     />
                     <button

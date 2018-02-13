@@ -17,7 +17,7 @@ class App extends Component {
             isSignedIn: true,
             //placeholder to simulate searching
             hasSearched: true,
-            //needed to simulate url change default is home
+            //needed to simulate url change, default is home
             route: 'home'
         };
     }
