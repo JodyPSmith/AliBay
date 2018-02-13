@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 // import Dashboard from './components/dashboard/dashboard';
 import Signup from './components/signup/signup';
-// import Login from './components/login/login';
+import Login from './components/login/login';
 // import LoginPage from './Containers/LoginPage/LoginPage';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
@@ -19,7 +19,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'confirmationPage',
+            route: 'home',
             //needed to pass in data from specific item page
             item: items[0]
         };
@@ -41,7 +41,7 @@ class App extends Component {
             <div className="App ">
                 {<HomePage signedIn={isSignedIn} route={route} />}
                 <AddListingPage />
-
+                <Login/>
                 <Signup />
             </div>
         ) : route === 'itemPage' ? (
