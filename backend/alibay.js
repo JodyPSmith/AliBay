@@ -1,6 +1,6 @@
 const assert = require("assert");
 const fs = require("fs");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 // map that keeps track of all the items a user has bought
 var itemsBought = {};
 
@@ -96,7 +96,8 @@ function getItemDescription(listingID) {
 function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, country) {
   if (checkUsername(usr)) {
     var userID = genUID();
-    var passHash = bcrypt.hash(pwd, 12);
+    console.log(pwd)
+    var passHash = bcrypt.hashSync(pwd, 12);
     passMap[usr] = passHash;
     userMap[userID] =
       {
@@ -110,11 +111,12 @@ function signUp(fname, lname, usr, pwd, email, address, city, province, pcode, c
         postal_code: pcode,
         country: country
       }
+      console.log(passMap[usr])
     return true;
   } else {
     return false;
   }
-
+  
 }
 
 function checkUsername(username) {
@@ -190,6 +192,7 @@ module.exports = {
   getItemDescription,
   allItemsBought,
   allListings,
-  searchForListings
+  searchForListings,
+  signUp
   // Add all the other functions that need to be exported
 };

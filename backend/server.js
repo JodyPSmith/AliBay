@@ -23,7 +23,7 @@ app.post('/createListing', (req, res) => { // takes a JSON object in body, with 
     let sellerID = request.sellerID;
     let price = request.price;
     let desc = request.description;
-    res.send('your product ID is: '+alibay.createListing(title, sellerID, price, desc));
+    res.send('your product ID is: ' + alibay.createListing(title, sellerID, price, desc));
 })
 
 app.post('/buy', (req, res) => { // takes a JSON object in body, with buyerID, sellerID, listingID ***Returns UNDEFINED***
@@ -51,7 +51,27 @@ app.get('/itemDescription', (req, res) => { // Returns object with price and blu
     res.send(JSON.stringify(description))
 })
 
-app.post('/itemsSold', (req,res) => { // takes single string in body, returns arrray of listing IDs
+app.post('/signUp', (req, res) => {
+    let request = JSON.parse(req.body.toString());
+    let fname = request.firstname;
+    let lname = request.lastname;
+    let usr = request.username;
+    let pwd = request.password;
+    let email = request.email;
+    let address = request.address;
+    let city = request.city;
+    let province = request.province;
+    let postal_code = request.postal_code;
+    let country = request.country;
+
+    if (alibay.signUp(fname, lname, usr, pwd, email, address, city, province, postal_code, country)) {
+        res.send('signup success');
+    } else {
+        res.send('signup failed')
+    }
+})
+
+app.post('/itemsSold', (req, res) => { // takes single string in body, returns arrray of listing IDs
     res.send(JSON.stringify(alibay.allItemsSold(req.body.toString())));
 })
 
