@@ -6,7 +6,7 @@ import miniLogo from '../../images/mini.png';
 class InAppSearchBar extends Component {
     render() {
         return (
-            <div className="flex">
+            <div className="flex w-50 ">
                 <img
                     src={miniLogo}
                     alt="logo"

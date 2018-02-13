@@ -5,7 +5,7 @@ class SearchBar extends Component {
         //object destructuring to save keystrokes -> ties params inside curly braces to this.props
         const { onInputChange, onSubmit } = this.props;
         return (
-            <div className="flex flex-column justify-center  ">
+            <div className="flex flex-column justify-center w-100 ">
                 <div className="center flex justify-center w-100">
                     <input
                         //this param, this.props.onInputChange will detect the input value, and be used to pass it to the fetch query in the parent container

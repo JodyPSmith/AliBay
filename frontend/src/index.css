@@ -7,3 +7,7 @@ body {
 .itemList {
     display: 'flex';
 }
+
+#Nav {
+    background: lightgray;
+}

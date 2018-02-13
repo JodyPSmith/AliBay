@@ -15,10 +15,12 @@ class SearchPage extends Component {
             <div>
                 {' '}
                 <div className="flex justify-between">
-                    <InAppSearchBar />
                     {/* this prop will check if the state in the parent container, isSignedIn, is true or false
                         see documentaion in Navigation component*/}
-                    <Navigation signedIn={this.props.signedIn} />
+                    <Navigation
+                        route={this.props.route}
+                        signedIn={this.props.signedIn}
+                    />
                 </div>
                 <div id="SearchPage" className="mt5">
                     <Scroll>

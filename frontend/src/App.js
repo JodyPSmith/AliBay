@@ -5,7 +5,6 @@ import './App.css';
 // import Login from './components/login/login';
 import LoginPage from './Containers/LoginPage/LoginPage';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
-import Navigation from './components/Navigation/Navigation';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
@@ -19,26 +18,25 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: ''
+            route: 'itemPage'
         };
     }
 
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, hasSearched, route } = this.state;
-        //ternary operator to check what route the page is one... default is home
+        //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
             <div className="App ">
-                <Navigation signedIn={isSignedIn} />
-                <HomePage signedIn={isSignedIn} />
+                <HomePage route={route} signedIn={isSignedIn} />
             </div>
         ) : route === 'itemPage' ? (
-            <ItemPage />
+            <ItemPage route={route} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <div>
                 {' '}
-                <SearchPage signedIn={isSignedIn} />
+                <SearchPage route={route} signedIn={isSignedIn} />
                 {/* <AddListingPage /> */}
             </div>
         ) : null;
