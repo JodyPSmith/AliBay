@@ -5,8 +5,15 @@ var app = express();
 
 var cookieMap = {};
 
+var generateCookie = () => {
+    let sessionID = Math.floor(Math.random()*10000);
+    if (cookieMap[sessionID]) {return generateCookie()} //if sessionID exists, re-generate sessionID
+    else return sessionID;
+}
+
 app.use(bodyParser.raw({ type: '*/*' }))
 
+//should change this
 app.get('/', (req, res) => { // returns a userID as string
     var x = alibay.genUID();
     res.send("" + x)
@@ -15,11 +22,13 @@ app.get('/', (req, res) => { // returns a userID as string
 app.post('/login', (req, res) => {
     let payload = JSON.parse(req.body.toString());
     let username = payload.username;
-    let pass = payload.password;
-    if (alibay.login(username, pass)) {
-        res.set('Set-Cookie', "sessionId=5555")
+    let password = payload.password;
+    if (alibay.login(username, password)) {
+        let sessionID = generateCookie();
+        res.set('Set-Cookie', "sessionId="+sessionID)
         res.send('login success');
-    } else {
+    }
+    else {
         res.send('user or pass invalid')
     }
 })
