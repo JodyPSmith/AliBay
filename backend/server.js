@@ -46,7 +46,9 @@ app.get('/itemsBought', (req, res) => { // takes userID in query, returns array 
 
 app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, sellerID, price, desc, and returns productID string
     let request = JSON.parse(req.body);
-    console.log(JSON.parse(req.body))
+    //console.log(JSON.parse(req.body))
+    console.log(request.images[0].preview)
+    var image1 = request.images[0].preview
     let title = request.title;
     let sellerID = request.sellerID;
     let price = request.price;
