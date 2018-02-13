@@ -23,7 +23,7 @@ class SearchPage extends Component {
                 </div>
                 <div id="SearchPage" className="mt5">
                     <Scroll>
-                        <CardList />
+                        <CardList renderItemPage={this.props.renderItemPage} />
                     </Scroll>
                 </div>
             </div>

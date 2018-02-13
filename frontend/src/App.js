@@ -18,25 +18,36 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: ''
+            route: '',
+            //need to pass in data from specific item page
+            item: {}
         };
     }
 
+    renderItemPage = data => {
+        //TODO: this function is undefined, find out how to get payload from CardList component to App.js
+        this.setState({ item: this.props.item });
+    };
+
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
-        const { isSignedIn, hasSearched, route } = this.state;
+        const { isSignedIn, hasSearched, route, item } = this.state;
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
             <div className="App ">
                 <HomePage route={route} signedIn={isSignedIn} />
             </div>
         ) : route === 'itemPage' ? (
-            <ItemPage route={route} signedIn={isSignedIn} />
+            <ItemPage item={item} route={route} signedIn={isSignedIn} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <div>
                 {' '}
-                <SearchPage route={route} signedIn={isSignedIn} />
+                <SearchPage
+                    renderItemPage={this.renderItemPage}
+                    route={route}
+                    signedIn={isSignedIn}
+                />
                 {/* <AddListingPage /> */}
             </div>
         ) : null;

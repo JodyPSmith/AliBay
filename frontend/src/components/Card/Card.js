@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 class Card extends Component {
     render() {
         return (
-            <div className="tc dib br3 pa3 ma2 dim bw2 shadow-5 pointer">
+            <div
+                onClick={this.props.renderItemPage}
+                className="tc dib br3 pa3 ma2 dim bw2 shadow-5 pointer"
+            >
                 <img
                     style={{
                         maxWidth: '15vw',

@@ -17,7 +17,13 @@ class CardList extends Component {
                 {items.map((item, index) => {
                     //use map array method to iterate through each index of the items map
                     //items will be fetched through the server, now it is fetched from a fakeData object. See line 3
-                    return <Card key={items[index].id} item={items[index]} />;
+                    return (
+                        <Card
+                            renderItemPage={this.props.renderItemPage}
+                            key={items[index].id}
+                            item={items[index]}
+                        />
+                    );
                 })}
             </div>
         );
