@@ -64,7 +64,6 @@ This function is incomplete. You need to complete it.
 function createListing(sellerID, price, blurb) {
     var pID = genUID();
     productsMap[pID] = { sellerID: sellerID, price: price, description: blurb, isSold: false };
-    // console.log(`listing created: ${pID}`)
     return pID;
 }
 
@@ -91,7 +90,6 @@ The seller will see the listing in his history of items sold
     returns: undefined
 */
 function buy(buyerID, sellerID, listingID) {
-
     itemsBought[buyerID].push(listingID);
     itemsSold[sellerID].push(listingID);
     productsMap[listingID].isSold = true;
@@ -114,7 +112,7 @@ Once an item is sold, it will not be returned by allListings
 */
 function allListings() {
     let productIds = Object.keys(productsMap); // array of all productIds in map
-    return productIds.filter(x => !productsMap[x].isSold) // for each, check if isSold, then push
+    return productIds.filter(x => !productsMap[x].isSold) // return new array with all products where isSold == true
 }
 
 /*

@@ -5,47 +5,42 @@ var app = express();
 
 app.use(bodyParser.raw({ type: '*/*' }))
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { // returns a userID as string
     var x = alibay.genUID();
     res.send("" + x)
 })
 
-app.get('/itemsBought', (req, res) => {
+app.get('/itemsBought', (req, res) => { // takes userID in query, returns array of all items bought buy the user
     let uid = req.query.uid;
     res.send(JSON.stringify(alibay.getItemsBought(uid)));
 });
 
-app.post('/createListing', (req, res) => {
-    let request = JSON.parse(req.body.toString());
+app.post('/createListing', (req, res) => { // takes a JSON object in body, with sellerID, price, desc, and returns productID string
+    let request = JSON.parse(req.body);
     let sellerID = request.sellerID;
     let price = request.price;
     let desc = request.description;
-    alibay.createListing(sellerID, price, desc);
-    res.send('success');
+    res.send('your product ID is: '+alibay.createListing(sellerID, price, desc));
 })
 
-app.post('/buy', (req, res) => {
+app.post('/buy', (req, res) => { // takes a JSON object in body, with buyerID, sellerID, listingID ***Returns UNDEFINED***
     let request = JSON.parse(req.body.toString());
     let buyerID = request.buyerID;
     let sellerID = request.sellerID;
     let listingID = request.listingID;
     alibay.buy(buyerID, sellerID, listingID);
     res.send('success')
-
 })
 
-app.get('/allListings', (req, res) => {
+app.get('/allListings', (req, res) => { // returns an array with all listings where isSold === true
     res.send(JSON.stringify(alibay.allListings()));
 })
 
-app.post('/search', (req, res) => {
+app.post('/search', (req, res) => { // returns new array where description includes search term ***To be optimized later***
     let request = JSON.parse(req.body.toString());
     let searchTerm = request.searchTerm;
     let results = alibay.searchForListings(searchTerm);
-    if (results === []) {
-        res.send('fail')
-    } else {
-        res.send('success')
+    res.send(JSON.stringify(results)) // return the array (could be empty) to be processed in front-end
     }
 })
 app.get('/itemDescription', (req, res) => { // Returns object with price and blurb
