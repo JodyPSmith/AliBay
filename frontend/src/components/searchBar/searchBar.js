@@ -12,7 +12,7 @@ class SearchBar extends Component {
                         //ie: search for "books", parent container will receive "books" and POST it to the server
 
                         onChange={onInputChange}
-                        className="f4 dim pa2 w-100 center shadow-1 br1"
+                        className="f4 dim pa2 w-100 center shadow-1 br2"
                         type="text"
                         style={{
                             border: 'none',
@@ -22,12 +22,18 @@ class SearchBar extends Component {
                     <button
                         //this param, this.props.onSubmit will submit the input value from above
                         onClick={onSubmit}
-                        className="  f4 link ph3 pv2 dib black bg-white   dim br1 pointer  "
+                        className="f4 link ph3 pv2 dib black bg-white dim pointer flex justify-center self-center "
                         style={{
-                            border: 'none',
+                            // border: 'none',
+                            height: '22px',
+                            borderBottom: 'none',
+                            borderRight: 'none',
+                            borderTop: 'none',
+                            borderLeft: '1px solid #dddddd',
                             position: 'relative',
                             minWidth: '90px',
-                            marginLeft: '-89px'
+                            marginLeft: '-91px',
+                            lineHeight: '5px'
                         }}
                     >
                         Go

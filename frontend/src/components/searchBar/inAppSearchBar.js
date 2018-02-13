@@ -13,7 +13,7 @@ class InAppSearchBar extends Component {
                         maxWidth: 'auto',
                         maxHeight: '40px',
                         marginTop: '2vh',
-                        marginRight: '2vw',
+                        marginRight: '1vw',
                         marginLeft: '2vw'
                     }}
                 />
