@@ -10,7 +10,17 @@ var itemsBought = {};
 var itemsSold = {};
 
 // map that keeps track of user information
-var userMap = {};
+var userMap = {test:       {
+  first_name: 'fname',
+  last_name: 'lname',
+  username: 'username',
+  email_address: 'email',
+  address: 'address',
+  city: 'city',
+  province: 'province',
+  postal_code: 'pcode',
+  country: 'country'
+}};
 
 //map that keeps track of passwords
 var passMap = {};
@@ -19,18 +29,18 @@ var passMap = {};
 var productsMap = {};
 
 // initialize maps from data file
-try {
-  console.log('Reading files...')
-  itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
-  itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
-  userMap = JSON.parse(fs.readFileSync('userMap.txt'));
-  passMap = JSON.parse(fs.readFileSync('passMap.txt'));
-  productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
-}
-catch (err) {
-  console.log('error encountered; data file probably not initialized')
-  console.log(`error: ${err}`)
-}
+// try {
+//   console.log('Reading files...')
+//   itemsBought = JSON.parse(fs.readFileSync('itemsBought.txt'));
+//   itemsSold = JSON.parse(fs.readFileSync('itemsSold.txt'));
+//   userMap = JSON.parse(fs.readFileSync('userMap.txt'));
+//   passMap = JSON.parse(fs.readFileSync('passMap.txt'));
+//   productsMap = JSON.parse(fs.readFileSync('productsMap.txt'));
+// }
+// catch (err) {
+//   console.log('error encountered; data file probably not initialized')
+//   console.log(`error: ${err}`)
+// }
 
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
@@ -73,11 +83,10 @@ function signUp(fname, lname, username, pwd, email, address, city, province, pco
   } else {
     return false;
   }
-
 }
 
 function login(username, password) {
-  if (password !== undefined && bcrypt.compareSync(password, passMap[username])) {
+  if (bcrypt.compareSync(password, passMap[username])) {
     return true;
   } else {
     return false;
@@ -90,6 +99,13 @@ function checkUsername(username) {
   } else {
     return false;
   }
+}
+
+function getUserID(username) { //takes username and searches all userIDs for a matching username, then returns userID
+  let allUserIDs = Object.keys(userMap);
+  var ret;
+  allUserIDs.forEach(x => {if (username == userMap[x].username) ret = x})
+  return ret;
 }
 
 //Functions that write to file
@@ -207,9 +223,10 @@ module.exports = {
   passMap,
   genUID,
   genPID,
-  signUP,
+  signUp,
   login,
   checkUsername,
+  getUserID,
   createListing,
   buy,
   allItemsBought,

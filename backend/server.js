@@ -1,9 +1,13 @@
 const alibay = require('./alibay');
 const bodyParser = require('body-parser');
-var express = require('express');
-var app = express();
+const fs = require('fs');
+const express = require('express');
+const app = express();
 
 var cookieMap = {};
+
+try {cookieMap = fs.readFileSync('cookieMap.txt')}
+catch(err) {console.log('cookieMap.txt not found')}
 
 var generateCookie = () => {
     let sessionID = Math.floor(Math.random()*10000);
@@ -25,16 +29,15 @@ app.post('/login', (req, res) => { // takes object with username & password, att
     let password = payload.password;
     if (alibay.login(username, password)) {
         let sessionID = generateCookie();
-        cookieMap[sessionID] = 
-        res.set('Set-Cookie', "sessionID="+sessionID)
+        cookieMap[sessionID] = alibay.getUserID(username);
+        fs.writeFileSync('cookieMap.txt', JSON.stringify(cookieMap));
+        res.set('Set-Cookie', "sessionID="+sessionID);
         res.send(JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
     }
     else {
         res.send(JSON.stringify({res: false})) //if failed login, send JSON object with sessionID false
     }
 })
-
-
 
 app.get('/itemsBought', (req, res) => { // takes userID in query, returns array of all items bought buy the user
     let uid = req.query.uid;
@@ -95,8 +98,6 @@ app.post('/signUp', (req, res) => {
         res.send('signup failed')
     }
 })
-
-
 
 app.post('/itemsSold', (req, res) => { // takes single string in body, returns arrray of listing IDs
     res.send(JSON.stringify(alibay.allItemsSold(req.body.toString())));
