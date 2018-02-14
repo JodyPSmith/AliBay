@@ -37,7 +37,9 @@ class Navigation extends Component {
                     >
                         Dashboard
                     </p>
-                    <Testing click={click} />
+                    <div className="ma3 mr4 mt4 ml0">
+                        <Testing click={click} />
+                    </div>
                 </nav>
             </div>
         );
