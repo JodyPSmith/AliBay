@@ -9,7 +9,8 @@ class Login extends Component {
         console.log(data)
         fetch('/login', {
             method : "POST",
-            body : JSON.stringify(data)
+            body : JSON.stringify(data),
+            credentials : "include"
         })
         .then(x => x.text())
         .then(y => console.log(y))
