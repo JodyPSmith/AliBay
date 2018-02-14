@@ -41,7 +41,7 @@ class HomePage extends Component {
                         <SearchBar onChange={''} />
                         {!signedIn || (
                             <div className="mt3 flex justify-center">
-                                <a className="dim pointer f4 mr3 ">
+                                <a onClick={() => setRoute('AddListingPage')} className="dim pointer f4 mr3 ">
                                     Selling an item?
                                 </a>
                             </div>

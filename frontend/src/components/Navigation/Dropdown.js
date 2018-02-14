@@ -40,9 +40,15 @@ class Dropdown extends Component {
                     </a>
                     <a
                         className="pointer dim"
-                        onClick={() => setRoute('testing')}
+                        onClick={() => setRoute('AddListingPage')}
                     >
-                        Testing Page
+                        Add Listing
+                    </a>
+                    <a className="pointer dim" onClick={() => setRoute('SignupPage')}>
+                        Signup
+                    </a>
+                    <a className="pointer dim" onClick={() => setRoute('LoginPage')}>
+                        Login
                     </a>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Dashboard from './components/dashboard/dashboard';
-import Signup from './components/signup/signup';
-import Login from './components/login/login';
+import SignupPage from './Containers/SignupPage/SignupPage';
+import LoginPage from './Containers/LoginPage/LoginPage';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -37,7 +37,7 @@ class App extends Component {
     };
     componentDidMount() {
         // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (!event.target.matches('.dropbtn')) {
                 var dropdowns = document.getElementsByClassName(
                     'dropdown-content'
@@ -76,14 +76,12 @@ class App extends Component {
                 signedIn={isSignedIn}
                 setRoute={this.setRoute}
             />
-        ) : route ===
-        'testing' ? (
-            <div>
-                
-            <AddListingPage/>
-            <Login/>
-            <Signup/>
-            </div>
+        ) : route === 'SignupPage' ? (
+                    <SignupPage setRoute={this.setRoute} />
+        ) : route === 'LoginPage' ? (
+                    <LoginPage setRoute={this.setRoute}/>
+        ) : route === 'AddListingPage' ? (
+                    <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute}/>
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage
