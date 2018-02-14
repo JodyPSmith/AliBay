@@ -5,7 +5,7 @@ import './dropdown.css';
 
 class Navigation extends Component {
     render() {
-        const { signedIn, route, click } = this.props;
+        const { signedIn, route, setRoute } = this.props;
         //needed ternary operator to change css depending on route
         //otherwise the nav would appear on the wrong side
         const css =
@@ -17,7 +17,7 @@ class Navigation extends Component {
         return !signedIn ? (
             <div className={css}>
                 {/* this binary operator will display nothing if the route is at the homepage, or the inAppSearch bar if it isnt */}
-                {route === 'home' || <InAppSearchBar click={click} />}
+                {route === 'home' || <InAppSearchBar setRoute={setRoute} />}
                 <nav className="flex justify-end">
                     <p
                         onClick={''}
@@ -29,10 +29,10 @@ class Navigation extends Component {
             </div>
         ) : (
             <div className={css}>
-                {route === 'home' || <InAppSearchBar click={click} />}
+                {route === 'home' || <InAppSearchBar setRoute={setRoute} />}
                 <nav className="flex justify-end">
                     <div className="ma3 mr5 mt4 ml0">
-                        <Dropdown click={click} />
+                        <Dropdown setRoute={setRoute} />
                     </div>
                 </nav>
             </div>
