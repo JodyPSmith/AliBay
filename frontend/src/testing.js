@@ -23,6 +23,12 @@ class Testing extends Component {
                     <a className="pointer dim" onClick={() => click('home')}>
                         Home
                     </a>
+                    <a
+                        className="pointer dim"
+                        onClick={() => click('dashboard')}
+                    >
+                        Dashboard
+                    </a>
                     <a className="pointer dim" onClick={() => click('')}>
                         Search Page
                     </a>
