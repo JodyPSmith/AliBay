@@ -5,10 +5,10 @@ import React, { Component } from 'react';
 
 class Scroll extends Component {
     render() {
-        const { children, height } = this.props;
+        const { children, height = '85vh', shadow = 'shadow-1' } = this.props;
         return (
             <div
-                className="shadow-5"
+                className={shadow}
                 id="scroll"
                 style={{
                     overflowY: 'scroll',

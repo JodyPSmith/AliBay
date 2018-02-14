@@ -51,6 +51,9 @@ app.post('/createListing', (req, res) => { // takes a JSON object in body, with 
     let sellerID = cookieMap[sessionID];
     
     let request = JSON.parse(req.body);
+    console.log(JSON.parse(req.body))
+    console.log(request.images[0].preview)
+    var image1 = request.images[0].preview
     let title = request.title;
     let price = request.price;
     let desc = request.description;

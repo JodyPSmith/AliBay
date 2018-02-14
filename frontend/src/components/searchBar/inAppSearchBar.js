@@ -7,6 +7,7 @@ class InAppSearchBar extends Component {
         return (
             <div className="flex w-50 ">
                 <img
+                    className="pointer dim"
                     src={miniLogo}
                     alt="logo"
                     style={{
