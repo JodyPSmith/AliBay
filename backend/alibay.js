@@ -70,31 +70,6 @@ function signUp(
   country
 ) {
   if (checkUsername(username)) {
-<<<<<<< HEAD
-    var userID = genUID();
-    var passHash = bcrypt.hashSync(pwd, 12);
-    passMap[username] = passHash;
-    console.log(passMap)
-    userMap[userID] =
-      {
-        first_name: fname,
-        last_name: lname,
-        username: username,
-        email_address: email,
-        address: address,
-        city: city,
-        province: province,
-        postal_code: pcode,
-        country: country
-      }
-      itemsBought[userID] = [];
-      itemsSold[userID] = [];
-      fs.writeFileSync('itemsBought.txt', JSON.stringify(itemsBought));
-      fs.writeFileSync('itemsSold.txt', JSON.stringify(itemsSold));
-      fs.writeFileSync('userMap.txt', JSON.stringify(userMap));
-      fs.writeFileSync('passMap.txt', JSON.stringify(passMap));
-    console.log(`${userID} user created`)
-=======
     let userID = genUID();
     let passHash = bcrypt.hashSync(pwd, 12);
     passMap[username] = passHash;
@@ -116,7 +91,6 @@ function signUp(
     fs.writeFileSync("./datafiles/userMap.txt", JSON.stringify(userMap));
     fs.writeFileSync("./datafiles/passMap.txt", JSON.stringify(passMap));
     console.log(`${userID} user created`);
->>>>>>> fa92df0545b16a4c0400169a150fbce803b47586
     return true;
   } else {
     return false;
