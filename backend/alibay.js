@@ -33,15 +33,15 @@ let productsMap = {};
 // initialize maps from data file
 try {
   console.log('Reading files...')
-  itemsBought = JSON.parse(fs.readFileSync('./datafiles/Bought.txt'));
-  itemsSold = JSON.parse(fs.readFileSync('./datafiles/itemsSold.txt'));
-  userMap = JSON.parse(fs.readFileSync('./datafiles/userMap.txt'));
-  passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
-  productsMap = JSON.parse(fs.readFileSync('./datafiles/productsMap.txt'));
+  itemsBought = JSON.parse(fs.readFileSync('./backend/datafiles/itemsBought.txt'));
+  itemsSold = JSON.parse(fs.readFileSync('./backend/datafiles/itemsSold.txt'));
+  userMap = JSON.parse(fs.readFileSync('./backend/datafiles/userMap.txt'));
+  passMap = JSON.parse(fs.readFileSync('./backend/datafiles/passMap.txt'));
+  productsMap = JSON.parse(fs.readFileSync('./backend/datafiles/productsMap.txt'));
 }
 catch (err) {
-  console.log('error encountered; data file probably not initialized')
-  console.log(`error: ${err}`)
+  console.log('error encountered; data file probably not initialized:')
+  console.log(`${err}`)
 }
 
 /*
@@ -86,27 +86,24 @@ function signUp(
     };
     itemsBought[userID] = [];
     itemsSold[userID] = [];
-    fs.writeFileSync("./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
-    fs.writeFileSync("./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
-    fs.writeFileSync("./datafiles/userMap.txt", JSON.stringify(userMap));
-    fs.writeFileSync("./datafiles/passMap.txt", JSON.stringify(passMap));
+    fs.writeFileSync("./backend/./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+    fs.writeFileSync("./backend/./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+    fs.writeFileSync("./backend/./datafiles/userMap.txt", JSON.stringify(userMap));
+    fs.writeFileSync("./backend/./datafiles/passMap.txt", JSON.stringify(passMap));
     console.log(`${userID} user created`);
     return true;
   } else {
+    console.log('check username failed')
     return false;
   }
 }
 
 function login(username, password) {
-  if (bcrypt.compareSync(password, passMap[username])) {
-    return true;
-  } else {
-    return false;
-  }
+  return bcrypt.compareSync(password, passMap[username])
 }
 
 function checkUsername(username) {
-  if (passMap[username] === undefined) {
+  if (!passMap[username]) {
     return true;
   } else {
     return false;
@@ -118,7 +115,7 @@ function getUserID(username) {
   let allUserIDs = Object.keys(userMap);
   let ret;
   allUserIDs.forEach(x => {
-    if (username == userMap[x].username) ret = x;
+    if (username == userMap[x].username) {ret = x;}
   });
   return ret;
 }
@@ -143,7 +140,7 @@ function createListing(title, sellerID, price, desc) {
     description: desc,
     isSold: false
   };
-  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
+  fs.writeFileSync("./backend/./datafiles/productsMap.txt", JSON.stringify(productsMap));
   return pID;
 }
 
@@ -164,9 +161,9 @@ function buy(buyerID, sellerID, listingID) {
   itemsSold[sellerID].push(listingID);
   productsMap[listingID].isSold = true;
 
-  fs.writeFileSync("./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
-  fs.writeFileSync("./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
-  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
+  fs.writeFileSync("./backend/./datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+  fs.writeFileSync("./backend/./datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+  fs.writeFileSync("./backend/./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
 //Search/return functions
