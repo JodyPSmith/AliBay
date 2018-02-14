@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import modalCss from '../../modalcss';
+import modalCss from './modalcss';
 import LoginPage from '../../Containers/LoginPage/LoginPage';
 
 class Dropdown extends Component {
