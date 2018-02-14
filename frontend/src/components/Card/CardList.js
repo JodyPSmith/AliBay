@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './Card';
+import { Link } from 'react-router-dom';
 
 class CardList extends Component {
     render() {
@@ -17,13 +18,18 @@ class CardList extends Component {
                     //use map array method to iterate through each index of the items map
                     //items will be fetched through the server, now it is fetched from a fakeData object. See line 3
                     return (
-                        <Card
-                            onClick={() => {
-                                setItemPage(item);
-                            }}
-                            key={index}
-                            item={item}
-                        />
+                        <Link
+                            className="hover-orange visited"
+                            to={`/item:${item.id}`}
+                        >
+                            <Card
+                                onClick={() => {
+                                    setItemPage(item);
+                                }}
+                                key={index}
+                                item={item}
+                            />
+                        </Link>
                     );
                 })}
             </div>

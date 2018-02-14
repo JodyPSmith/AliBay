@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import Dashboard from './components/dashboard/dashboard';
-import SignupPage from './Containers/SignupPage/SignupPage';
-import LoginPage from './Containers/LoginPage/LoginPage';
+
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -29,8 +28,7 @@ class App extends Component {
 
     setItemPage = data => {
         this.setState({
-            item: data,
-            route: 'itemPage'
+            item: data
         });
     };
     setRoute = route => {
@@ -41,42 +39,105 @@ class App extends Component {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, hasSearched, route, item, user } = this.state;
         //ternary operator to check what route the page is on... default is home
-        return route === 'home' ? (
-            <HomePage
-                signedIn={isSignedIn}
-                route={route}
-                setRoute={this.setRoute}
-            />
-        ) : route === 'itemPage' ? (
-            <ItemPage
-                item={item}
-                signedIn={isSignedIn}
-                setRoute={this.setRoute}
-            />
-        ) : route === 'confirmationPage' ? (
-            <ConfirmationPage
-                user={user}
-                item={item}
-                signedIn={isSignedIn}
-                setRoute={this.setRoute}
-            />
-        ) : route === 'SignupPage' ? (
-            <SignupPage setRoute={this.setRoute} />
-        ) : route === 'LoginPage' ? (
-            <div>
-                <LoginPage className="white" setRoute={this.setRoute} />
-            </div>
-        ) : route === 'AddListingPage' ? (
-            <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute} />
-        ) : //conditional to simulate searching -> if true display search page
-        hasSearched ? (
-            <SearchPage
-                setItemPage={this.setItemPage}
-                signedIn={isSignedIn}
-                setRoute={this.setRoute}
-            />
-        ) : null;
+        return (
+            <Switch>
+                <Route
+                    exact
+                    path="/"
+                    render={routeProps => {
+                        return (
+                            <HomePage
+                                signedIn={isSignedIn}
+                                route={route}
+                                setRoute={this.setRoute}
+                            />
+                        );
+                    }}
+                />
+                <Route
+                    exact
+                    path="/item:itemID"
+                    render={() => (
+                        <ItemPage
+                            item={item}
+                            signedIn={isSignedIn}
+                            setRoute={this.setRoute}
+                        />
+                    )}
+                />
+                <Route
+                    exact
+                    path="/confirm"
+                    render={() => (
+                        <ConfirmationPage
+                            user={user}
+                            item={item}
+                            signedIn={isSignedIn}
+                            setRoute={this.setRoute}
+                        />
+                    )}
+                />
+                <Route
+                    exact
+                    path="/add"
+                    render={() => (
+                        <AddListingPage
+                            item={item}
+                            signedIn={isSignedIn}
+                            setRoute={this.setRoute}
+                        />
+                    )}
+                />
+                <Route
+                    exact
+                    path="/search"
+                    render={routeProps => (
+                        <SearchPage
+                            setItemPage={this.setItemPage}
+                            signedIn={isSignedIn}
+                            setRoute={this.setRoute}
+                        />
+                    )}
+                />
+            </Switch>
+        );
     }
 }
 
 export default App;
+
+// route === 'home' ? (
+//     <HomePage
+//         signedIn={isSignedIn}
+//         route={route}
+//         setRoute={this.setRoute}
+//     />
+// ) : route === 'itemPage' ? (
+//     <ItemPage
+//         item={item}
+//         signedIn={isSignedIn}
+//         setRoute={this.setRoute}
+//     />
+// ) : route === 'confirmationPage' ? (
+//     <ConfirmationPage
+//         user={user}
+//         item={item}
+//         signedIn={isSignedIn}
+//         setRoute={this.setRoute}
+//     />
+// ) : route === 'SignupPage' ? (
+//     <SignupPage setRoute={this.setRoute} />
+// ) : route === 'LoginPage' ? (
+//     <div>
+//         <LoginPage className="white" setRoute={this.setRoute} />
+//     </div>
+// ) : route === 'AddListingPage' ? (
+//     <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute} />
+// ) : //conditional to simulate searching -> if true display search page
+// hasSearched ? (
+//     <SearchPage
+//         setItemPage={this.setItemPage}
+//         signedIn={isSignedIn}
+//         setRoute={this.setRoute}
+//     />
+// ) : null;
