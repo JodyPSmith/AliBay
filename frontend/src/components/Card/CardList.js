@@ -4,7 +4,7 @@ import { items } from './fakeData';
 
 class CardList extends Component {
     render() {
-        // const { items } = this.props;
+        const { items, setItemPage } = this.props;
         return (
             <div
                 className="flex justify-start center flex-wrap"
@@ -20,7 +20,7 @@ class CardList extends Component {
                     return (
                         <Card
                             onClick={() => {
-                                this.props.setItemPage(item);
+                                setItemPage(item);
                             }}
                             key={index}
                             item={item}

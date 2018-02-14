@@ -33,22 +33,54 @@ class App extends Component {
             route: 'itemPage'
         });
     };
-
+    setRoute = route => {
+        this.setState({ route: route });
+    };
+    componentDidMount() {
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName(
+                    'dropdown-content'
+                );
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        };
+    }
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, hasSearched, route, item, user } = this.state;
         //ternary operator to check what route the page is on... default is home
         return route === 'home' ? (
-            <HomePage signedIn={isSignedIn} route={route} />
+            <HomePage
+                signedIn={isSignedIn}
+                route={route}
+                click={this.setRoute}
+            />
         ) : /* <AddListingPage />
                 <Signup /> */ route ===
         'itemPage' ? (
-            <ItemPage item={item} signedIn={isSignedIn} />
+            <ItemPage item={item} signedIn={isSignedIn} click={this.setRoute} />
         ) : route === 'confirmationPage' ? (
-            <ConfirmationPage user={user} item={item} signedIn={isSignedIn} />
+            <ConfirmationPage
+                user={user}
+                item={item}
+                signedIn={isSignedIn}
+                click={this.setRoute}
+            />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
-            <SearchPage signedIn={isSignedIn} />
+            <SearchPage
+                setItemPage={this.setItemPage}
+                signedIn={isSignedIn}
+                click={this.setRoute}
+            />
         ) : null;
     }
 }

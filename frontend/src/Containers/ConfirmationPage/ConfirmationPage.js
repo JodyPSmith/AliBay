@@ -3,12 +3,12 @@ import Navigation from '../../components/Navigation/Navigation';
 import Scroll from '../../Containers/scroll';
 class ConfirmationPage extends Component {
     render() {
-        const { signedIn, item, user } = this.props;
+        const { signedIn, item, user, click } = this.props;
 
         return (
             <div>
                 <div className="flex justify-between">
-                    <Navigation signedIn={signedIn} />
+                    <Navigation click={click} signedIn={signedIn} />
                 </div>
                 <div id="ItemPage">
                     <Scroll shadow="">
