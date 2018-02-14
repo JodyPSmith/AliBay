@@ -39,17 +39,17 @@ class Signup extends Component {
                 <div >
                     <h1 className="flex justify-center center"> Please Signup here</h1>
                     
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> First Name <input className="ba b--white" id="firstname"  placeholder="First Name" ref={r => this.signupFname = r} /></h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Last Name <input id="lastname"  placeholder="Last Name" ref={r => this.signupLname = r}  /></h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Desired Username <input id="signupName"  placeholder="Enter your desired username here" ref={r => this.signupName = r}  /></h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Password <input id="signupPW" type="password"  placeholder="Enter password here" ref={r => this.signupPW = r}  /></h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Re-enter Password <input id="signupPWconf" type="password" placeholder="Re-enter password here" ref={r => this.signupPWconf = r}  />  </h3>                  
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Email Address <input id="signupEmail" type="email" placeholder="Enter email address here" ref={r => this.signupEmail = r}  /></h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Street Address <input id="address" placeholder="Street Address" ref={r => this.signupAddress = r} /> </h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> City <input id="city" placeholder="City" ref={r => this.signupCity = r} /> </h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Province or State <input id="StateProvince" placeholder="State or Province" ref={r => this.signupProvince = r} /> </h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Postal Code or Zip <input id="zip" placeholder="ZIP or Postal Code" ref={r => this.signupPC = r} /> </h3>
-                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Country <input id="country" placeholder="Country" ref={r => this.signupCountry = r} /> </h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> First Name <input className="bn" id="firstname" ref={r => this.signupFname = r} /></h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Last Name <input className="bn" id="lastname" ref={r => this.signupLname = r}  /></h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Desired Username <input id="signupName" className="bn" ref={r => this.signupName = r}  /></h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Password <input id="signupPW" type="password" className="bn"  ref={r => this.signupPW = r}  /></h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Re-enter Password <input className="bn" id="signupPWconf" type="password" ref={r => this.signupPWconf = r}  />  </h3>                  
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Email Address <input className="bn" id="signupEmail" type="email"  ref={r => this.signupEmail = r}  /></h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Street Address <input className="bn" id="address"  ref={r => this.signupAddress = r} /> </h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> City <input id="city" className="bn" ref={r => this.signupCity = r} /> </h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Province or State <input id="StateProvince" className="bn" ref={r => this.signupProvince = r} /> </h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Postal Code or Zip <input id="zip" className="bn" ref={r => this.signupPC = r} /> </h3>
+                    <h3 className="f4 dim pa2 w-80 center shadow-5 "> Country <input id="country" className="bn" ref={r => this.signupCountry = r} /> </h3>
                     <br />
                     <button className="flex justify-center center" onClick={this.signUp} id="signupPW" size="3">Sign Up</button>
                 </div>
