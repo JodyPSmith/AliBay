@@ -31,13 +31,9 @@ class Navigation extends Component {
             <div className={css}>
                 {route === 'home' || <InAppSearchBar />}
                 <nav className="flex justify-end">
-                    <p
-                        onClick={''}
-                        className="f5 link dim black  pa3 pointer  mr3"
-                    >
-                        Dashboard
-                    </p>
-                    <Testing click={click} />
+                    <div className="ma3 mr4 mt4 ml0">
+                        <Testing click={click} />
+                    </div>
                 </nav>
             </div>
         );

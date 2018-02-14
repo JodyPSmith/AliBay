@@ -8,28 +8,37 @@ class Testing extends Component {
         const { click } = this.props;
         return (
             <div className="dropdown">
-                <button
+                <a
                     onClick={() => {
                         this.findMe();
                     }}
-                    className="dropbtn"
+                    className="dropbtn bg-white br2 pointer dim"
                 >
                     Dropdown
-                </button>
-                <div id="myDropdown" className="dropdown-content">
-                    <a className="pointer" onClick={() => click('home')}>
+                </a>
+                <div
+                    id="myDropdown"
+                    className="dropdown-content bg-white shadow-1 mr4"
+                >
+                    <a className="pointer dim" onClick={() => click('home')}>
                         Home
                     </a>
-                    <a className="pointer" onClick={() => click('')}>
+                    <a
+                        className="pointer dim"
+                        onClick={() => click('dashboard')}
+                    >
+                        Dashboard
+                    </a>
+                    <a className="pointer dim" onClick={() => click('')}>
                         Search Page
                     </a>
                     <a
-                        className="pointer"
+                        className="pointer dim"
                         onClick={() => click('confirmationPage')}
                     >
                         Confirmation Page
                     </a>
-                    <a className="pointer" onClick={() => click('testing')}>
+                    <a className="pointer dim" onClick={() => click('testing')}>
                         Testing Page
                     </a>
                 </div>

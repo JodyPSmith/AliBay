@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Card from './Card';
-import { items } from './fakeData';
 
 class CardList extends Component {
     render() {
