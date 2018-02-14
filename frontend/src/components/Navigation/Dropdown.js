@@ -17,6 +17,7 @@ class Dropdown extends Component {
         this.setState({ modalIsOpen: !this.state.modalIsOpen });
     };
     componentDidMount() {
+        console.log(Modal.defaultStyles);
         // Close the dropdown menu if the user clicks outside of it
         window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
@@ -84,12 +85,10 @@ class Dropdown extends Component {
                         <Modal
                             isOpen={modalIsOpen}
                             onRequestClose={this.toggleModal}
-                            shouldCloseOnOverlayClick={true}
+                            shouldCloseOnOverlayClick={false}
                             style={modalCss}
                             className={{
-                                base: 'bg-white br3 shadow-1 pa4 myModal',
-                                afterOpen: '',
-                                beforeClose: ''
+                                base: 'bg-white br3 shadow-1 pa4 myModal'
                             }}
                         >
                             <LoginPage />
