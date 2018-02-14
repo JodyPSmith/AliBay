@@ -35,23 +35,7 @@ class App extends Component {
     setRoute = route => {
         this.setState({ route: route });
     };
-    componentDidMount() {
-        // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName(
-                    'dropdown-content'
-                );
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        };
-    }
+
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, hasSearched, route, item, user } = this.state;
@@ -62,8 +46,7 @@ class App extends Component {
                 route={route}
                 setRoute={this.setRoute}
             />
-        ) :  route ===
-        'itemPage' ? (
+        ) : route === 'itemPage' ? (
             <ItemPage
                 item={item}
                 signedIn={isSignedIn}
@@ -77,11 +60,13 @@ class App extends Component {
                 setRoute={this.setRoute}
             />
         ) : route === 'SignupPage' ? (
-                    <SignupPage setRoute={this.setRoute} />
+            <SignupPage setRoute={this.setRoute} />
         ) : route === 'LoginPage' ? (
-                    <LoginPage setRoute={this.setRoute}/>
+            <div>
+                <LoginPage setRoute={this.setRoute} />
+            </div>
         ) : route === 'AddListingPage' ? (
-                    <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute}/>
+            <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute} />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage

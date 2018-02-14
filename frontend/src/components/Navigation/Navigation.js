@@ -31,7 +31,7 @@ class Navigation extends Component {
             <div className={css}>
                 {route === 'home' || <InAppSearchBar setRoute={setRoute} />}
                 <nav className="flex justify-end">
-                    <div className="ma3 mr5 mt4 ml0">
+                    <div className="ma3 mr4 mt4 ml0">
                         <Dropdown setRoute={setRoute} />
                     </div>
                 </nav>
