@@ -72,7 +72,7 @@ class ConfirmationPage extends Component {
                                 }}
                             >
                                 <div>
-                                    <h1 className="ml4">IS THIS OKAY</h1>
+                                    <h1 className="ml4">Confirm to buy</h1>
                                 </div>
 
                                 <div>

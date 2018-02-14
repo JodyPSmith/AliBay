@@ -5,8 +5,9 @@ import miniLogo from '../../images/mini.png';
 class InAppSearchBar extends Component {
     render() {
         return (
-            <div className="flex w-50 ">
+            <div className="flex w-50 mt2">
                 <img
+                    onClick={() => this.props.click('home')}
                     className="pointer dim"
                     src={miniLogo}
                     alt="logo"
@@ -15,7 +16,8 @@ class InAppSearchBar extends Component {
                         maxHeight: '40px',
                         marginTop: '2vh',
                         marginRight: '1vw',
-                        marginLeft: '2vw'
+                        marginLeft: '2vw',
+                        marginBottom: '2vh'
                     }}
                 />
                 <SearchBar />
