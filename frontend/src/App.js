@@ -19,7 +19,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'testing',
+            route: 'home',
             //needed to pass in data from specific item page
             item: items[0],
             user: userMap.test
@@ -62,8 +62,7 @@ class App extends Component {
                 route={route}
                 setRoute={this.setRoute}
             />
-        ) : /* <AddListingPage />
-                <Signup /> */ route ===
+        ) :  route ===
         'itemPage' ? (
             <ItemPage
                 item={item}
@@ -77,6 +76,14 @@ class App extends Component {
                 signedIn={isSignedIn}
                 setRoute={this.setRoute}
             />
+        ) : route ===
+        'testing' ? (
+            <div>
+                
+            <AddListingPage/>
+            <Login/>
+            <Signup/>
+            </div>
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage
