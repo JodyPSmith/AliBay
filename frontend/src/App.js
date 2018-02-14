@@ -60,25 +60,29 @@ class App extends Component {
             <HomePage
                 signedIn={isSignedIn}
                 route={route}
-                click={this.setRoute}
+                setRoute={this.setRoute}
             />
         ) : /* <AddListingPage />
                 <Signup /> */ route ===
         'itemPage' ? (
-            <ItemPage item={item} signedIn={isSignedIn} click={this.setRoute} />
+            <ItemPage
+                item={item}
+                signedIn={isSignedIn}
+                setRoute={this.setRoute}
+            />
         ) : route === 'confirmationPage' ? (
             <ConfirmationPage
                 user={user}
                 item={item}
                 signedIn={isSignedIn}
-                click={this.setRoute}
+                setRoute={this.setRoute}
             />
         ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage
                 setItemPage={this.setItemPage}
                 signedIn={isSignedIn}
-                click={this.setRoute}
+                setRoute={this.setRoute}
             />
         ) : null;
     }
