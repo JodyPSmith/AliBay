@@ -13,11 +13,11 @@ class ItemPage extends Component {
     }
     render() {
         //imports Item from the App.js state
-        const { signedIn, item, click } = this.props;
+        const { signedIn, item, setRoute } = this.props;
         return (
             <div>
                 <div className="flex justify-between ">
-                    <Navigation click={click} signedIn={signedIn} />
+                    <Navigation setRoute={setRoute} signedIn={signedIn} />
                 </div>
                 <div id="ItemPage">
                     <Scroll height="80vh">
@@ -32,6 +32,7 @@ class ItemPage extends Component {
                                     alt="product "
                                 />
                                 <div className="flex flex-wrap">
+                                    {/* Here we do a map of all the images available and display them */}
                                     {item.image.map((item, index) => {
                                         return (
                                             <div
@@ -70,7 +71,9 @@ class ItemPage extends Component {
                                             background: '#F6841F',
                                             border: 'none',
                                             width: '3vw',
-                                            height: '5vh'
+                                            height: '5vh',
+                                            minHeight: '20px',
+                                            minWidth: '60px'
                                         }}
                                     >
                                         Buy

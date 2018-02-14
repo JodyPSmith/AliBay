@@ -11,7 +11,7 @@ class SearchPage extends Component {
     }
 
     render() {
-        const { route, signedIn, setItemPage, click } = this.props;
+        const { route, signedIn, setItemPage, setRoute } = this.props;
         return (
             <div>
                 {' '}
@@ -19,7 +19,7 @@ class SearchPage extends Component {
                     {/* this prop will check if the state in the parent container, isSignedIn, is true or false
                         see documentaion in Navigation component*/}
                     <Navigation
-                        click={click}
+                        setRoute={setRoute}
                         route={route}
                         signedIn={signedIn}
                     />

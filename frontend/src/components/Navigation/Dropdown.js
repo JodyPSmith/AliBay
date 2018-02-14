@@ -5,7 +5,7 @@ class Dropdown extends Component {
         document.getElementById('myDropdown').classList.toggle('show');
     };
     render() {
-        const { click } = this.props;
+        const { setRoute } = this.props;
         return (
             <div className="dropdown">
                 <a
@@ -20,25 +20,28 @@ class Dropdown extends Component {
                     id="myDropdown"
                     className="dropdown-content bg-white shadow-1 mr4"
                 >
-                    <a className="pointer dim" onClick={() => click('home')}>
+                    <a className="pointer dim" onClick={() => setRoute('home')}>
                         Home
                     </a>
                     <a
                         className="pointer dim"
-                        onClick={() => click('dashboard')}
+                        onClick={() => setRoute('dashboard')}
                     >
                         Dashboard
                     </a>
-                    <a className="pointer dim" onClick={() => click('')}>
+                    <a className="pointer dim" onClick={() => setRoute('')}>
                         Search Page
                     </a>
                     <a
                         className="pointer dim"
-                        onClick={() => click('confirmationPage')}
+                        onClick={() => setRoute('confirmationPage')}
                     >
                         Confirmation Page
                     </a>
-                    <a className="pointer dim" onClick={() => click('testing')}>
+                    <a
+                        className="pointer dim"
+                        onClick={() => setRoute('testing')}
+                    >
                         Testing Page
                     </a>
                     <a className="pointer dim" onClick={() => click('SignupPage')}>

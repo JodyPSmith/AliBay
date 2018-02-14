@@ -5,11 +5,15 @@ import Navigation from '../../components/Navigation/Navigation';
 
 class HomePage extends Component {
     render() {
-        const { signedIn, route, click } = this.props;
+        const { signedIn, route, setRoute } = this.props;
         return (
             <div className="center">
                 {' '}
-                <Navigation click={click} route={route} signedIn={signedIn} />
+                <Navigation
+                    setRoute={setRoute}
+                    route={route}
+                    signedIn={signedIn}
+                />
                 <div
                     className="center"
                     style={{
