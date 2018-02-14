@@ -8,7 +8,7 @@ class AddListing extends Component {
     }
     onImageDrop = (accepted, rejected) => {
         this.setState({ accepted, rejected });
-        console.log(accepted);
+        //console.log(accepted);
     }
 
     createListing = () => {
@@ -17,6 +17,7 @@ class AddListing extends Component {
         // need to add redirect to for sale items in the below fetch once the end point is ready
         fetch('/createListing', {
             method: "POST",
+            enctype: "multipart/form-data",
             body: JSON.stringify(newItem),
             credentials: "include"
         })

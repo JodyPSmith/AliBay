@@ -20,7 +20,7 @@ class App extends Component {
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
-            route: 'home',
+            route: 'testing',
             //needed to pass in data from specific item page
             item: items[0],
             user: userMap.test
