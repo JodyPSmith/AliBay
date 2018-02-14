@@ -99,7 +99,11 @@ function signUp(
 }
 
 function login(username, password) {
-  return bcrypt.compareSync(password, passMap[username])
+  try{ return bcrypt.compareSync(password, passMap[username])}
+  catch(err) {
+    console.log('error: username or password does not exist', err)
+    return false
+  }
 }
 
 function checkUsername(username) {
