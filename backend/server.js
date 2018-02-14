@@ -39,7 +39,7 @@ app.post('/login', (req, res) => { // takes object with username & password, att
         console.log(`cookieMap: `,cookieMap)
         fs.writeFileSync('./datafiles/cookieMap.txt', (JSON.stringify(cookieMap)));
         res.set('Set-Cookie', 'sessionID='+sessionID);
-        res.send('login successful '+JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
+        res.send(JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
     }
     else {
         res.send(JSON.stringify({res: false})) //if failed login, send JSON object with sessionID false
@@ -53,13 +53,13 @@ app.get('/itemsBought', (req, res) => { // takes cookie, returns array of all it
     res.send(JSON.stringify(alibay.getItemsBought(userID)));
 });
 
-app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, COOKIE, price, desc, and returns productID string
-    console.log(req.headers.cookie)
+app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, image(s), price, desc, and returns productID string
     let sessionID = req.cookies.sessionID
-    console.log(`sessionID = `+sessionID)
     let sellerID = cookieMap[sessionID];
+
     let request = JSON.parse(req.body);
-    // var image1 = request.images[0].preview
+
+    var image1 = request.images[0].preview
     let title = request.title;
     let price = request.price;
     let desc = request.description;
