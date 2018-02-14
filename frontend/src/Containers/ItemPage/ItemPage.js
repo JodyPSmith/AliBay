@@ -13,11 +13,11 @@ class ItemPage extends Component {
     }
     render() {
         //imports Item from the App.js state
-        const { signedIn, item } = this.props;
+        const { signedIn, item, click } = this.props;
         return (
             <div>
                 <div className="flex justify-between ">
-                    <Navigation signedIn={signedIn} />
+                    <Navigation click={click} signedIn={signedIn} />
                 </div>
                 <div id="ItemPage">
                     <Scroll height="80vh">

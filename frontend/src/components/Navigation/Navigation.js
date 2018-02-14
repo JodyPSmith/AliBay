@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import InAppSearchBar from '../searchBar/inAppSearchBar';
+import Testing from '../../testing';
+import './testing.css';
 
 class Navigation extends Component {
     render() {
+        const { signedIn, route, click } = this.props;
         //needed ternary operator to change css depending on route
         //otherwise the nav would appear on the wrong side
         const css =
-            this.props.route === 'home'
+            route === 'home'
                 ? 'flex justify-end w-100 '
                 : 'flex justify-between w-100 ';
         //in the parent container, the signedIn prop is linked to the this.state.isSignedIn boolean
         //if false -> displays "Sign In" otherwise it links to the Dashboard
-        return !this.props.signedIn ? (
+        return !signedIn ? (
             <div className={css}>
                 {/* this binary operator will display nothing if the route is at the homepage, or the inAppSearch bar if it isnt */}
-                {this.props.route === 'home' || <InAppSearchBar />}
+                {route === 'home' || <InAppSearchBar />}
                 <nav className="flex justify-end">
                     <p
                         onClick={''}
@@ -26,7 +29,7 @@ class Navigation extends Component {
             </div>
         ) : (
             <div className={css}>
-                {this.props.route === 'home' || <InAppSearchBar />}
+                {route === 'home' || <InAppSearchBar />}
                 <nav className="flex justify-end">
                     <p
                         onClick={''}
@@ -34,6 +37,7 @@ class Navigation extends Component {
                     >
                         Dashboard
                     </p>
+                    <Testing click={click} />
                 </nav>
             </div>
         );
