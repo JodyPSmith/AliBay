@@ -24,7 +24,7 @@ class SearchPage extends Component {
                         signedIn={signedIn}
                     />
                 </div>
-                <div id="SearchPage" className="mt5">
+                <div id="SearchPage" className="">
                     <Scroll height="71vh">
                         <CardList items={items} setItemPage={setItemPage} />
                     </Scroll>

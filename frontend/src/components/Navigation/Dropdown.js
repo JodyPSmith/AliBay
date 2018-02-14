@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-class Testing extends Component {
-    findMe = () => {
+class Dropdown extends Component {
+    toggleDropdown = () => {
         document.getElementById('myDropdown').classList.toggle('show');
     };
     render() {
@@ -10,11 +10,11 @@ class Testing extends Component {
             <div className="dropdown">
                 <a
                     onClick={() => {
-                        this.findMe();
+                        this.toggleDropdown();
                     }}
                     className="dropbtn bg-white br2 pointer dim"
                 >
-                    Dropdown
+                    Menu
                 </a>
                 <div
                     id="myDropdown"
@@ -47,4 +47,4 @@ class Testing extends Component {
     }
 }
 
-export default Testing;
+export default Dropdown;

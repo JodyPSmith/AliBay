@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import InAppSearchBar from '../searchBar/inAppSearchBar';
-import Testing from '../../testing';
-import './testing.css';
+import Dropdown from './Dropdown';
+import './dropdown.css';
 
 class Navigation extends Component {
     render() {
@@ -17,7 +17,7 @@ class Navigation extends Component {
         return !signedIn ? (
             <div className={css}>
                 {/* this binary operator will display nothing if the route is at the homepage, or the inAppSearch bar if it isnt */}
-                {route === 'home' || <InAppSearchBar />}
+                {route === 'home' || <InAppSearchBar click={click} />}
                 <nav className="flex justify-end">
                     <p
                         onClick={''}
@@ -29,10 +29,10 @@ class Navigation extends Component {
             </div>
         ) : (
             <div className={css}>
-                {route === 'home' || <InAppSearchBar />}
+                {route === 'home' || <InAppSearchBar click={click} />}
                 <nav className="flex justify-end">
-                    <div className="ma3 mr4 mt4 ml0">
-                        <Testing click={click} />
+                    <div className="ma3 mr5 mt4 ml0">
+                        <Dropdown click={click} />
                     </div>
                 </nav>
             </div>
