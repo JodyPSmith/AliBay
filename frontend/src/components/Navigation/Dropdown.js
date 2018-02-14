@@ -41,6 +41,12 @@ class Dropdown extends Component {
                     <a className="pointer dim" onClick={() => click('testing')}>
                         Testing Page
                     </a>
+                    <a className="pointer dim" onClick={() => click('SignupPage')}>
+                        Signup
+                    </a>
+                    <a className="pointer dim" onClick={() => click('LoginPage')}>
+                        Login
+                    </a>
                 </div>
             </div>
         );

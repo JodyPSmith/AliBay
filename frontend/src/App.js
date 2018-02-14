@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import Dashboard from './components/dashboard/dashboard';
-import Signup from './components/signup/signup';
-import Login from './components/login/login';
+import SignupPage from './Containers/SignupPage/SignupPage';
+import LoginPage from './Containers/LoginPage/LoginPage';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -37,7 +37,7 @@ class App extends Component {
     };
     componentDidMount() {
         // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (!event.target.matches('.dropbtn')) {
                 var dropdowns = document.getElementsByClassName(
                     'dropdown-content'
@@ -62,32 +62,30 @@ class App extends Component {
                 route={route}
                 click={this.setRoute}
             />
-        ) :  route ===
-        'itemPage' ? (
-            <ItemPage item={item} signedIn={isSignedIn} click={this.setRoute} />
-        ) : route === 'confirmationPage' ? (
-            <ConfirmationPage
-                user={user}
-                item={item}
-                signedIn={isSignedIn}
-                click={this.setRoute}
-            />
         ) : route ===
-        'testing' ? (
-            <div>
-                
-            <AddListingPage/>
-            <Login/>
-            <Signup/>
-            </div>
-        ) : //conditional to simulate searching -> if true display search page
+            'itemPage' ? (
+                    <ItemPage item={item} signedIn={isSignedIn} click={this.setRoute} />
+                ) : route === 'confirmationPage' ? (
+                    <ConfirmationPage
+                        user={user}
+                        item={item}
+                        signedIn={isSignedIn}
+                        click={this.setRoute}
+                    />
+                ) : route === 'testing' ? (
+                    <SignupPage />
+                ) : route === 'Login' ? (
+                    <LoginPage />
+                ) : route === 'AddListingPage' ? (
+                    <AddListingPage />
+                ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
-            <SearchPage
-                setItemPage={this.setItemPage}
-                signedIn={isSignedIn}
-                click={this.setRoute}
-            />
-        ) : null;
+                    <SearchPage
+                    setItemPage={this.setItemPage}
+                    signedIn={isSignedIn}
+                    click={this.setRoute}
+                    />
+                ) : null;
     }
 }
 
