@@ -3,24 +3,29 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser')
+
+app.use(cookieParser());
 app.use(bodyParser.raw({ type: '*/*' }))
 
 var cookieMap = {};
 
-try {cookieMap = fs.readFileSync('./backend/datafiles/cookieMap.txt')}
+try {cookieMap = JSON.parse(fs.readFileSync('./datafiles/cookieMap.txt'))}
 catch(err) {console.log('cookieMap.txt not found')}
 
 var generateCookie = () => {
-    let sessionID = 's'+Math.floor(Math.random()*10000);
+    let sessionID = 's'+Math.floor(Math.random()*100000);
     if (cookieMap[sessionID]) {return generateCookie()} //if sessionID exists, re-generate sessionID
     else return sessionID;
 }
 
 
-//should change this
-app.get('/', (req, res) => { //
-    var x = alibay.genUID();
-    res.send("" + x)
+//checks for sessionID and returns the according userID OR returns failure message
+app.get('/test', (req, res) => {
+    console.log('cookies: ', req.cookies)
+    let sessionID = req.cookies.sessionID;
+    if (cookieMap[sessionID]) {res.send(`userID: ${cookieMap[sessionID]}`)}
+    else res.send('no sessionID found')
 })
 
 app.post('/login', (req, res) => { // takes object with username & password, attempts to match with database
@@ -29,10 +34,12 @@ app.post('/login', (req, res) => { // takes object with username & password, att
     let password = payload.password;
     if (alibay.login(username, password)) {
         let sessionID = generateCookie();
-        cookieMap[sessionID] = alibay.getUserID(username);
-        fs.writeFileSync('./backend/datafiles/cookieMap.txt', JSON.stringify(cookieMap));
-        res.set('Set-Cookie', "sessionID="+sessionID);
-        res.send(JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
+        cookieMap[sessionID] = Number(alibay.getUserID(username));
+        console.log(`getUserID result ${alibay.getUserID(username)}`)
+        console.log(`cookieMap: `,cookieMap)
+        fs.writeFileSync('./datafiles/cookieMap.txt', (JSON.stringify(cookieMap)));
+        res.set('Set-Cookie', 'sessionID='+sessionID);
+        res.send('login successful '+JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
     }
     else {
         res.send(JSON.stringify({res: false})) //if failed login, send JSON object with sessionID false
@@ -40,20 +47,19 @@ app.post('/login', (req, res) => { // takes object with username & password, att
 })
 
 app.get('/itemsBought', (req, res) => { // takes cookie, returns array of all items bought buy the user
-    let sessionID = parseCookies(req.headers.cookie).sessionID;
+    let sessionID = req.cookies.sessionID
     let userID = cookieMap[sessionID];
     // console.log(`sessionID=${sessionID}, userID=${userID}`)
     res.send(JSON.stringify(alibay.getItemsBought(userID)));
 });
 
 app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, COOKIE, price, desc, and returns productID string
-    let sessionID = parseCookies(req.headers.cookie).sessionID;
+    console.log(req.headers.cookie)
+    let sessionID = req.cookies.sessionID
+    console.log(`sessionID = `+sessionID)
     let sellerID = cookieMap[sessionID];
-    
     let request = JSON.parse(req.body);
-    console.log(JSON.parse(req.body))
-    console.log(request.images[0].preview)
-    var image1 = request.images[0].preview
+    // var image1 = request.images[0].preview
     let title = request.title;
     let price = request.price;
     let desc = request.description;
@@ -61,7 +67,7 @@ app.post('/createListing', (req, res) => { // takes a JSON object in body, with 
 })
 
 app.post('/buy', (req, res) => { // takes a JSON object in body, with sellerID, listingID returns object with res:true
-    let sessionID = parseCookies(req.headers.cookie).sessionID;
+    let sessionID = req.cookies.sessionID
     let sellerID = cookieMap[sessionID];
 
     let request = JSON.parse(req.body.toString());
@@ -112,13 +118,6 @@ app.post('/itemsSold', (req, res) => { // takes single string in body, returns a
     res.send(JSON.stringify(alibay.allItemsSold(req.body.toString())));
 })
 
-//Special function used to parse the inputted Cookies
-var parseCookies = (str) => {
-    let asArray = str.split('; ').map(x => x.split('='));
-    let ret = {};
-    asArray.forEach(lst => ret[lst[0]] = lst[1])
-    return ret;
-}
 
 app.listen(4000, () => {
     console.log('Listening on port 4000')
