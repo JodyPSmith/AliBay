@@ -12,7 +12,9 @@ class SignupPage extends Component {
         
         return (
             <div>
-                <img alt="Alibay Logo" src={logo} />
+                <div  className="flex justify-center center">
+                <img  alt="Alibay Logo" src={logo} />
+                </div>
                 <Signup setRoute={this.props.setRoute}/>
             </div>
         )

@@ -10,3 +10,19 @@ body {
 #ItemPage {
     margin: 2vh 5vw;
 }
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+    90% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.myModal {
+    animation: popIn 0.4s ease-in-out;
+}
