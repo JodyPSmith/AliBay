@@ -3,10 +3,11 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const express = require('express');
 const app = express();
+app.use(bodyParser.raw({ type: '*/*' }))
 
 var cookieMap = {};
 
-try {cookieMap = fs.readFileSync('cookieMap.txt')}
+try {cookieMap = fs.readFileSync('./backend/datafiles/cookieMap.txt')}
 catch(err) {console.log('cookieMap.txt not found')}
 
 var generateCookie = () => {
@@ -15,7 +16,6 @@ var generateCookie = () => {
     else return sessionID;
 }
 
-app.use(bodyParser.raw({ type: '*/*' }))
 
 //should change this
 app.get('/', (req, res) => { //
@@ -30,7 +30,7 @@ app.post('/login', (req, res) => { // takes object with username & password, att
     if (alibay.login(username, password)) {
         let sessionID = generateCookie();
         cookieMap[sessionID] = alibay.getUserID(username);
-        fs.writeFileSync('cookieMap.txt', JSON.stringify(cookieMap));
+        fs.writeFileSync('./backend/datafiles/cookieMap.txt', JSON.stringify(cookieMap));
         res.set('Set-Cookie', "sessionID="+sessionID);
         res.send(JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
     }
@@ -39,30 +39,36 @@ app.post('/login', (req, res) => { // takes object with username & password, att
     }
 })
 
-app.get('/itemsBought', (req, res) => { // takes userID in query, returns array of all items bought buy the user
-    let uid = req.query.uid;
-    res.send(JSON.stringify(alibay.getItemsBought(uid)));
+app.get('/itemsBought', (req, res) => { // takes cookie, returns array of all items bought buy the user
+    let sessionID = parseCookies(req.headers.cookie).sessionID;
+    let userID = cookieMap[sessionID];
+    // console.log(`sessionID=${sessionID}, userID=${userID}`)
+    res.send(JSON.stringify(alibay.getItemsBought(userID)));
 });
 
-app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, sellerID, price, desc, and returns productID string
+app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, COOKIE, price, desc, and returns productID string
+    let sessionID = parseCookies(req.headers.cookie).sessionID;
+    let sellerID = cookieMap[sessionID];
+    
     let request = JSON.parse(req.body);
-    //console.log(JSON.parse(req.body))
+    console.log(JSON.parse(req.body))
     console.log(request.images[0].preview)
     var image1 = request.images[0].preview
     let title = request.title;
-    let sellerID = request.sellerID;
     let price = request.price;
     let desc = request.description;
     res.send('your product ID is: ' + alibay.createListing(title, sellerID, price, desc));
 })
 
-app.post('/buy', (req, res) => { // takes a JSON object in body, with buyerID, sellerID, listingID ***Returns UNDEFINED***
+app.post('/buy', (req, res) => { // takes a JSON object in body, with sellerID, listingID returns object with res:true
+    let sessionID = parseCookies(req.headers.cookie).sessionID;
+    let sellerID = cookieMap[sessionID];
+
     let request = JSON.parse(req.body.toString());
     let buyerID = request.buyerID;
-    let sellerID = request.sellerID;
     let listingID = request.listingID;
     alibay.buy(buyerID, sellerID, listingID);
-    res.send('success')
+    res.send(JSON.stringify({res: true}))
 })
 
 app.get('/allListings', (req, res) => { // returns an array with all listings where isSold === true
@@ -75,6 +81,7 @@ app.post('/search', (req, res) => { // returns new array where description inclu
     let results = alibay.searchForListings(searchTerm);
     res.send(JSON.stringify(results)) // return the array (could be empty) to be processed in front-end
 })
+
 app.get('/itemDescription', (req, res) => { // Returns object with price and blurb
     let item = req.query.item;
     let description = alibay.getItemDescription(item);
