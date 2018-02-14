@@ -7,7 +7,7 @@ class AddListingPage extends Component {
         return (
             <div>
                 <img alt="Alibay Logo" src={logo}/>
-                <AddListing/>
+                <AddListing setRoute={this.props.setRoute}/>
             </div>
         )
     }

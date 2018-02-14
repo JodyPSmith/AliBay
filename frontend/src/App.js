@@ -76,23 +76,13 @@ class App extends Component {
                 signedIn={isSignedIn}
                 setRoute={this.setRoute}
             />
-        ) : route ===
-            'itemPage' ? (
-                    <ItemPage item={item} signedIn={isSignedIn} click={this.setRoute} />
-                ) : route === 'confirmationPage' ? (
-                    <ConfirmationPage
-                        user={user}
-                        item={item}
-                        signedIn={isSignedIn}
-                        click={this.setRoute}
-                    />
-                ) : route === 'testing' ? (
-                    <SignupPage />
-                ) : route === 'Login' ? (
-                    <LoginPage />
-                ) : route === 'AddListingPage' ? (
-                    <AddListingPage />
-                ) : //conditional to simulate searching -> if true display search page
+        ) : route === 'SignupPage' ? (
+                    <SignupPage setRoute={this.setRoute} />
+        ) : route === 'LoginPage' ? (
+                    <LoginPage setRoute={this.setRoute}/>
+        ) : route === 'AddListingPage' ? (
+                    <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute}/>
+        ) : //conditional to simulate searching -> if true display search page
         hasSearched ? (
             <SearchPage
                 setItemPage={this.setItemPage}

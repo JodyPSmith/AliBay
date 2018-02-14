@@ -9,11 +9,11 @@ class SignupPage extends Component {
     }
 
     render() {
-        const { signedIn, route, click } = this.props;
+        
         return (
             <div>
                 <img alt="Alibay Logo" src={logo} />
-                <Signup />
+                <Signup setRoute={this.props.setRoute}/>
             </div>
         )
     }
