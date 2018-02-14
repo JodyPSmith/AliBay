@@ -9,6 +9,7 @@ import HomePage from './Containers/homePage/HomePage';
 import ConfirmationPage from './Containers/ConfirmationPage/ConfirmationPage';
 import { items } from './components/Card/fakeData';
 import userMap from './placeholderData/user';
+import { Switch, Route } from 'react-router';
 
 class App extends Component {
     constructor() {
@@ -63,7 +64,7 @@ class App extends Component {
             <SignupPage setRoute={this.setRoute} />
         ) : route === 'LoginPage' ? (
             <div>
-                <LoginPage setRoute={this.setRoute} />
+                <LoginPage className="white" setRoute={this.setRoute} />
             </div>
         ) : route === 'AddListingPage' ? (
             <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute} />

@@ -2,19 +2,24 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import modalCss from './modalcss';
 import LoginPage from '../../Containers/LoginPage/LoginPage';
-
+import SignUpPage from '../../Containers/SignupPage/SignupPage';
+import Scroll from '../../Containers/scroll';
 class Dropdown extends Component {
     constructor() {
         super();
         this.state = {
-            modalIsOpen: false
+            loginIsOpen: false,
+            signUpIsOpen: false
         };
     }
     toggleDropdown = () => {
         document.getElementById('myDropdown').classList.toggle('show');
     };
-    toggleModal = () => {
-        this.setState({ modalIsOpen: !this.state.modalIsOpen });
+    toggleLoginModal = () => {
+        this.setState({ loginIsOpen: !this.state.loginIsOpen });
+    };
+    toggleSignUpModal = () => {
+        this.setState({ signUpIsOpen: !this.state.signUpIsOpen });
     };
     componentDidMount() {
         console.log(Modal.defaultStyles);
@@ -36,7 +41,7 @@ class Dropdown extends Component {
     }
     render() {
         const { setRoute } = this.props;
-        const { modalIsOpen } = this.state;
+        const { loginIsOpen, signUpIsOpen } = this.state;
         return (
             <div className="dropdown">
                 <a
@@ -75,26 +80,36 @@ class Dropdown extends Component {
                     >
                         Add Listing
                     </a>
-                    <a
-                        className="pointer dim"
-                        onClick={() => setRoute('SignupPage')}
-                    >
+                    <a className="pointer dim" onClick={this.toggleSignUpModal}>
                         Signup
                     </a>
-                    <a className="pointer dim" onClick={this.toggleModal}>
-                        <Modal
-                            isOpen={modalIsOpen}
-                            onRequestClose={this.toggleModal}
-                            shouldCloseOnOverlayClick={false}
-                            style={modalCss}
-                            className={{
-                                base: 'bg-white br3 shadow-1 pa4 myModal'
-                            }}
-                        >
-                            <LoginPage />
-                        </Modal>{' '}
+                    <a className="pointer dim" onClick={this.toggleLoginModal}>
                         Login Page
                     </a>
+                    <Modal
+                        isOpen={signUpIsOpen}
+                        onRequestClose={this.toggleSignUpModal}
+                        shouldCloseOnOverlayClick={true}
+                        style={modalCss}
+                        className={{
+                            base: 'bg-white br3 shadow-1 pa4 myModal'
+                        }}
+                    >
+                        <Scroll shadow="">
+                            <SignUpPage />
+                        </Scroll>
+                    </Modal>
+                    <Modal
+                        isOpen={loginIsOpen}
+                        onRequestClose={this.toggleLoginModal}
+                        shouldCloseOnOverlayClick={true}
+                        style={modalCss}
+                        className={{
+                            base: 'bg-white br3 shadow-1 pa4 myModal'
+                        }}
+                    >
+                        <LoginPage />
+                    </Modal>{' '}
                 </div>
             </div>
         );
