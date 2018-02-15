@@ -36,11 +36,13 @@ class AddListing extends Component {
 
         fetch('/createListing', {
             method: 'POST',
-            enctype: 'multipart/form-data',
+            headers: {
+                'content-type': 'application/json'
+            },
             body: JSON.stringify(newItem),
             credentials: 'include'
         })
-            .then(x => x.text())
+            .then(x => x.json())
             .then(y => console.log(y));
     };
 
@@ -113,7 +115,7 @@ class AddListing extends Component {
                 </div>
 
                 <br />
-                <button onClick={this.uploadFile}>Add Listing</button>
+                <button onClick={this.createListing}>Add Listing</button>
             </div>
         );
         return newListing;

@@ -176,6 +176,7 @@ app.post('/imgUpload', (req, res) => {
     var filenames = [];
     req.pipe(req.busboy);
     req.busboy.on('file', (fieldname, file, filename) => {
+        console.log(file);
         filename = 'img' + Math.floor(Math.random() * 10000000);
         console.log('Uploading: ' + filename);
         fstream = fs.createWriteStream(
@@ -188,5 +189,10 @@ app.post('/imgUpload', (req, res) => {
             res.status(500).send({ res: 'error' });
         });
     });
-    req.busboy.on('finish', () => res.send({ res: filenames }));
+    req.busboy.on('finish', () =>
+        res.send({
+            res: 'successful',
+            images: filenames
+        })
+    );
 });
