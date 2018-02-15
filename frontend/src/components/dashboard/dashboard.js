@@ -5,15 +5,15 @@ let dashboard =
     (<div className="Dashboard">
         <div className="itemList"> 
         Bought Items
-        <Card/>
+        <Card onClick={() => { setItemPage(item);}} key={this.props.index} item={this.props.item}/>
         </div>
         <div className="itemList">
         Selling Items
-        <Card/>
+        <Card onClick={() => { setItemPage(item);}} key={this.props.index} item={this.props.item}/>
         </div>
         <div className="itemList"> 
         Sold Items
-        <Card/>
+        <Card  onClick={() => { setItemPage(item);}} key={this.props.index} item={this.props.item}/>
         </div>
     </div>);
 

@@ -26,9 +26,9 @@ class App extends Component {
         };
     }
 
-    setSignedIn = (x) => {
-        this.setState({isSignedIn : x})
-    }
+    setSignedIn = x => {
+        this.setState({ isSignedIn: x });
+    };
 
     setItemPage = data => {
         this.setState({
@@ -42,7 +42,7 @@ class App extends Component {
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, item, user } = this.state;
-        const Navigator = withRouter(Navigation)
+        const Navigator = withRouter(Navigation);
         console.log(window.location.pathname);
         //ternary operator to check what route the page is on... default is home
         return (
@@ -53,58 +53,31 @@ class App extends Component {
                         exact
                         path="/"
                         render={routeProps => {
-                            return (
-                                <HomePage
-
-
-
-                                />
-                            );
+                            return <HomePage />;
                         }}
                     />
                     <Route
                         exact
                         path="/item:itemID"
-                        render={() => (
-                            <ItemPage
-                                item={item}
-
-
-                            />
-                        )}
+                        render={() => <ItemPage item={item} />}
                     />
                     <Route
                         exact
                         path="/confirm"
                         render={() => (
-                            <ConfirmationPage
-                                user={user}
-                                item={item}
-
-
-                            />
+                            <ConfirmationPage user={user} item={item} />
                         )}
                     />
                     <Route
                         exact
                         path="/add"
-                        render={() => (
-                            <AddListingPage
-                                item={item}
-
-
-                            />
-                        )}
+                        render={() => <AddListingPage item={item} />}
                     />
                     <Route
                         exact
                         path="/search"
                         render={routeProps => (
-                            <SearchPage
-                                setItemPage={this.setItemPage}
-
-
-                            />
+                            <SearchPage setItemPage={this.setItemPage} />
                         )}
                     />
                 </Switch>
@@ -114,39 +87,3 @@ class App extends Component {
 }
 
 export default App;
-
-// route === 'home' ? (
-//     <HomePage
-//         signedIn={isSignedIn}
-//         
-//         setRoute={this.setRoute}
-//     />
-// ) : route === 'itemPage' ? (
-//     <ItemPage
-//         item={item}
-//         signedIn={isSignedIn}
-//         setRoute={this.setRoute}
-//     />
-// ) : route === 'confirmationPage' ? (
-//     <ConfirmationPage
-//         user={user}
-//         item={item}
-//         signedIn={isSignedIn}
-//         setRoute={this.setRoute}
-//     />
-// ) : route === 'SignupPage' ? (
-//     <SignupPage setRoute={this.setRoute} />
-// ) : route === 'LoginPage' ? (
-//     <div>
-//         <LoginPage className="white" setRoute={this.setRoute} />
-//     </div>
-// ) : route === 'AddListingPage' ? (
-//     <AddListingPage signedIn={isSignedIn} setRoute={this.setRoute} />
-// ) : //conditional to simulate searching -> if true display search page
-// hasSearched ? (
-//     <SearchPage
-//         setItemPage={this.setItemPage}
-//         signedIn={isSignedIn}
-//         setRoute={this.setRoute}
-//     />
-// ) : null;
