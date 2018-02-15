@@ -216,8 +216,14 @@ allItemsSold returns the IDs of all the items sold by a seller
 */
 async function allItemsSold(sellerID) {
   var listing_id = [];
-  var result = await con.query('SELECT listing_id FROM listing WHERE seller_id = ?', [sellerID]);
+  var result = await con.query('SELECT * FROM listing WHERE seller_id = ?', [sellerID]);
   console.log(">>>", result)
+  return result;
+}
+// return items that the user is currently selling.
+async function allitemsSelling(sellerID){
+  var result = await con.query('SELECT * FROM listing WHERE seller_id =?' , [sellerID], 'AND buyer_id IS NULL')
+  console.log(">>>", result);
   return result;
 }
 /*
