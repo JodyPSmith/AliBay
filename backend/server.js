@@ -31,28 +31,6 @@ const generateCookie = () => {
     } else return sessionID; //if sessionID exists, re-generate sessionID
 };
 
-app.post('/imgTest', (req, res) => {
-    var fstream;
-    var filenames = [];
-    req.pipe(req.busboy);
-    req.busboy.on('file', (fieldname, file, filename) => {
-        console.log('Uploading: ' + filename);
-        fstream = fs.createWriteStream(
-            __dirname + '/datafiles/images/' + filename
-        );
-        filenames.push(filename);
-        file.pipe(fstream);
-        fstream.on('error', err => {
-            console.log('error', err);
-            res.status(500).send({ res: 'error' });
-        });
-    });
-
-    req.busboy.on('finish', () => res.send({ res: filenames }));
-
-    // if (req.body) res.send(JSON.stringify({ res: 'success' }));
-});
-
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
     let request = req.body;
@@ -178,6 +156,31 @@ app.post('/search', (req, res) => {
     let searchTerm = request.searchTerm;
     let results = alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
+});
+
+app.post('/imgUpload', (req, res) => {
+    var fstream;
+    var filenames = [];
+    req.pipe(req.busboy);
+    req.busboy.on('file', (fieldname, file, filename) => {
+        console.log('Uploading: ' + filename);
+        fstream = fs.createWriteStream(
+            __dirname + '/datafiles/images/' + filename
+        );
+        filenames.push(filename);
+        file.pipe(fstream);
+        fstream.on('error', err => {
+            console.log('error', err);
+            res.status(500).send({ res: 'error' });
+        });
+    });
+
+    req.busboy.on('finish', () =>
+        res.send({
+            res: 'successful',
+            images: filenames
+        })
+    );
 });
 
 app.listen(4000, () => {
