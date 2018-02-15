@@ -23,7 +23,8 @@ class Login extends Component {
             .then(x => x.json())
             .then(y => {
                 if (y.res === true) {
-                    this.setState({ loginStat: "yes" })  
+                    this.setState({ loginStat: "yes" })
+                    //setTimeout( () => this.setState(route to dashboard))  
                 } else {
                     this.setState({ loginStat: "failed" })
                     setTimeout(() => this.setState({loginStat : "no" }), 2000)
