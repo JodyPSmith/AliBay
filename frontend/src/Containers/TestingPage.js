@@ -7,24 +7,7 @@ class Testing extends Component {
             images: []
         };
     }
-    uploadImage = accepted => {
-        console.log(accepted);
-        const formData = new FormData();
-        accepted.forEach((file, i) => {
-            console.log(file);
-            formData.append(`userpic[]`, file, file.name);
-        });
-        console.log(formData);
-        fetch('/imgTest', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: formData
-        })
-            .then(res => res.json())
-            .then(res => this.setState({ images: res.res }));
-    };
+
     componentDidMount() {}
     render() {
         return (

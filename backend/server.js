@@ -35,22 +35,18 @@ app.post('/imgTest', (req, res) => {
     var fstream;
     var filenames = [];
     req.pipe(req.busboy);
-    try {
-        req.busboy.on('file', function(fieldname, file, filename) {
-            console.log('Uploading: ' + filename);
-            fstream = fs.createWriteStream(
-                __dirname + '/datafiles/images/' + filename
-            );
-            filenames.push(filename);
-            file.pipe(fstream);
-            fstream.on('error', err => {
-                console.log('error', err);
-                res.status(500).send({ res: 'error' });
-            });
+    req.busboy.on('file', (fieldname, file, filename) => {
+        console.log('Uploading: ' + filename);
+        fstream = fs.createWriteStream(
+            __dirname + '/datafiles/images/' + filename
+        );
+        filenames.push(filename);
+        file.pipe(fstream);
+        fstream.on('error', err => {
+            console.log('error', err);
+            res.status(500).send({ res: 'error' });
         });
-    } catch (err) {
-        res.send({ res: 'error' });
-    }
+    });
 
     req.busboy.on('finish', () => res.send({ res: filenames }));
 

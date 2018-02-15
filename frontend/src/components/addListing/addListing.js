@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-//import Dropzone from 'react-dropzone';
-//import Imageupload from '../Imageupload/imageupload';
+import Imageupload from '../Imageupload/imageupload';
 class AddListing extends Component {
     constructor() {
         super();
         this.state = { accepted: [], rejected: [] };
     }
 
-    onImageDrop = (accepted, rejected) => {
-        this.setState({ accepted, rejected });
-
-        //console.log(accepted);
+    onImageDrop = accepted => {
+        console.log(accepted);
+        const formData = new FormData();
+        accepted.forEach((file, i) => {
+            console.log(file);
+            formData.append(`userpic[]`, file, file.name);
+        });
+        console.log(formData);
+        fetch('/imgTest', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(res => this.setState({ images: res.res }));
     };
 
     uploadFile = x => {
@@ -43,12 +52,10 @@ class AddListing extends Component {
         var newListing = (
             <div>
                 <div className="flex justify-center center flex-wrap">
-                    {/* <div>
-                        <Imageupload onImageDrop={this.onImageDrop} />
-                    </div> */}
                     <div>
-                        {/* <input type="file" id="input" onClick={e => this.uploadFile(e.target.files[0])} /><br/> */}
-                        {/* Image <input type="file" ref={r => this.image = r} id="input" onChange={e => this.uploadFile(e.target.files[0])} /> */}
+                        <Imageupload onImageDrop={this.onImageDrop} />
+                    </div>
+                    <div>
                         <a className="f3 pa2 ma1 mw-20">
                             Title :<input
                                 className="pa2 ma1"
