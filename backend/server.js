@@ -28,7 +28,7 @@ app.post('/login', async (req, res) => { // takes object with username & passwor
         let sessionID = generateCookie();
         console.log('test id', test.id)
         cookieMap[sessionID] = test.id;
-        fs.writeFileSync('./datafiles/cookieMap.txt', JSON.stringify(cookieMap));
+        fs.writeFileSync(__dirname+'/datafiles/cookieMap.txt', JSON.stringify(cookieMap));
         res.set('Set-Cookie', "sessionID=" + sessionID);
         res.send(JSON.stringify({ res: true, sessionID: sessionID })); //if successful, will send JSON object with sessionID
     }
@@ -86,7 +86,7 @@ app.get('/itemDescription', (req, res) => { // Returns object with price and blu
     res.send(JSON.stringify(description))
 })
 
-app.post('/signUp', (req, res) => {
+app.post('/signUp', async (req, res) => {
     let request = JSON.parse(req.body.toString());
     let fname = request.firstname;
     let lname = request.lastname;
@@ -99,7 +99,7 @@ app.post('/signUp', (req, res) => {
     let postal_code = request.postal_code;
     let country = request.country;
 
-    if (alibay.signUp(fname, lname, usr, pwd, email, address, city, province, postal_code, country)) {
+    if (await alibay.signUp(fname, lname, usr, pwd, email, address, city, province, postal_code, country)) {
         res.send('signup success');
     } else {
         res.send('signup failed')

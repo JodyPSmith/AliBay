@@ -33,7 +33,7 @@ let userMap = {
 };
 
 //map that keeps track of passwords
-let passMap = {};
+// let passMap = {};
 
 // map that keeps track of all products
 let productsMap = {};
@@ -44,7 +44,7 @@ try {
   itemsBought = JSON.parse(fs.readFileSync('./datafiles/itemsBought.txt'));
   itemsSold = JSON.parse(fs.readFileSync('./datafiles/itemsSold.txt'));
   userMap = JSON.parse(fs.readFileSync('./datafiles/userMap.txt'));
-  passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
+  // passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
   productsMap = JSON.parse(fs.readFileSync('./datafiles/productsMap.txt'));
 }
 catch (err) {
@@ -65,7 +65,7 @@ function genPID() {
 
 //Sign-up/Login functions
 
-function signUp(
+async function signUp(
   fname,
   lname,
   username,
@@ -77,11 +77,9 @@ function signUp(
   pcode,
   country
 ) {
-  if (checkUsername(username)) {
-    let userID = genUID();
+  if (await checkUsername(username)) {
     let passHash = bcrypt.hashSync(pwd, 12);
-    passMap[username] = passHash;
-    userMap[userID] = {
+    let userInfo = {
       first_name: fname,
       last_name: lname,
       username: username,
@@ -93,9 +91,9 @@ function signUp(
       postal_code: pcode,
       country: country
     };
-    itemsBought[userID] = [];
-    itemsSold[userID] = [];
-    con.query('INSERT INTO users SET ?', userMap[userID],
+    // itemsBought[userID] = [];
+    // itemsSold[userID] = [];
+    con.query('INSERT INTO users SET ?', userInfo,
       (err, rows) => {
         if (err) throw err;
         console.log('Data inserted into Db:\n');
@@ -104,8 +102,8 @@ function signUp(
     // fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
     // fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
     // fs.writeFileSync("././datafiles/userMap.txt", JSON.stringify(userMap));
-    fs.writeFileSync("././datafiles/passMap.txt", JSON.stringify(passMap));
-    console.log(`${userID} user created`);
+    // fs.writeFileSync("././datafiles/passMap.txt", JSON.stringify(passMap));
+    console.log(`user created`);
     return true;
   } else {
     console.log('check username failed')
@@ -125,8 +123,10 @@ async function login(username, password) {
   }
 }
 
-function checkUsername(username) {
-  if (!passMap[username]) {
+async function checkUsername(username) {
+  var result = await con.query('SELECT username FROM users WHERE username = ?', [username])
+  console.log(`result :`, result)
+  if (!result[0]) {
     return true;
   } else {
     return false;
@@ -167,6 +167,7 @@ function createListing(title, sellerID, price, desc) {
     console.log('Data received from Db:\n');
     console.log(rows);
   });
+  return pID;
   //fs.writeFileSync("./backend/./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
@@ -262,7 +263,7 @@ module.exports = {
   itemsSold,
   productsMap,
   userMap,
-  passMap,
+  // passMap,
   genUID,
   genPID,
   signUp,
