@@ -36,22 +36,23 @@ class Signup extends Component {
     render() {
         let signupPage = (
             <div>
-                <div >
-                    <h1 className="flex justify-center center"> Please Signup here</h1>
+                <div className="center">
+                    <h1 className="flex justify-center center"> Please Signup here </h1>
                     
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> First Name <input className="mw-50 w-50 fr" id="firstname" ref={r => this.signupFname = r} /></h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Last Name <input className="mw-50 w-50 fr" id="lastname" ref={r => this.signupLname = r}  /></h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Desired Username <input id="signupName" className="mw-50 w-50 fr" ref={r => this.signupName = r}  /></h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Password <input id="signupPW" type="password" className="mw-50 w-50 fr"  ref={r => this.signupPW = r}  /></h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Re-enter Password <input className="mw-50 w-50 fr" id="signupPWconf" type="password" ref={r => this.signupPWconf = r}  />  </h3>                  
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Email Address <input className="mw-50 w-50 fr" id="signupEmail" type="email"  ref={r => this.signupEmail = r}  /></h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Street Address <input className="mw-50 w-50 fr" id="address"  ref={r => this.signupAddress = r} /> </h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> City <input id="city" className="mw-50 w-50 fr" ref={r => this.signupCity = r} /> </h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Province or State <input id="StateProvince" className="mw-50 w-50 fr" ref={r => this.signupProvince = r} /> </h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Postal Code or Zip <input id="zip" className="mw-50 w-50 fr" ref={r => this.signupPC = r} /> </h3>
-                    <h3 className="f5 dim pa2 w-90 center shadow-5 "> Country <input id="country" className="mw-50 w-50 fr" ref={r => this.signupCountry = r} /> </h3>
+                    <input placeholder="First Name" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" id="firstname" ref={r => this.signupFname = r} />
+                    <input placeholder="Last Name" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" id="lastname" ref={r => this.signupLname = r}  />
+                    <input placeholder="Desired Username" id="signupName" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" ref={r => this.signupName = r}  />
+                    <input placeholder="Password" id="signupPW" type="password" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn"  ref={r => this.signupPW = r}  />
+                    <input placeholder="Re-enter Password" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" id="signupPWconf" type="password" ref={r => this.signupPWconf = r}  />                    
+                    <input placeholder="Email Address" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" id="signupEmail" type="email"  ref={r => this.signupEmail = r}  />
+                    <input placeholder="Street Address" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" id="address"  ref={r => this.signupAddress = r} /> 
+                    <input placeholder="City"id="city" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" ref={r => this.signupCity = r} />
+                    <input id="StateProvince" placeholder="Province or State" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" ref={r => this.signupProvince = r} />
+                    <input id="zip" placeholder="Postal Code or Zip" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" ref={r => this.signupPC = r} />
+                    <input placeholder="Country" id="country" className="f5 ma2 dim pa2 w-55 center shadow-5 mw-55 bn" ref={r => this.signupCountry = r} />
                     <br />
                     <button className="flex justify-center center" onClick={this.signUp} id="signupPW" size="3">Sign Up</button>
+                    
                 </div>
             </div>
         )

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone';
 import Imageupload from '../Imageupload/imageupload'
+
+
 class AddListing extends Component {
     constructor() {
         super();
@@ -41,20 +43,20 @@ class AddListing extends Component {
     render() {
         var newListing = (
             <div >
-                <div className="flex center flex-wrap">
+                <div className="flex justify-center center flex-wrap">
                     {/* <div>
                         <Imageupload onImageDrop={this.onImageDrop} />
                     </div> */}
                     <div>
                         <input type="file" id="input" onClick={e => this.uploadFile(e.target.files[0])} /><br/>
                         {/* Image <input type="file" ref={r => this.image = r} id="input" onChange={e => this.uploadFile(e.target.files[0])} /> */}
-                        <a className="f3 pa3 m3 mw-20">Title: <input className="ml6 m3" required ref={r => this.title = r} placeholder="Title" /></a><br/>
-                        <a className="f3 pa3 m3 mw-20">Price: <input className="ml6 m3" required ref={r => this.price = r} placeholder="Price" type="number" min="0" /></a><br/>
-                        <a className="f3 pa3 m3 mw-20">Desc: <textarea row="4" cols="50" className="ml6 m3" required ref={r => this.desc = r} placeholder="Description" /></a><br/>
-                        <a className="f3 pa3 m3 mw-20">Location: <input className="ml6 m3" ref={r => this.location = r} placeholder="Location" /></a><br/>
+                        <a className="f3 pa2 ma1 mw-20">Title    :<input className="pa2 ma1" required ref={r => this.title = r} placeholder="Title" /></a><br/>
+                        <a className="f3 pa2 ma1 mw-20">Price    :<input className="pa2 ma1" required ref={r => this.price = r} placeholder="Price" type="number" min="0" /></a><br/>
+                        <a className="f3 pa2 ma1 mw-20">Desc     :<textarea row="4" cols="50" className="pa2 ma1" required ref={r => this.desc = r} placeholder="Description" /></a><br/>
+                        <a className="f3 pa2 ma1 mw-20">Location :<input className="pa2 ma1" ref={r => this.location = r} placeholder="Location" /></a><br/>
                     </div>
                 </div>
-                <div className="flex justify-start center flex-wrap">
+                <div className="flex justify-center center flex-wrap">
                     {this.state.accepted.map(x => console.log(x))}
                     {this.state.accepted.map(x => <img style={{
                         maxWidth: '15vh',

@@ -102,7 +102,7 @@ class Dropdown extends Component {
                             base: 'bg-white br3 shadow-1 pa4 myModal'
                         }}
                     >
-                        <LoginPage />
+                        <LoginPage signedIn={this.props.isSignedIn}/>
                     </Modal>{' '}
                 </div>
             </div>
