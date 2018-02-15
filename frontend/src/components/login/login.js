@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 class Login extends Component {
+    constructor() {
+        super();
+
+        this.state = { signedIn: "failed" }
+    }
+
     sendLogin = () => {
         let data = {
             username: this.loginName.value,
@@ -13,46 +19,64 @@ class Login extends Component {
             credentials: 'include'
         })
             .then(x => x.text())
-            .then(y => console.log(y));
+            .then(y => console.log(y))
+            .then(y => {
+                if (y.res === true) {
+                    this.setState({ signedIn: "yes" })
+                } else {
+                    this.setState({ signedIn: "failed" })
+                }
+            });
     };
 
     render() {
         let loginPage = (
             <div>
-                <div className="flex flex-column justify-center content-center">
-                    <h1> Please Login here </h1>
-                    <h2> Username </h2>
+                <div >
+                    <h1 > Please Login here </h1>
                     <input
-                        className="f4 dim pa2 w-60 center shadow-5 br1"
+                        className="f4 dim m10 pa2 w-90 center shadow-5 br1"
                         id="loginName"
-                        size="3"
-                        placeholder="Enter name here"
+                        placeholder="Enter username here"
                         ref={r => (this.loginName = r)}
                     />
-
-                    <h2> Password </h2>
                     <input
-                        className="f4 dim pa2 w-60 center shadow-5 br1"
+                        className="f4 dim m10 pa2 w-90 center shadow-5 br1"
                         id="loginPW"
                         type="password"
-                        size="3"
                         placeholder="Enter password here"
                         ref={r => (this.loginPW = r)}
                     />
-
                     <br />
-                    <button
-                        onClick={this.sendLogin}
-                        className="f4 dim pa2 w-20 center shadow-5 br1"
-                        size="3"
-                    >
-                        {' '}
-                        Log In{' '}
+                    <button onClick={this.sendLogin} className="flex flex-column content-center center ma3 f4 dim pa2 w-40 justify-center shadow-5 br1">
+                        {' '}Log In{' '}
                     </button>
                 </div>
             </div>
         );
-        return loginPage;
+        
+        let loginFailure = (
+            <div>
+                <h1>Log in Failed, No Selling for you!!</h1>   
+            </div>
+        )
+        
+        let loginSuccess = (
+            <div className="">
+                <h1>Login Success</h1>    
+            </div>
+        )
+        
+        if (this.state.signedIn === "no") {
+            return loginPage
+        } else if (this.state.signedIn === "yes"){
+
+            return loginSuccess
+        } else {
+            setTimeout(() => {this.setState.signedIn = "no"}, 1000)
+            return loginFailure
+        }
+        
     }
 }
 
