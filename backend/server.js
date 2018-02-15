@@ -6,7 +6,7 @@ const app = express();
 const cookieParser = require('cookie-parser')
 
 app.use(cookieParser());
-app.use(bodyParser.raw({ type: '*/*' }))
+app.use(bodyParser.raw({ type: '*/*', limit: '50mb'}))
 
 var cookieMap = {};
 
@@ -19,30 +19,21 @@ var generateCookie = () => {
     else return sessionID;
 }
 
-
-//checks for sessionID and returns the according userID OR returns failure message
-app.get('/test', (req, res) => {
-    console.log('cookies: ', req.cookies)
-    let sessionID = req.cookies.sessionID;
-    if (cookieMap[sessionID]) {res.send(`userID: ${cookieMap[sessionID]}`)}
-    else res.send('no sessionID found')
-})
-
-app.post('/login', (req, res) => { // takes object with username & password, attempts to match with database
-    let payload = JSON.parse(req.body.toString());
+app.post('/login', async (req, res) => { // takes object with username & password, attempts to match with database
+    let payload = JSON.parse(req.body);
     let username = payload.username;
     let password = payload.password;
-    if (alibay.login(username, password)) {
+    var test = await alibay.login(username, password)
+    if (test.result) {
         let sessionID = generateCookie();
-        cookieMap[sessionID] = Number(alibay.getUserID(username));
-        console.log(`getUserID result ${alibay.getUserID(username)}`)
-        console.log(`cookieMap: `,cookieMap)
-        fs.writeFileSync('./datafiles/cookieMap.txt', (JSON.stringify(cookieMap)));
-        res.set('Set-Cookie', 'sessionID='+sessionID);
-        res.send(JSON.stringify({res: true, sessionID: sessionID})); //if successful, will send JSON object with sessionID
+        console.log('test id', test.id)
+        cookieMap[sessionID] = test.id;
+        fs.writeFileSync('./datafiles/cookieMap.txt', JSON.stringify(cookieMap));
+        res.set('Set-Cookie', "sessionID=" + sessionID);
+        res.send(JSON.stringify({ res: true, sessionID: sessionID })); //if successful, will send JSON object with sessionID
     }
     else {
-        res.send(JSON.stringify({res: false})) //if failed login, send JSON object with sessionID false
+        res.send(JSON.stringify({ res: false })) //if failed login, send JSON object with sessionID false
     }
 })
 
@@ -58,8 +49,9 @@ app.post('/createListing', (req, res) => { // takes a JSON object in body, with 
     let sellerID = cookieMap[sessionID];
 
     let request = JSON.parse(req.body);
+    console.log('request', request)
 
-    var image1 = request.images[0].preview
+    // var image1 = request.images[0].preview
     let title = request.title;
     let price = request.price;
     let desc = request.description;
@@ -114,8 +106,12 @@ app.post('/signUp', (req, res) => {
     }
 })
 
-app.post('/itemsSold', (req, res) => { // takes single string in body, returns arrray of listing IDs
-    res.send(JSON.stringify(alibay.allItemsSold(req.body.toString())));
+app.post('/itemsSold', async (req, res) => { // takes single string in body, returns arrray of listing IDs
+    var payload = JSON.parse(req.body.toString())
+    console.log(">>>>>>>", payload.seller_id)
+    var ok = await alibay.allItemsSold(payload.seller_id);
+    console.log(ok)
+    res.send(JSON.stringify(ok));
 })
 
 
