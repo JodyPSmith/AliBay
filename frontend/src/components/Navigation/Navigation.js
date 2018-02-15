@@ -5,19 +5,20 @@ import './dropdown.css';
 
 class Navigation extends Component {
     render() {
-        const { signedIn, route, setRoute } = this.props;
+        const { isSignedIn, location } = this.props;
+        const home = location.pathname === '/'
         //needed ternary operator to change css depending on route
         //otherwise the nav would appear on the wrong side
         const css =
-            route === 'home'
+            home
                 ? 'flex justify-end w-100 '
                 : 'flex justify-between w-100 ';
         //in the parent container, the signedIn prop is linked to the this.state.isSignedIn boolean
         //if false -> displays "Sign In" otherwise it links to the Dashboard
-        return !signedIn ? (
+        return !isSignedIn ? (
             <div className={css}>
                 {/* this binary operator will display nothing if the route is at the homepage, or the inAppSearch bar if it isnt */}
-                {route === 'home' || <InAppSearchBar setRoute={setRoute} />}
+                {home || <InAppSearchBar />}
                 <nav className="flex justify-end">
                     <p
                         onClick={''}
@@ -28,15 +29,15 @@ class Navigation extends Component {
                 </nav>
             </div>
         ) : (
-            <div className={css}>
-                {route === 'home' || <InAppSearchBar setRoute={setRoute} />}
-                <nav className="flex justify-end">
-                    <div className="ma3 mr4 mt4 ml0">
-                        <Dropdown setRoute={setRoute} />
-                    </div>
-                </nav>
-            </div>
-        );
+                <div className={css}>
+                    {home || <InAppSearchBar />}
+                    <nav className="flex justify-end">
+                        <div className="ma3 mr4 mt4 ml0">
+                            <Dropdown />
+                        </div>
+                    </nav>
+                </div>
+            );
     }
 }
 

@@ -1,18 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import Imageupload from '../Imageupload/imageupload'
-
-
+import Imageupload from '../Imageupload/imageupload';
 class AddListing extends Component {
     constructor() {
         super();
-        this.state = { accepted: [], rejected: [] }
+        this.state = { accepted: [], rejected: [] };
     }
 
     onImageDrop = (accepted, rejected) => {
         this.setState({ accepted, rejected });
+
         //console.log(accepted);
-    }
+    };
 
     uploadFile = (x) => {
         
@@ -37,8 +36,8 @@ class AddListing extends Component {
             credentials: "include"
         })
             .then(x => x.text())
-            .then(y => console.log(y))
-    }
+            .then(y => console.log(y));
+    };
 
     render() {
         var newListing = (
@@ -58,22 +57,25 @@ class AddListing extends Component {
                 </div>
                 <div className="flex justify-center center flex-wrap">
                     {this.state.accepted.map(x => console.log(x))}
-                    {this.state.accepted.map(x => <img style={{
-                        maxWidth: '15vh',
+                    {this.state.accepted.map(x => (
+                        <img
+                            style={{
+                                maxWidth: '15vh',
 
-                        minHeight: 'auto',
+                                minHeight: 'auto',
 
-                        margin: '2vh'
-                    }} src={x.preview} />)}
+                                margin: '2vh'
+                            }}
+                            src={x.preview}
+                        />
+                    ))}
                 </div>
 
                 <br />
                 <button onClick={this.uploadFile}>Add Listing</button>
             </div>
-        )
-        return (
-            newListing
-        )
+        );
+        return newListing;
     }
 }
 
