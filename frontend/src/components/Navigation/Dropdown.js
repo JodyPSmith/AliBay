@@ -4,6 +4,8 @@ import modalCss from './modalcss';
 import LoginPage from '../../Containers/LoginPage/LoginPage';
 import SignUpPage from '../../Containers/SignupPage/SignupPage';
 import Scroll from '../../Containers/scroll';
+import { Link } from 'react-router-dom';
+
 class Dropdown extends Component {
     constructor() {
         super();
@@ -23,6 +25,7 @@ class Dropdown extends Component {
     };
     componentDidMount() {
         console.log(Modal.defaultStyles);
+        1;
         // Close the dropdown menu if the user clicks outside of it
         window.onclick = function(event) {
             if (!event.target.matches('.dropbtn')) {
@@ -56,30 +59,21 @@ class Dropdown extends Component {
                     id="myDropdown"
                     className="dropdown-content bg-white shadow-1 mr4"
                 >
-                    <a className="pointer dim" onClick={() => setRoute('home')}>
+                    <Link className="pointer dim" to="/">
                         Home
-                    </a>
-                    <a
-                        className="pointer dim"
-                        onClick={() => setRoute('dashboard')}
-                    >
+                    </Link>
+                    <Link className="pointer dim" to="/dashboard">
                         Dashboard
-                    </a>
-                    <a className="pointer dim" onClick={() => setRoute('')}>
+                    </Link>
+                    <Link className="pointer dim" to="/search">
                         Search Page
-                    </a>
-                    <a
-                        className="pointer dim"
-                        onClick={() => setRoute('confirmationPage')}
-                    >
+                    </Link>
+                    <Link className="pointer dim" to="/confirm">
                         Confirmation Page
-                    </a>
-                    <a
-                        className="pointer dim"
-                        onClick={() => setRoute('AddListingPage')}
-                    >
+                    </Link>
+                    <Link className="pointer dim" to="/add">
                         Add Listing
-                    </a>
+                    </Link>
                     <a className="pointer dim" onClick={this.toggleSignUpModal}>
                         Signup
                     </a>

@@ -24,3 +24,7 @@ body {
 .myModal {
     animation: popIn 0.225s ease-in-out;
 }
+
+.visited:visited {
+    color: grey;
+}
