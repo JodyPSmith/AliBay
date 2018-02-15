@@ -167,7 +167,7 @@ app.post('/imgUpload', (req, res) => {
     var filenames = [];
     req.pipe(req.busboy);
     req.busboy.on('file', (fieldname, file, filename) => {
-        filename = 'img'+Math.floor(Math.random)*10000000
+        filename = 'img'+ Math.floor(Math.random())*10000000
         console.log('Uploading: ' + filename);
         fstream = fs.createWriteStream(
             __dirname + '/datafiles/tempImages/' + filename
