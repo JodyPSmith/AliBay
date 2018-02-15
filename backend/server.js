@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(busboy());
 
-app.use(express.static('datafiles/images'));
+app.use(express.static('datafiles/tempImages'));
 
 var cookieMap = {};
 
@@ -30,28 +30,6 @@ const generateCookie = () => {
         return generateCookie();
     } else return sessionID; //if sessionID exists, re-generate sessionID
 };
-
-app.post('/imgTest', (req, res) => {
-    var fstream;
-    var filenames = [];
-    req.pipe(req.busboy);
-    req.busboy.on('file', (fieldname, file, filename) => {
-        console.log('Uploading: ' + filename);
-        fstream = fs.createWriteStream(
-            __dirname + '/datafiles/images/' + filename
-        );
-        filenames.push(filename);
-        file.pipe(fstream);
-        fstream.on('error', err => {
-            console.log('error', err);
-            res.status(500).send({ res: 'error' });
-        });
-    });
-
-    req.busboy.on('finish', () => res.send({ res: filenames }));
-
-    // if (req.body) res.send(JSON.stringify({ res: 'success' }));
-});
 
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
@@ -88,14 +66,12 @@ app.post('/signUp', async (req, res) => {
 });
 app.post('/login', async (req, res) => {
     // takes object with username & password, attempts to match with database
-    console.log('hhh', req.body);
     let payload = req.body;
     let username = payload.username;
     let password = payload.password;
     var test = await alibay.login(username, password);
     if (test.result) {
         let sessionID = generateCookie();
-        console.log('test id', test.id);
         cookieMap[sessionID] = test.id;
         fs.writeFileSync(
             __dirname + '/datafiles/cookieMap.txt',
@@ -182,4 +158,26 @@ app.post('/search', (req, res) => {
 
 app.listen(4000, () => {
     console.log('Listening on port 4000');
+});
+
+// image filewriting
+
+app.post('/imgUpload', (req, res) => {
+    var fstream;
+    var filenames = [];
+    req.pipe(req.busboy);
+    req.busboy.on('file', (fieldname, file, filename) => {
+        filename = 'img' + Math.floor(Math.random() * 10000000);
+        console.log('Uploading: ' + filename);
+        fstream = fs.createWriteStream(
+            __dirname + '/datafiles/tempImages/' + filename
+        );
+        filenames.push(filename);
+        file.pipe(fstream);
+        fstream.on('error', err => {
+            console.log('error', err);
+            res.status(500).send({ res: 'error' });
+        });
+    });
+    req.busboy.on('finish', () => res.send({ res: filenames }));
 });
