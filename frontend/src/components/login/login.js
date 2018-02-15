@@ -26,7 +26,6 @@ class Login extends Component {
                     this.setState({ loginStat: "yes" })  
                 } else {
                     this.setState({ loginStat: "failed" })
-                    
                     setTimeout(() => this.setState({loginStat : "no" }), 2000)
                 }
             });
@@ -36,15 +35,17 @@ class Login extends Component {
         let loginPage = (
             <div>
                 <div >
-                    <h1 > Please Login here </h1>
+                    <h1 className="flex justify-center f3"> Please Login here </h1>
                     <input
-                        className="f4 dim m10 pa2 w-90 center shadow-5 br1"
+                        className="flex f5 ma2 dim pa2 w-100 mw-100 center shadow-5 bn"
+                        //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
                         id="loginName"
                         placeholder="Enter username here"
                         ref={r => (this.loginName = r)}
                     />
                     <input
-                        className="f4 dim m10 pa2 w-90 center shadow-5 br1"
+                        className="flex f5 ma2 dim pa2 w-100 mw-100 center shadow-5 bn"
+                        //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
                         id="loginPW"
                         type="password"
                         placeholder="Enter password here"

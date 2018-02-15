@@ -1,28 +1,24 @@
 import React, { Component } from "react";
-import Card from "../Card/Card.js"
-
-let dashboard =
-    (<div className="Dashboard">
-        <div className="itemList"> 
-        Bought Items
-        <Card/>
-        </div>
-        <div className="itemList">
-        Selling Items
-        <Card/>
-        </div>
-        <div className="itemList"> 
-        Sold Items
-        <Card/>
-        </div>
-    </div>);
-
-
+import { items } from '../../components/Card/fakeData';
+import CardList from "../Card/CardList.js"
 
 class Dashboard extends Component {
     render() {
         return (
-            dashboard
+            <div>
+                <div className="itemList">
+                    Bought Items
+                        <CardList items={items} setItemPage={this.props.setItemPage} />
+                </div>
+                <div className="itemList">
+                    Selling Items
+                        <CardList items={items} setItemPage={this.props.setItemPage} />
+                </div>
+                <div className="itemList">
+                    Sold Items
+                        <CardList items={items} setItemPage={this.props.setItemPage} />
+                </div>
+            </div>
         );
     }
 

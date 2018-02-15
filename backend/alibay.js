@@ -1,6 +1,14 @@
 const assert = require("assert");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const mysql = require('promise-mysql');
+var con = null
+mysql.createConnection({
+  host: '165.227.39.184',
+  user: 'vako',
+  password: '12345',
+  database: 'alibay'
+}).then((x) => { con = x });
 
 // Maps:
 // map that keeps track of all the items a user has bought
@@ -25,7 +33,7 @@ let userMap = {
 };
 
 //map that keeps track of passwords
-let passMap = {};
+// let passMap = {};
 
 // map that keeps track of all products
 let productsMap = {};
@@ -36,7 +44,7 @@ try {
   itemsBought = JSON.parse(fs.readFileSync('./datafiles/itemsBought.txt'));
   itemsSold = JSON.parse(fs.readFileSync('./datafiles/itemsSold.txt'));
   userMap = JSON.parse(fs.readFileSync('./datafiles/userMap.txt'));
-  passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
+  // passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
   productsMap = JSON.parse(fs.readFileSync('./datafiles/productsMap.txt'));
 }
 catch (err) {
@@ -57,7 +65,7 @@ function genPID() {
 
 //Sign-up/Login functions
 
-function signUp(
+async function signUp(
   fname,
   lname,
   username,
@@ -69,28 +77,33 @@ function signUp(
   pcode,
   country
 ) {
-  if (checkUsername(username)) {
-    let userID = genUID();
+  if (await checkUsername(username)) {
     let passHash = bcrypt.hashSync(pwd, 12);
-    passMap[username] = passHash;
-    userMap[userID] = {
+    let userInfo = {
       first_name: fname,
       last_name: lname,
       username: username,
-      email_address: email,
+      password: passHash,
+      email: email,
       address: address,
       city: city,
       province: province,
       postal_code: pcode,
       country: country
     };
-    itemsBought[userID] = [];
-    itemsSold[userID] = [];
-    fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
-    fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
-    fs.writeFileSync("././datafiles/userMap.txt", JSON.stringify(userMap));
-    fs.writeFileSync("././datafiles/passMap.txt", JSON.stringify(passMap));
-    console.log(`${userID} user created`);
+    // itemsBought[userID] = [];
+    // itemsSold[userID] = [];
+    con.query('INSERT INTO users SET ?', userInfo,
+      (err, rows) => {
+        if (err) throw err;
+        console.log('Data inserted into Db:\n');
+        console.log(rows);
+      });
+    // fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+    // fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+    // fs.writeFileSync("././datafiles/userMap.txt", JSON.stringify(userMap));
+    // fs.writeFileSync("././datafiles/passMap.txt", JSON.stringify(passMap));
+    console.log(`user created`);
     return true;
   } else {
     console.log('check username failed')
@@ -98,16 +111,22 @@ function signUp(
   }
 }
 
-function login(username, password) {
-  try{ return bcrypt.compareSync(password, passMap[username])}
-  catch(err) {
-    console.log('error: username or password does not exist', err)
+async function login(username, password) {
+  var result = await con.query('SELECT id, password FROM users WHERE username = ?', [username])
+  console.log(">>> LOGIN RESULT >> ", result[0].password);
+  if (result[0] !== undefined){
+  var bool = bcrypt.compareSync(password, result[0].password);
+  return {id: result[0].id, result: bool}
+}
+  else {
     return false
   }
 }
 
-function checkUsername(username) {
-  if (!passMap[username]) {
+async function checkUsername(username) {
+  var result = await con.query('SELECT username FROM users WHERE username = ?', [username])
+  console.log(`result :`, result)
+  if (!result[0]) {
     return true;
   } else {
     return false;
@@ -139,13 +158,17 @@ function createListing(title, sellerID, price, desc) {
   let pID = genPID();
   productsMap[pID] = {
     title: title,
-    sellerID: sellerID,
-    price: price,
     description: desc,
-    isSold: false
+    price: price,
+    seller_id: sellerID,
   };
-  fs.writeFileSync("././datafiles/productsMap.txt", JSON.stringify(productsMap));
+  con.query('INSERT INTO listing SET ?', productsMap[pID], (err, rows) => {
+    if (err) throw err;
+    console.log('Data received from Db:\n');
+    console.log(rows);
+  });
   return pID;
+  //fs.writeFileSync("./backend/./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
 /* 
@@ -186,8 +209,11 @@ allItemsSold returns the IDs of all the items sold by a seller
     parameter: [sellerID] The ID of the seller
     returns: an array of listing IDs
 */
-function allItemsSold(sellerID) {
-  return itemsSold[sellerID];
+async function allItemsSold(sellerID) {
+  var listing_id = [];
+  var result = await con.query('SELECT listing_id FROM listing WHERE seller_id = ?', [sellerID]);
+  console.log(">>>", result)
+  return result;
 }
 
 /*
@@ -237,7 +263,7 @@ module.exports = {
   itemsSold,
   productsMap,
   userMap,
-  passMap,
+  // passMap,
   genUID,
   genPID,
   signUp,

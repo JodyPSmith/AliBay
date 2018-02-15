@@ -24,7 +24,7 @@ class Dropdown extends Component {
         this.setState({ signUpIsOpen: !this.state.signUpIsOpen });
     };
     componentDidMount() {
-        console.log(Modal.defaultStyles);
+        //console.log(Modal.defaultStyles);
 
         // Close the dropdown menu if the user clicks outside of it
         window.onclick = function(event) {
