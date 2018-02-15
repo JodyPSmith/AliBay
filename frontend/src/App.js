@@ -81,6 +81,7 @@ class App extends Component {
                             <SearchPage setItemPage={this.setItemPage} />
                         )}
                     />
+                    <Route path="/testing" render={() => <TestingPage />} />
                     <Route
                         exact
                         path="/dashboard"

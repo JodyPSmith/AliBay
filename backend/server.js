@@ -45,7 +45,7 @@ app.post('/imgTest', (req, res) => {
             });
         });
     } catch (err) {
-        res.send(JSON.stringify());
+        res.send({ res: 'error' });
     }
 
     req.busboy.on('finish', () => res.send({ res: filenames }));
@@ -55,7 +55,7 @@ app.post('/imgTest', (req, res) => {
 
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
-    let request = JSON.parse(req.body.toString());
+    let request = req.body;
     let fname = request.firstname;
     let lname = request.lastname;
     let usr = request.username;
@@ -88,7 +88,7 @@ app.post('/signUp', async (req, res) => {
 });
 app.post('/login', async (req, res) => {
     // takes object with username & password, attempts to match with database
-    let payload = JSON.parse(req.body);
+    let payload = req.body;
     let username = payload.username;
     let password = payload.password;
     var test = await alibay.login(username, password);
@@ -101,9 +101,9 @@ app.post('/login', async (req, res) => {
             JSON.stringify(cookieMap)
         );
         res.set('Set-Cookie', 'sessionID=' + sessionID);
-        res.send(JSON.stringify({ res: true, sessionID: sessionID })); //if successful, will send JSON object with sessionID
+        res.send({ res: true, sessionID: sessionID }); //if successful, will send JSON object with sessionID
     } else {
-        res.send(JSON.stringify({ res: false })); //if failed login, send JSON object with sessionID false
+        res.send({ res: false }); //if failed login, send JSON object with sessionID false
     }
 });
 
@@ -114,7 +114,7 @@ app.post('/buy', (req, res) => {
     let sessionID = req.cookies.sessionID;
     let sellerID = cookieMap[sessionID];
 
-    let request = JSON.parse(req.body.toString());
+    let request = req.body;
     let buyerID = request.buyerID;
     let listingID = request.listingID;
     alibay.buy(buyerID, sellerID, listingID);
@@ -126,9 +126,9 @@ app.post('/createListing', (req, res) => {
     let sessionID = req.cookies.sessionID;
     let sellerID = cookieMap[sessionID];
 
-    let request = JSON.parse(req.body);
-    console.log('request', request);
+    let request = req.body;
 
+    var image1 = request.images[0].preview;
     let title = request.title;
     let price = request.price;
     let desc = request.description;
@@ -145,7 +145,7 @@ app.get('/itemsBought', (req, res) => {
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
     // console.log(`sessionID=${sessionID}, userID=${userID}`)
-    res.send(JSON.stringify(alibay.getItemsBought(userID)));
+    res.send(alibay.getItemsBought(userID));
 });
 
 app.post('/itemsSold', async (req, res) => {
@@ -154,29 +154,29 @@ app.post('/itemsSold', async (req, res) => {
     console.log('>>>>>>>', payload.seller_id);
     var ok = await alibay.allItemsSold(payload.seller_id);
     console.log(ok);
-    res.send(JSON.stringify(ok));
+    res.send(ok);
 });
 
 app.get('/itemDescription', (req, res) => {
     // Returns object with price and blurb
     let item = req.query.item;
     let description = alibay.getItemDescription(item);
-    res.send(JSON.stringify(description));
+    res.send(description);
 });
 
 // search functions-----------------------------------------------------------------------------------
 
 app.get('/allListings', (req, res) => {
     // returns an array with all listings where isSold === true
-    res.send(JSON.stringify(alibay.allListings()));
+    res.send(alibay.allListings());
 });
 
 app.post('/search', (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
-    let request = JSON.parse(req.body.toString());
+    let request = req.body.toString();
     let searchTerm = request.searchTerm;
     let results = alibay.searchForListings(searchTerm);
-    res.send(JSON.stringify(results)); // return the array (could be empty) to be processed in front-end
+    res.send(results); // return the array (could be empty) to be processed in front-end
 });
 
 app.listen(4000, () => {
