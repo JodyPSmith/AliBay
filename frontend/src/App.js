@@ -9,6 +9,7 @@ import ConfirmationPage from './Containers/ConfirmationPage/ConfirmationPage';
 import { items } from './components/Card/fakeData';
 import userMap from './placeholderData/user';
 import Navigation from './components/Navigation/Navigation';
+import TestingPage from './Containers/TestingPage';
 
 class App extends Component {
     constructor() {
@@ -80,6 +81,7 @@ class App extends Component {
                             <SearchPage setItemPage={this.setItemPage} />
                         )}
                     />
+                    <Route path="/testing" render={() => <TestingPage />} />
                 </Switch>
             </div>
         );

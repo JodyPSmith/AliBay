@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import ImageUpload from '../components/Imageupload/imageupload';
 class Testing extends Component {
     constructor() {
         super();
@@ -7,21 +7,21 @@ class Testing extends Component {
             img: ''
         };
     }
-    componentDidMount() {
-        const reader = new FileReader();
-        let file;
-        fetch('/imgTest')
-            .then(res => res.json())
-            .then(res => console.log(res.img.data));
-        // let img = reader.readAsBinaryString(file);
-        // this.setState({ img });
-    }
+    uploadImage = accepted => {
+        console.log(accepted);
+        const formData = new FormData();
+        accepted.forEach((file, i) => {
+            console.log(file);
+            formData.append(`userpic[]`, file, file.name);
+        });
+        console.log(formData);
+        fetch('/imgTest', {
+            method: 'POST',
+            body: formData
+        }).then(res => console.log(res));
+    };
     render() {
-        return (
-            <div>
-                <img src={this.state.img} alt="test" />
-            </div>
-        );
+        return <ImageUpload onImageDrop={this.uploadImage} />;
     }
 }
 
