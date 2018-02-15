@@ -80,6 +80,7 @@ class Dropdown extends Component {
                         Login Page
                     </a>
                     <Modal
+
                         isOpen={signUpIsOpen}
                         onRequestClose={this.toggleSignUpModal}
                         shouldCloseOnOverlayClick={true}
