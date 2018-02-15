@@ -13,22 +13,27 @@ class AddListing extends Component {
         //console.log(accepted);
     };
 
+    uploadFile = (x) => {
+        
+        console.log("this is what x is " + x)
+        fetch('/raw',{
+            method: "POST",
+            enctype: "multipart/form-data",
+            body: x}) // 
+      }
+      
     createListing = () => {
-        var newItem = {
-            sellerID: 12345,
-            title: this.title.value,
-            price: this.price.value,
-            description: this.desc.value,
-            images: this.state.accepted,
-            location: this.location.value
-        };
-        console.log(newItem);
+        //var newItem = { "sellerID": 12345, "title": this.title.value, "price": this.price.value, "description": this.desc.value, "images": this.state.accepted, "location": this.location.value }
+        var newItem = { "images": this.state.accepted[0] }
+        var extract = newItem.images;
+        var blobby = extract.preview;
+        console.log(blobby);
         // need to add redirect to for sale items in the below fetch once the end point is ready
         fetch('/createListing', {
-            method: 'POST',
-            enctype: 'multipart/form-data',
-            body: JSON.stringify(newItem),
-            credentials: 'include'
+            method: "POST",
+            enctype: "multipart/form-data",
+            body: JSON.stringify(blobby),
+            credentials: "include"
         })
             .then(x => x.text())
             .then(y => console.log(y));
@@ -36,38 +41,18 @@ class AddListing extends Component {
 
     render() {
         var newListing = (
-            <div>
-                <div className="flex justify-start center flex-wrap">
-                    <div>
+            <div >
+                <div className="flex center flex-wrap">
+                    {/* <div>
                         <Imageupload onImageDrop={this.onImageDrop} />
-                    </div>
+                    </div> */}
                     <div>
-                        Title:{' '}
-                        <input
-                            required
-                            ref={r => (this.title = r)}
-                            placeholder="Title"
-                        />
-                        Price:{' '}
-                        <input
-                            required
-                            ref={r => (this.price = r)}
-                            placeholder="Price"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                        />
-                        Desc:{' '}
-                        <input
-                            required
-                            ref={r => (this.desc = r)}
-                            placeholder="Description"
-                        />
-                        Location:{' '}
-                        <input
-                            ref={r => (this.location = r)}
-                            placeholder="Location"
-                        />
+                        <input type="file" id="input" onClick={e => this.uploadFile(e.target.files[0])} /><br/>
+                        {/* Image <input type="file" ref={r => this.image = r} id="input" onChange={e => this.uploadFile(e.target.files[0])} /> */}
+                        <a className="f3 pa3 m3 mw-20">Title: <input className="ml6 m3" required ref={r => this.title = r} placeholder="Title" /></a><br/>
+                        <a className="f3 pa3 m3 mw-20">Price: <input className="ml6 m3" required ref={r => this.price = r} placeholder="Price" type="number" min="0" /></a><br/>
+                        <a className="f3 pa3 m3 mw-20">Desc: <textarea row="4" cols="50" className="ml6 m3" required ref={r => this.desc = r} placeholder="Description" /></a><br/>
+                        <a className="f3 pa3 m3 mw-20">Location: <input className="ml6 m3" ref={r => this.location = r} placeholder="Location" /></a><br/>
                     </div>
                 </div>
                 <div className="flex justify-start center flex-wrap">
@@ -87,7 +72,7 @@ class AddListing extends Component {
                 </div>
 
                 <br />
-                <button onClick={this.createListing}>Add Listing</button>
+                <button onClick={this.uploadFile}>Add Listing</button>
             </div>
         );
         return newListing;
