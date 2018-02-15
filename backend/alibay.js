@@ -114,10 +114,10 @@ async function signUp(
 async function login(username, password) {
   var result = await con.query('SELECT id, password FROM users WHERE username = ?', [username])
   console.log(">>> LOGIN RESULT >> ", result[0].password);
-  if (result[0] !== undefined){
-  var bool = bcrypt.compareSync(password, result[0].password);
-  return {id: result[0].id, result: bool}
-}
+  if (result[0] !== undefined) {
+    var bool = bcrypt.compareSync(password, result[0].password);
+    return { id: result[0].id, result: bool }
+  }
   else {
     return false
   }
@@ -138,7 +138,7 @@ function getUserID(username) {
   let allUserIDs = Object.keys(userMap);
   let ret;
   allUserIDs.forEach(x => {
-    if (username == userMap[x].username) {ret = x;}
+    if (username == userMap[x].username) { ret = x; }
   });
   return ret;
 }
@@ -183,14 +183,18 @@ The seller will see the listing in his history of items sold
      [listingID] The ID of listing
     returns: undefined
 */
-function buy(buyerID, sellerID, listingID) {
-  itemsBought[buyerID].push(listingID);
-  itemsSold[sellerID].push(listingID);
-  productsMap[listingID].isSold = true;
+function buy(userID, listingID) {
+  con.query('UPDATE listing SET buyer_id ?' , [userID] , 'WHERE listing_id = ?', [listingID], (err, rows) => {
+    if (err) throw err;
+    console.log('Data received from Db:\n');
+    console.log(rows);
+  });
 
-  fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
-  fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
-  fs.writeFileSync("././datafiles/productsMap.txt", JSON.stringify(productsMap));
+  
+
+  //fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
+  //fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
+  //fs.writeFileSync("././datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
 //Search/return functions
@@ -200,10 +204,11 @@ allItemsBought returns the IDs of all the items bought by a buyer
     parameter: [buyerID] The ID of the buyer
     returns: an array of listing IDs
 */
-function allItemsBought(buyerID) {
-  return itemsBought[buyerID];
+async function allItemsBought(buyerID) {
+  var result = await con.query('SELECT * FROM listing WHERE buyer_id = ?', [buyerID]);
+  console.log(">>> Items bought by user >>>", result);
+  return result;
 }
-
 /* 
 allItemsSold returns the IDs of all the items sold by a seller
     parameter: [sellerID] The ID of the seller
@@ -211,19 +216,26 @@ allItemsSold returns the IDs of all the items sold by a seller
 */
 async function allItemsSold(sellerID) {
   var listing_id = [];
-  var result = await con.query('SELECT listing_id FROM listing WHERE seller_id = ?', [sellerID]);
+  var result = await con.query('SELECT * FROM listing WHERE seller_id = ?', [sellerID]);
   console.log(">>>", result)
   return result;
 }
-
+// return items that the user is currently selling.
+async function allitemsSelling(sellerID){
+  var result = await con.query('SELECT * FROM listing WHERE seller_id =?' , [sellerID], 'AND buyer_id IS NULL')
+  console.log(">>>", result);
+  return result;
+}
 /*
 allListings returns the IDs of all the listings currently on the market
 Once an item is sold, it will not be returned by allListings
     returns: an array of listing IDs
 */
-function allListings() {
-  let productIds = Object.keys(productsMap); // array of all productIds in map
-  return productIds.filter(x => !productsMap[x].isSold); // return new array with all products where isSold == true
+async function allListings() {
+  // let productIds = Object.keys(productsMap); // array of all productIds in map
+  // return productIds.filter(x => !productsMap[x].isSold); // return new array with all products where isSold == true
+  var result = await con.query('SELECT * FROM listing WHERE buyer_id IS NULL');
+  return result;
 }
 
 /* 

@@ -1,38 +1,43 @@
 import React, { Component } from 'react';
-//import Dropzone from 'react-dropzone';
-//import Imageupload from '../Imageupload/imageupload';
+import Imageupload from '../Imageupload/imageupload';
 class AddListing extends Component {
     constructor() {
         super();
-        this.state = { accepted: [], rejected: [] };
+        this.state = {
+            accepted: [],
+            images: []
+        };
     }
 
-    onImageDrop = (accepted, rejected) => {
-        this.setState({ accepted, rejected });
-
-        //console.log(accepted);
-    };
-
-    uploadFile = x => {
-        console.log('this is what x is ' + x);
-        fetch('/raw', {
+    onImageDrop = accepted => {
+        console.log(accepted);
+        const formData = new FormData();
+        accepted.forEach((file, i) => {
+            console.log(file);
+            formData.append(`userpic[]`, file, file.name);
+        });
+        console.log(formData);
+        fetch('/imgUpload', {
             method: 'POST',
-            enctype: 'multipart/form-data',
-            body: x
-        }); //
+            body: formData
+        })
+            .then(res => res.json())
+            .then(res => this.setState({ images: res.images }));
     };
 
     createListing = () => {
-        //var newItem = { "sellerID": 12345, "title": this.title.value, "price": this.price.value, "description": this.desc.value, "images": this.state.accepted, "location": this.location.value }
-        var newItem = { images: this.state.accepted[0] };
-        var extract = newItem.images;
-        var blobby = extract.preview;
-        console.log(blobby);
-        // need to add redirect to for sale items in the below fetch once the end point is ready
+        var newItem = {
+            title: this.title.value,
+            price: this.price.value,
+            description: this.desc.value,
+            images: this.state.images,
+            location: this.location.value
+        };
+
         fetch('/createListing', {
             method: 'POST',
             enctype: 'multipart/form-data',
-            body: JSON.stringify(blobby),
+            body: JSON.stringify(newItem),
             credentials: 'include'
         })
             .then(x => x.text())
@@ -43,12 +48,10 @@ class AddListing extends Component {
         var newListing = (
             <div>
                 <div className="flex justify-center center flex-wrap">
-                    {/* <div>
-                        <Imageupload onImageDrop={this.onImageDrop} />
-                    </div> */}
                     <div>
-                        {/* <input type="file" id="input" onClick={e => this.uploadFile(e.target.files[0])} /><br/> */}
-                        {/* Image <input type="file" ref={r => this.image = r} id="input" onChange={e => this.uploadFile(e.target.files[0])} /> */}
+                        <Imageupload onImageDrop={this.onImageDrop} />
+                    </div>
+                    <div>
                         <a className="f3 pa2 ma1 mw-20">
                             Title :<input
                                 className="pa2 ma1"
@@ -92,18 +95,21 @@ class AddListing extends Component {
                 </div>
                 <div className="flex justify-center center flex-wrap">
                     {this.state.accepted.map(x => console.log(x))}
-                    {this.state.accepted.map(x => (
-                        <img
-                            style={{
-                                maxWidth: '15vh',
+                    {this.state.images.map(image => {
+                        console.log(image);
+                        return (
+                            <img
+                                style={{
+                                    maxWidth: '15vh',
 
-                                minHeight: 'auto',
+                                    minHeight: 'auto',
 
-                                margin: '2vh'
-                            }}
-                            src={x.preview}
-                        />
-                    ))}
+                                    margin: '2vh'
+                                }}
+                                src={`http://localhost:4000/${image}`}
+                            />
+                        );
+                    })}
                 </div>
 
                 <br />

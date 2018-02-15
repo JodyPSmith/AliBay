@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 class Login extends Component {
     constructor() {
         super();
-        this.state = { }
+        this.state = {};
     }
     componentDidMount = () => {
-        this.setState({ loginStat: "no" })
-    }
+        this.setState({ loginStat: 'no' });
+    };
 
     sendLogin = () => {
         let data = {
@@ -17,17 +17,19 @@ class Login extends Component {
         console.log(data);
         fetch('/login', {
             method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
             body: JSON.stringify(data),
             credentials: 'include'
         })
             .then(x => x.json())
             .then(y => {
                 if (y.res === true) {
-                    this.setState({ loginStat: "yes" })
-                    //setTimeout( () => this.setState(route to dashboard))  
+                    this.setState({ loginStat: 'yes' });
                 } else {
-                    this.setState({ loginStat: "failed" })
-                    setTimeout(() => this.setState({loginStat : "no" }), 2000)
+                    this.setState({ loginStat: 'failed' });
+                    setTimeout(() => this.setState({ loginStat: 'no' }), 2000);
                 }
             });
     };
@@ -35,8 +37,11 @@ class Login extends Component {
     render() {
         let loginPage = (
             <div>
-                <div >
-                    <h1 className="flex justify-center f3"> Please Login here </h1>
+                <div>
+                    <h1 className="flex justify-center f3">
+                        {' '}
+                        Please Login here{' '}
+                    </h1>
                     <input
                         className="flex f5 ma2 dim pa2 w-100 mw-100 center shadow-5 bn"
                         //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
@@ -53,34 +58,36 @@ class Login extends Component {
                         ref={r => (this.loginPW = r)}
                     />
                     <br />
-                    <button onClick={this.sendLogin} className="flex flex-column content-center center ma3 f4 dim pa2 w-40 justify-center shadow-5 br1">
-                        {' '}Log In{' '}
+                    <button
+                        onClick={this.sendLogin}
+                        className="flex flex-column content-center center ma3 f4 dim pa2 w-40 justify-center shadow-5 br1"
+                    >
+                        {' '}
+                        Log In{' '}
                     </button>
                 </div>
             </div>
         );
-        
+
         let loginFailure = (
             <div>
-                <h2 className="center">Log in Failed, No Selling for you!!</h2>   
+                <h2 className="center">Log in Failed, No Selling for you!!</h2>
             </div>
-        )
-        
+        );
+
         let loginSuccess = (
-            <div >
-                <h2 className="center">Login Success</h2>    
+            <div>
+                <h2 className="center">Login Success</h2>
             </div>
-        )
-        
-        if (this.state.loginStat === "no") {
-            return loginPage
-        } else if (this.state.loginStat === "yes"){
-            
-            return loginSuccess
+        );
+
+        if (this.state.loginStat === 'no') {
+            return loginPage;
+        } else if (this.state.loginStat === 'yes') {
+            return loginSuccess;
         } else {
-            return loginFailure
+            return loginFailure;
         }
-        
     }
 }
 

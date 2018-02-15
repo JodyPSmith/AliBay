@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-
+import ImageUpload from '../components/Imageupload/imageupload';
 class Testing extends Component {
     constructor() {
         super();
         this.state = {
-            img: ''
+            images: []
         };
     }
-    componentDidMount() {
-        const reader = new FileReader();
-        let file;
-        fetch('/imgTest')
-            .then(res => res.json())
-            .then(res => console.log(res.img.data));
-        // let img = reader.readAsBinaryString(file);
-        // this.setState({ img });
-    }
+
+    componentDidMount() {}
     render() {
         return (
             <div>
-                <img src={this.state.img} alt="test" />
+                <ImageUpload onImageDrop={this.uploadImage} />
+
+                {this.state.images.map((image, i) => {
+                    console.log(image);
+                    return (
+                        <img
+                            alt="product"
+                            src={`http://localhost:4000/${
+                                this.state.images[i]
+                            }`}
+                        />
+                    );
+                })}
             </div>
         );
     }
