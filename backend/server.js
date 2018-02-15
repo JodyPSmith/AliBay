@@ -66,14 +66,12 @@ app.post('/signUp', async (req, res) => {
 });
 app.post('/login', async (req, res) => {
     // takes object with username & password, attempts to match with database
-    console.log('hhh', req.body);
     let payload = req.body;
     let username = payload.username;
     let password = payload.password;
     var test = await alibay.login(username, password);
     if (test.result) {
         let sessionID = generateCookie();
-        console.log('test id', test.id);
         cookieMap[sessionID] = test.id;
         fs.writeFileSync(
             __dirname + '/datafiles/cookieMap.txt',
@@ -158,14 +156,21 @@ app.post('/search', (req, res) => {
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 
+app.listen(4000, () => {
+    console.log('Listening on port 4000');
+});
+
+// image filewriting
+
 app.post('/imgUpload', (req, res) => {
     var fstream;
     var filenames = [];
     req.pipe(req.busboy);
     req.busboy.on('file', (fieldname, file, filename) => {
+        let filename = 'img'+Math.floor(Math.random)*10000000
         console.log('Uploading: ' + filename);
         fstream = fs.createWriteStream(
-            __dirname + '/datafiles/images/' + filename
+            __dirname + '/datafiles/tempImages/' + filename
         );
         filenames.push(filename);
         file.pipe(fstream);
@@ -174,15 +179,5 @@ app.post('/imgUpload', (req, res) => {
             res.status(500).send({ res: 'error' });
         });
     });
-
-    req.busboy.on('finish', () =>
-        res.send({
-            res: 'successful',
-            images: filenames
-        })
-    );
-});
-
-app.listen(4000, () => {
-    console.log('Listening on port 4000');
+    req.busboy.on('finish', () => res.send({ res: filenames }));
 });
