@@ -26,9 +26,9 @@ class App extends Component {
         };
     }
 
-    setSignedIn = (x) => {
-        this.setState({isSignedIn : x})
-    }
+    setSignedIn = x => {
+        this.setState({ isSignedIn: x });
+    };
 
     setItemPage = data => {
         this.setState({
