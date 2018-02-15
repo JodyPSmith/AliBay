@@ -117,7 +117,7 @@ app.post('/createListing', (req, res) => {
 
 // itemInfo that takes sessionID ---------------------------------------------------------------------
 
-app.get('/itemsBought', (req, res) => {
+app.get('/itemsIBought', (req, res) => {
     // takes cookie, returns array of all items bought buy the user
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
@@ -130,6 +130,15 @@ app.post('/itemsSold', async (req, res) => {
     var payload = JSON.parse(req.body.toString());
     console.log('>>>>>>>', payload.seller_id);
     var ok = await alibay.allItemsSold(payload.seller_id);
+    console.log(ok);
+    res.send(ok);
+});
+
+app.post('/itemsSelling', async (req, res) => {
+    // takes single string in body, returns arrray of listing IDs
+    var payload = JSON.parse(req.body.toString());
+    console.log('>>>>>>>', payload.seller_id);
+    var ok = await alibay.allitemsSelling(payload.seller_id);
     console.log(ok);
     res.send(ok);
 });
