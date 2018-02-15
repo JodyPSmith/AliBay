@@ -12,7 +12,6 @@ class SearchPage extends Component {
     render() {
         const { setItemPage } = this.props;
         return (
-
             <div id="SearchPage" className="">
                 <Scroll height="71vh">
                     <CardList items={items} setItemPage={setItemPage} />
