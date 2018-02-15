@@ -17,6 +17,9 @@ class Testing extends Component {
         console.log(formData);
         fetch('/imgTest', {
             method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
             body: formData
         })
             .then(res => res.json())

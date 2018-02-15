@@ -7,9 +7,13 @@ const cookieParser = require('cookie-parser');
 const busboy = require('connect-busboy');
 
 app.use(cookieParser());
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(busboy());
+
 app.use(express.static('datafiles/images'));
 
 var cookieMap = {};
@@ -88,6 +92,7 @@ app.post('/signUp', async (req, res) => {
 });
 app.post('/login', async (req, res) => {
     // takes object with username & password, attempts to match with database
+    console.log('hhh', req.body);
     let payload = req.body;
     let username = payload.username;
     let password = payload.password;
