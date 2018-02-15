@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Navigation from '../../components/Navigation/Navigation';
 import Scroll from '../../Containers/scroll';
 class ItemPage extends Component {
     constructor() {
@@ -13,78 +12,73 @@ class ItemPage extends Component {
     }
     render() {
         //imports Item from the App.js state
-        const { signedIn, item, setRoute } = this.props;
+        const { item } = this.props;
         return (
-            <div>
-                <div className="flex justify-between ">
-                    <Navigation setRoute={setRoute} signedIn={signedIn} />
-                </div>
-                <div id="ItemPage">
-                    <Scroll height="80vh">
-                        <div className="flex ma5">
-                            <div className="mr5">
-                                <img
-                                    style={{
-                                        width: 'auto',
-                                        height: '300px'
-                                    }}
-                                    src={this.state.image}
-                                    alt="product "
-                                />
-                                <div className="flex flex-wrap">
-                                    {/* Here we do a map of all the images available and display them */}
-                                    {item.image.map((item, index) => {
-                                        return (
-                                            <div
-                                                className="ma1"
+            <div id="ItemPage">
+                <Scroll height="80vh">
+                    <div className="flex ma5">
+                        <div className="mr5">
+                            <img
+                                style={{
+                                    width: 'auto',
+                                    height: '300px'
+                                }}
+                                src={this.state.image}
+                                alt="product "
+                            />
+                            <div className="flex flex-wrap">
+                                {/* Here we do a map of all the images available and display them */}
+                                {item.image.map((item, index) => {
+                                    return (
+                                        <div
+                                            className="ma1"
+                                            style={{
+                                                maxWidth: '100px',
+                                                maxHeight: '150px '
+                                            }}
+                                        >
+                                            <img
+                                                alt="product"
+                                                onClick={() =>
+                                                    this.setState({
+                                                        image: item
+                                                    })
+                                                }
+                                                className="shadow-1 ma1 mb0 dim br3 pointer"
+                                                src={item}
+                                                key={`${index}`}
                                                 style={{
-                                                    maxWidth: '100px',
-                                                    maxHeight: '150px '
+                                                    height: '100px',
+                                                    width: 'auto'
                                                 }}
-                                            >
-                                                <img
-                                                    alt="product"
-                                                    onClick={() =>
-                                                        this.setState({
-                                                            image: item
-                                                        })
-                                                    }
-                                                    className="shadow-1 ma1 mb0 dim br3 pointer"
-                                                    src={item}
-                                                    key={`${index}`}
-                                                    style={{
-                                                        height: '100px',
-                                                        width: 'auto'
-                                                    }}
-                                                />
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                            <div>
-                                <div className="flex justify-between">
-                                    <p className="f1 ma0 mb3">{item.name}</p>
-                                    <button
-                                        className="dim pointer white br1 shadow-5"
-                                        style={{
-                                            background: '#F6841F',
-                                            border: 'none',
-                                            width: '3vw',
-                                            height: '5vh',
-                                            minHeight: '20px',
-                                            minWidth: '60px'
-                                        }}
-                                    >
-                                        Buy
-                                    </button>
-                                </div>
-                                <p className="f3 ma0">{item.price}</p>
-                                <p className="f4">{item.desc}</p>
+                                            />
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
-                    </Scroll>
-                </div>
+                        <div>
+                            <div className="flex justify-between">
+                                <p className="f1 ma0 mb3">{item.name}</p>
+                                <button
+                                    className="dim pointer white br1 shadow-5"
+                                    style={{
+                                        background: '#F6841F',
+                                        border: 'none',
+                                        width: '3vw',
+                                        height: '5vh',
+                                        minHeight: '20px',
+                                        minWidth: '60px'
+                                    }}
+                                >
+                                    Buy
+                                    </button>
+                            </div>
+                            <p className="f3 ma0">{item.price}</p>
+                            <p className="f4">{item.desc}</p>
+                        </div>
+                    </div>
+                </Scroll>
             </div>
         );
     }
