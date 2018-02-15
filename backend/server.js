@@ -35,13 +35,14 @@ app.post('/login', async (req, res) => { // takes object with username & passwor
     else {
         res.send(JSON.stringify({ res: false })) //if failed login, send JSON object with sessionID false
     }
-})
+});
 
-app.get('/itemsBought', (req, res) => { // takes cookie, returns array of all items bought buy the user
+app.get('/itemsBought', async (req, res) => { // takes cookie, returns array of all items bought buy the user
     let sessionID = req.cookies.sessionID
     let userID = cookieMap[sessionID];
     // console.log(`sessionID=${sessionID}, userID=${userID}`)
-    res.send(JSON.stringify(alibay.getItemsBought(userID)));
+    var result = await alibay.getItemsBought(userID);
+    res.send(JSON.stringify(result));
 });
 
 app.post('/createListing', (req, res) => { // takes a JSON object in body, with title, image(s), price, desc, and returns productID string
