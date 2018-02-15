@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
-import Imageupload from '../Imageupload/imageupload';
+//import Dropzone from 'react-dropzone';
+//import Imageupload from '../Imageupload/imageupload';
 class AddListing extends Component {
     constructor() {
         super();
