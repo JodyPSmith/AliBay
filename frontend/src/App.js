@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router';
-// import Dashboard from './components/dashboard/dashboard';
+import Dashboard from './components/dashboard/dashboard';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
@@ -79,6 +79,11 @@ class App extends Component {
                         render={routeProps => (
                             <SearchPage setItemPage={this.setItemPage} />
                         )}
+                    />
+                    <Route
+                        exact
+                        path="/dashboard"
+                        render={() => <Dashboard item={item} user={user} setItemPage={this.setItemPage}/>}
                     />
                 </Switch>
             </div>
