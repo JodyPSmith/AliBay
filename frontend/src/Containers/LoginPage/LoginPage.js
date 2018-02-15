@@ -7,7 +7,7 @@ class LoginPage extends Component {
         return (
             <div>
                 <img alt="Alibay Logo" src={logo}/>
-                <Login setRoute={this.props.setRoute}/>
+                <Login signedIn={this.props.signedIn} setRoute={this.props.setRoute}/>
             </div>
         )
     }
