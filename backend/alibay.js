@@ -1,8 +1,8 @@
-const assert = require('assert');
-const fs = require('fs');
-const bcrypt = require('bcrypt');
-const mysql = require('promise-mysql');
-var Sifter = require('sifter');
+const assert = require("assert");
+const fs = require("fs");
+const bcrypt = require("bcrypt");
+const mysql = require("promise-mysql");
+var Sifter = require("sifter");
 var con = null;
 mysql
   .createConnection({
@@ -177,18 +177,23 @@ async function createListing(sellerID, title, price, desc, images, location) {
     console.log("Data received from Db:\n");
     console.log(rows);
   });
-  
-  var query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`
 
-  let listingID = await con.query(query)
-  console.log('listingID:', listingID[0].listing_id)
+  var query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`;
 
-  if (imgMap[listingID[0].listing_id]) imgMap[listingID[0].listing_id] = imgMap[listingID[0].listing_id].concat(images);
+  let listingID = await con.query(query);
+  console.log("listingID:", listingID[0].listing_id);
+
+  if (imgMap[listingID[0].listing_id])
+    imgMap[listingID[0].listing_id] = imgMap[listingID[0].listing_id].concat(
+      images
+    );
   else imgMap[listingID[0].listing_id] = images;
 
-  console.log(`imgMap[${listingID[0].listing_id}]: ${imgMap[listingID[0].listing_id]}`);
+  console.log(
+    `imgMap[${listingID[0].listing_id}]: ${imgMap[listingID[0].listing_id]}`
+  );
 
-  fs.writeFileSync('./datafiles/imgMap.txt', JSON.stringify(imgMap));
+  fs.writeFileSync("./datafiles/imgMap.txt", JSON.stringify(imgMap));
   fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
@@ -230,7 +235,9 @@ allItemsBought returns the IDs of all the items bought by a buyer
     returns: an array of listing IDs
 */
 async function allItemsBought(buyerID) {
-  var result = await con.query("SELECT * FROM listing WHERE buyer_id = ?", [buyerID]);
+  var result = await con.query("SELECT * FROM listing WHERE buyer_id = ?", [
+    buyerID
+  ]);
   console.log(">>> Items bought by user >>>", result);
   return result;
 }
@@ -249,9 +256,19 @@ async function allItemsSold(sellerID) {
 }
 // return items that the user is currently selling.
 async function allItemsSelling(sellerID) {
-  let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NULL`
-  var result = await con.query(query);
-  console.log(">>>", result);
+  let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NULL`;
+  var queryRes = await con.query(query);
+  try {
+    imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
+  } catch (err) {
+    console.log("imgMap.txt not found");
+  }
+
+  let result = queryRes.map(x => {
+    x.image = imgMap[x.listing_id];
+    console.log("array element: ", x);
+    return x;
+  });
   return result;
 }
 /*
@@ -286,45 +303,44 @@ Once an item is sold, it will not be returned by searchForListings
     returns: an array of listing IDs
 */
 async function searchForListings(searchTerm) {
-    // var query = "SELECT * FROM listing";
-    var listingsMap = {};
-    //Search query to get all the listings from the database
-    var queryResult = await con.query("SELECT * FROM listing");
-    console.log(queryResult)
+  // var query = "SELECT * FROM listing";
+  var listingsMap = {};
+  //Search query to get all the listings from the database
+  var queryResult = await con.query("SELECT * FROM listing");
+  console.log(queryResult);
 
+  // for loop to add the query results into a map to use for sifter
+  for (var i = 0; i < queryResult.length; i++) {
+    var obj = {
+      title: queryResult[i].title,
+      description: queryResult[i].description,
+      price: queryResult[i].price,
+      date_created: queryResult[i].date_created,
+      seller_id: queryResult[i].seller_id,
+      buyer_id: queryResult[i].buyer_id
+    };
+    //push objects to listingsMap
+    listingsMap[queryResult[i].listing_id].push(obj);
+  }
+  //Sifter functions
+  var allListings = new Sifter(listingsMap);
+  var result = allListings.search(searchTerm, {
+    fields: ["title", "desc"],
+    sort: [{ field: "title", direction: "asc" }],
+    limit: 20
+  });
 
-    // for loop to add the query results into a map to use for sifter
-    for (var i = 0; i < queryResult.length; i++) {
-        var obj = {
-            title: queryResult[i].title,
-            description: queryResult[i].description,
-            price: queryResult[i].price,
-            date_created: queryResult[i].date_created,
-            seller_id: queryResult[i].seller_id,
-            buyer_id: queryResult[i].buyer_id
-        }
-        //push objects to listingsMap
-        listingsMap[queryResult[i].listing_id].push(obj);
+  var finalSort = (sortedItems = result => {
+    let sortedArray = [];
+
+    for (var i = 0; i < result.items.length; i++) {
+      sortedArray.push(itemsMap[result.items[i].id]);
     }
-    //Sifter functions
-    var allListings = new Sifter(listingsMap);
-    var result = allListings.search(searchTerm, {
-        fields: ['title', 'desc'],
-        sort: [{ field: 'title', direction: 'asc' }],
-        limit: 20
-    });
 
-    var finalSort = sortedItems = (result) => {
-        let sortedArray = [];
-
-        for (var i = 0; i < result.items.length; i++) {
-            sortedArray.push(itemsMap[result.items[i].id])
-        }
-
-        var answer = JSON.stringify(sortedArray);
-        return answer
-    }
-    return finalSort;
+    var answer = JSON.stringify(sortedArray);
+    return answer;
+  });
+  return finalSort;
 }
 
 module.exports = {

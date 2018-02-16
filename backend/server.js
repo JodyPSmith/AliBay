@@ -149,8 +149,8 @@ app.get('/itemsIBought', async (req, res) => {
     // takes cookie, returns array of all items bought buy the user
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
-    console.log(await alibay.allItemsBought(userID));
     let result = await alibay.allItemsBought(userID)
+
     res.send(result);
 });
 
@@ -165,10 +165,11 @@ app.post('/itemsSold', async (req, res) => {
 
 app.get('/itemsSelling', async (req, res) => {
     let sellerID = cookieMap[req.cookies.sessionID];
+    console.log('items Selling!!!!!!!!!!!!!!!')
     console.log('sellerID: ', sellerID)
-    var ok = await alibay.allItemsSelling(sellerID);
-    console.log('function result: ', ok);
-    res.send(ok);
+    var result = await alibay.allItemsSelling(sellerID);
+    console.log('function result: ', result);
+    res.send(result);
 });
 
 app.get('/itemDescription', (req, res) => {
