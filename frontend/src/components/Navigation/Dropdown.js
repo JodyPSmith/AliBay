@@ -27,14 +27,14 @@ class Dropdown extends Component {
         //console.log(Modal.defaultStyles);
 
         // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function(event) {
+        window.onclick = event => {
             if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName(
+                const dropdowns = document.getElementsByClassName(
                     'dropdown-content'
                 );
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
+
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
                     if (openDropdown.classList.contains('show')) {
                         openDropdown.classList.remove('show');
                     }
@@ -44,6 +44,7 @@ class Dropdown extends Component {
     }
     render() {
         const { loginIsOpen, signUpIsOpen } = this.state;
+        const { isSignedIn, setSignIn } = this.props;
         return (
             <div className="dropdown">
                 <a
@@ -61,24 +62,39 @@ class Dropdown extends Component {
                     <Link className="pointer dim" to="/">
                         Home
                     </Link>
-                    <Link className="pointer dim" to="/dashboard">
-                        Dashboard
-                    </Link>
+                    {!isSignedIn || (
+                        <Link className="pointer dim" to="/dashboard">
+                            Dashboard
+                        </Link>
+                    )}
+                    {!isSignedIn || (
+                        <Link className="pointer dim" to="/add">
+                            Add Listing
+                        </Link>
+                    )}
+                    {isSignedIn || (
+                        <a
+                            className="pointer dim"
+                            onClick={this.toggleSignUpModal}
+                        >
+                            Signup
+                        </a>
+                    )}
+                    {isSignedIn || (
+                        <a
+                            className="pointer dim"
+                            onClick={this.toggleLoginModal}
+                        >
+                            Login
+                        </a>
+                    )}
                     <Link className="pointer dim" to="/search">
                         Search Page
                     </Link>
                     <Link className="pointer dim" to="/confirm">
                         Confirmation Page
                     </Link>
-                    <Link className="pointer dim" to="/add">
-                        Add Listing
-                    </Link>
-                    <a className="pointer dim" onClick={this.toggleSignUpModal}>
-                        Signup
-                    </a>
-                    <a className="pointer dim" onClick={this.toggleLoginModal}>
-                        Login Page
-                    </a>
+
                     <Modal
                         isOpen={signUpIsOpen}
                         onRequestClose={this.toggleSignUpModal}
@@ -101,8 +117,11 @@ class Dropdown extends Component {
                             base: 'bg-white br3 shadow-1 pa4 myModal'
                         }}
                     >
-                        <LoginPage signedIn={this.props.isSignedIn}/>
-                    </Modal>{' '}
+                        <LoginPage
+                            setSignIn={setSignIn}
+                            signedIn={this.props.isSignedIn}
+                        />
+                    </Modal>
                 </div>
             </div>
         );

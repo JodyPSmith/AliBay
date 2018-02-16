@@ -31,6 +31,23 @@ const generateCookie = () => {
     } else return sessionID; //if sessionID exists, re-generate sessionID
 };
 
+app.get('/getImage', async (req, res) => {
+    let sessionID = req.cookies.sessionID;
+    let userID = cookieMap[sessionID];
+    let result = await alibay.allItemsSelling(userID);
+    console.log('result: ', result);
+    res.send({ res: 'ok' });
+});
+
+//check for signIn status
+app.get('/check', (req, res) => {
+    console.log('tes');
+    const sessionID = req.cookies.sessionID;
+    if (cookieMap[sessionID]) res.send({ res: true });
+    else res.send({ res: false });
+});
+//-->move this jimm
+
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
     let request = req.body;
@@ -105,14 +122,15 @@ app.post('/createListing', (req, res) => {
 
     let request = req.body;
 
-    var image1 = request.images[0].preview;
     let title = request.title;
     let price = request.price;
     let desc = request.description;
-    res.send(
-        'your product ID is: ' +
-            alibay.createListing(title, sellerID, price, desc)
-    );
+    let imageArr = request.images;
+    let loc = request.location;
+
+    alibay.createListing(sellerID, title, price, desc, imageArr, loc);
+
+    res.send({ res: 'product created' });
 });
 
 // itemInfo that takes sessionID ---------------------------------------------------------------------
@@ -178,7 +196,6 @@ app.post('/imgUpload', (req, res) => {
     var filenames = [];
     req.pipe(req.busboy);
     req.busboy.on('file', (fieldname, file, filename) => {
-        console.log(file);
         filename = 'img' + Math.floor(Math.random() * 10000000);
         console.log('Uploading: ' + filename);
         fstream = fs.createWriteStream(

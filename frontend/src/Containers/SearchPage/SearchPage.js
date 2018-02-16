@@ -4,11 +4,6 @@ import Scroll from '../scroll';
 import './SearchPage.css';
 import { items } from '../../components/Card/fakeData';
 class SearchPage extends Component {
-    constructor() {
-        super();
-        this.state = {};
-    }
-
     render() {
         const { setItemPage } = this.props;
         return (
