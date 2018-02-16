@@ -39,12 +39,17 @@ app.get('/getImage', async (req, res) => {
     res.send({ res: 'ok' });
 });
 
+
+
+//signup / login endpoints----------------------------------------------------------------------------------------
+
 //check for signIn status
 app.get('/check', (req, res) => {
     const sessionID = req.cookies.sessionID;
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
 });
+<<<<<<< HEAD
 //-->move this jimmy
 
 app.get('/signOut', (req, res) => {
@@ -54,8 +59,9 @@ app.get('/signOut', (req, res) => {
     console.log('deleted?  ', cookieMap[sessionID]);
     res.send({ res: true });
 });
+=======
+>>>>>>> 359435f25b3dd8970315a75847cfbce615edbc56
 
-//signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
     let request = req.body;
     let fname = request.firstname;
