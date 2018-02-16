@@ -31,6 +31,15 @@ const generateCookie = () => {
   } else return sessionID; //if sessionID exists, re-generate sessionID
 };
 
+app.get('/getImage', (req, res) => {
+  let sessionID = req.cookies.sessionID;
+  let userID = cookieMap[sessionID]
+  let result = alibay.allItemsSelling(userID);
+  console.log('result: ',result);
+  res.send({res: 'ok'})
+})
+
+
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post("/signUp", async (req, res) => {
   let request = req.body;

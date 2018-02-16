@@ -220,9 +220,7 @@ allItemsBought returns the IDs of all the items bought by a buyer
     returns: an array of listing IDs
 */
 async function allItemsBought(buyerID) {
-  var result = await con.query("SELECT * FROM listing WHERE buyer_id = ?", [
-    buyerID
-  ]);
+  var result = await con.query("SELECT * FROM listing WHERE buyer_id = ?", [buyerID]);
   console.log(">>> Items bought by user >>>", result);
   return result;
 }
