@@ -22,6 +22,7 @@ let itemsBought = {};
 // map that keeps track of all the items a user has sold
 let itemsSold = {};
 
+let listingsMap = {};
 // map that keeps track of user information
 let userMap = {
     test: {
@@ -285,15 +286,17 @@ Once an item is sold, it will not be returned by searchForListings
 */
 async function searchForListings(searchTerm) {
     // var query = "SELECT * FROM listing";
-    var listingsMap = {};
+    console.log(">> SearchTerm in function: " ,searchTerm)
+    var obj = {};
     //Search query to get all the listings from the database
     var queryResult = await con.query("SELECT * FROM listing");
-    console.log(queryResult)
+    //console.log(queryResult)
 
 
     // for loop to add the query results into a map to use for sifter
     for (var i = 0; i < queryResult.length; i++) {
-        var obj = {
+        listingsMap[queryResult[i].listing_id] = []
+         obj = {
             title: queryResult[i].title,
             description: queryResult[i].description,
             price: queryResult[i].price,
@@ -301,28 +304,40 @@ async function searchForListings(searchTerm) {
             seller_id: queryResult[i].seller_id,
             buyer_id: queryResult[i].buyer_id
         }
+        //console.log(">>> OBJECT >>> " ,obj)
         //push objects to listingsMap
+        //console.log('>> listing id >> ', queryResult[i].listing_id)
         listingsMap[queryResult[i].listing_id].push(obj);
+       
     }
+    //console.log(listingsMap[3])
+
     //Sifter functions
     var allListings = new Sifter(listingsMap);
+    console.log(allListings);
     var result = allListings.search(searchTerm, {
         fields: ['title', 'desc'],
         sort: [{ field: 'title', direction: 'asc' }],
         limit: 20
     });
 
-    var finalSort = sortedItems = (result) => {
+    console.log(result)
+    sortedItems = (result) => {
         let sortedArray = [];
 
         for (var i = 0; i < result.items.length; i++) {
-            sortedArray.push(itemsMap[result.items[i].id])
+            sortedArray.push(allListings[result.items[i].id])
         }
 
         var answer = JSON.stringify(sortedArray);
+        console.log(answer)
         return answer
     }
-    return finalSort;
+
+    console.log(sortedItems(result));
+    // console.log(finalSort)
+   // return finalSort;
+
 }
 
 module.exports = {

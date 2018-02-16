@@ -49,7 +49,6 @@ app.get('/check', (req, res) => {
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
 });
-<<<<<<< HEAD
 //-->move this jimmy
 
 app.get('/signOut', (req, res) => {
@@ -59,8 +58,6 @@ app.get('/signOut', (req, res) => {
     console.log('deleted?  ', cookieMap[sessionID]);
     res.send({ res: true });
 });
-=======
->>>>>>> 359435f25b3dd8970315a75847cfbce615edbc56
 
 app.post('/signUp', async (req, res) => {
     let request = req.body;
@@ -192,8 +189,11 @@ app.get('/allListings', (req, res) => {
 
 app.post('/search', async (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
-    let request = req.body.toString();
+    console.log(req.body)
+    let request = req.body;
+    console.log("REQUEST: ", request)
     let searchTerm = request.searchTerm;
+    console.log(">>> search term in serverjs >>> " , searchTerm)
     let results = await alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
