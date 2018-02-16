@@ -12,10 +12,9 @@ class ConfirmationPage extends Component {
     confirmBuying = () => {
         fetch('/buy', {
             credentials: 'include',
+            headers: {'content-type': 'application/json'},
             method: 'POST',
-            body: JSON.stringify({
-                listingID: this.props.item.listing_ID
-            })
+            body: JSON.stringify({listingID: this.props.item.listing_id})
         })
             .then(res => res.json())
             .then(json => {
