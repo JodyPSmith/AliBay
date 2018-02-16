@@ -13,7 +13,7 @@ class SearchBar extends Component {
             credentials : 'include'
         })
         .then(x => x.json())
-        .then(y => console.log(y))
+        .then(y => console.log("this is the response " , y))
     
     }
 
@@ -24,7 +24,7 @@ class SearchBar extends Component {
         //     body: JSON.stringify(search),
         //     credentials : 'include'
         // })
-        console.log(search)
+        // console.log(search)
     }
     
     render() {
@@ -36,7 +36,6 @@ class SearchBar extends Component {
                     <input
                         //this param, this.props.onInputChange will detect the input value, and be used to pass it to the fetch query in the parent container
                         //ie: search for "books", parent container will receive "books" and POST it to the server ? 
-                        //WHY?!?! that just seem unnecessarily complicated for a page with one bar that needs to send the fetch? 
 
                         //onChange={onInputChange}
                         onChange={e => this.liveSearch(e)}

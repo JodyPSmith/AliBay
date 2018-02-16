@@ -13,14 +13,10 @@ class ConfirmationPage extends Component {
             credentials: 'include',
             headers: {'content-type': 'application/json'},
             method: 'POST',
-<<<<<<< HEAD
-            body: JSON.stringify({listingID: this.props.item.listing_id})
-=======
             body: JSON.stringify({
                 //this prop is passed from the root App.js in the this.state.item
                 listingID: this.props.item.listing_ID
             })
->>>>>>> 93cdd3bda97d62fb382d1e46fd347af8f0551aa1
         })
             .then(res => res.json())
             .then(json => {
