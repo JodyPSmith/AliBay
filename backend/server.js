@@ -118,12 +118,12 @@ app.post("/createListing", (req, res) => {
 
 // itemInfo that takes sessionID ---------------------------------------------------------------------
 
-app.get("/itemsBought", (req, res) => {
-  // takes cookie, returns array of all items bought buy the user
-  let sessionID = req.cookies.sessionID;
-  let userID = cookieMap[sessionID];
-  // console.log(`sessionID=${sessionID}, userID=${userID}`)
-  res.send(alibay.getItemsBought(userID));
+app.get('/itemsIBought', (req, res) => {
+    // takes cookie, returns array of all items bought buy the user
+    let sessionID = req.cookies.sessionID;
+    let userID = cookieMap[sessionID];
+    // console.log(`sessionID=${sessionID}, userID=${userID}`)
+    res.send(alibay.getItemsBought(userID));
 });
 
 app.post("/itemsSold", async (req, res) => {
@@ -135,11 +135,20 @@ app.post("/itemsSold", async (req, res) => {
   res.send(ok);
 });
 
-app.get("/itemDescription", (req, res) => {
-  // Returns object with price and blurb
-  let item = req.query.item;
-  let description = alibay.getItemDescription(item);
-  res.send(description);
+app.post('/itemsSelling', async (req, res) => {
+    // takes single string in body, returns arrray of listing IDs
+    var payload = JSON.parse(req.body.toString());
+    console.log('>>>>>>>', payload.seller_id);
+    var ok = await alibay.allitemsSelling(payload.seller_id);
+    console.log(ok);
+    res.send(ok);
+});
+
+app.get('/itemDescription', (req, res) => {
+    // Returns object with price and blurb
+    let item = req.query.item;
+    let description = alibay.getItemDescription(item);
+    res.send(description);
 });
 
 // search functions-----------------------------------------------------------------------------------
