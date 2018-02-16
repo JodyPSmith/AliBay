@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Scroll from '../../Containers/scroll';
-import { Redirect } from 'react-router';
+import { Redirect, Switch } from 'react-router';
 class ConfirmationPage extends Component {
     constructor() {
         super();
@@ -101,12 +101,6 @@ class ConfirmationPage extends Component {
                     ) : (
                         <div className="mt5 shadow-1">
                             <h1>Thanks for buying!</h1>
-                            {() =>
-                                setTimeout(
-                                    () => <Redirect to="/dashboard" />,
-                                    2000
-                                )
-                            }
                         </div>
                     )}
                 </Scroll>
