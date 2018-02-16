@@ -15,12 +15,12 @@ class Card extends Component {
                         minWidth: '15vw'
                     }}
                     //the image is linked to the item prop in the parent container -> CardList
-                    src={this.props.item.image || null}
+                    src={`http://localhost:4000/${this.props.item.image[0]}`}
                     alt="product"
                 />
                 <div>
-                    <h2>{'PRICE'}</h2>
-                    <p>{'TITLE'}</p>
+                    <h2>{this.props.item.title}</h2>
+                    <p className="f3">{`$${this.props.item.price}`}</p>
                 </div>
             </div>
         );
