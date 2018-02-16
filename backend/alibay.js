@@ -1,14 +1,18 @@
 const assert = require("assert");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
-const mysql = require('promise-mysql');
-var con = null
-mysql.createConnection({
-  host: '165.227.39.184',
-  user: 'vako',
-  password: '12345',
-  database: 'alibay'
-}).then((x) => { con = x });
+const mysql = require("promise-mysql");
+var con = null;
+mysql
+  .createConnection({
+    host: "165.227.39.184",
+    user: "vako",
+    password: "12345",
+    database: "alibay"
+  })
+  .then(x => {
+    con = x;
+  });
 
 // Maps:
 // map that keeps track of all the items a user has bought
@@ -32,24 +36,23 @@ let userMap = {
   }
 };
 
-//map that keeps track of passwords
-// let passMap = {};
+//map that keeps track of images by listing
+let imgMap = {};
 
 // map that keeps track of all products
 let productsMap = {};
 
 // initialize maps from data file
 try {
-  console.log('Reading files...')
-  itemsBought = JSON.parse(fs.readFileSync('./datafiles/itemsBought.txt'));
-  itemsSold = JSON.parse(fs.readFileSync('./datafiles/itemsSold.txt'));
-  userMap = JSON.parse(fs.readFileSync('./datafiles/userMap.txt'));
+  console.log("Reading files...");
+  itemsBought = JSON.parse(fs.readFileSync("./datafiles/itemsBought.txt"));
+  itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
+  userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
   // passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
-  productsMap = JSON.parse(fs.readFileSync('./datafiles/productsMap.txt'));
-}
-catch (err) {
-  console.log('error encountered; data file probably not initialized:')
-  console.log(`${err}`)
+  productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
+} catch (err) {
+  console.log("error encountered; data file probably not initialized:");
+  console.log(`${err}`);
 }
 
 /*
@@ -93,12 +96,11 @@ async function signUp(
     };
     // itemsBought[userID] = [];
     // itemsSold[userID] = [];
-    con.query('INSERT INTO users SET ?', userInfo,
-      (err, rows) => {
-        if (err) throw err;
-        console.log('Data inserted into Db:\n');
-        console.log(rows);
-      });
+    con.query("INSERT INTO users SET ?", userInfo, (err, rows) => {
+      if (err) throw err;
+      console.log("Data inserted into Db:\n");
+      console.log(rows);
+    });
     // fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
     // fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
     // fs.writeFileSync("././datafiles/userMap.txt", JSON.stringify(userMap));
@@ -106,26 +108,31 @@ async function signUp(
     console.log(`user created`);
     return true;
   } else {
-    console.log('check username failed')
+    console.log("check username failed");
     return false;
   }
 }
 
 async function login(username, password) {
-  var result = await con.query('SELECT id, password FROM users WHERE username = ?', [username])
+  var result = await con.query(
+    "SELECT id, password FROM users WHERE username = ?",
+    [username]
+  );
   console.log(">>> LOGIN RESULT >> ", result[0].password);
   if (result[0] !== undefined) {
     var bool = bcrypt.compareSync(password, result[0].password);
-    return { id: result[0].id, result: bool }
-  }
-  else {
-    return false
+    return { id: result[0].id, result: bool };
+  } else {
+    return false;
   }
 }
 
 async function checkUsername(username) {
-  var result = await con.query('SELECT username FROM users WHERE username = ?', [username])
-  console.log(`result :`, result)
+  var result = await con.query(
+    "SELECT username FROM users WHERE username = ?",
+    [username]
+  );
+  console.log(`result :`, result);
   if (!result[0]) {
     return true;
   } else {
@@ -138,7 +145,9 @@ function getUserID(username) {
   let allUserIDs = Object.keys(userMap);
   let ret;
   allUserIDs.forEach(x => {
-    if (username == userMap[x].username) { ret = x; }
+    if (username == userMap[x].username) {
+      ret = x;
+    }
   });
   return ret;
 }
@@ -154,20 +163,22 @@ This function is incomplete. You need to complete it.
       [desc] A desc describing the item
     returns: The ID of the new listing
 */
-function createListing(title, sellerID, price, desc) {
-  let pID = genPID();
-  productsMap[pID] = {
+function createListing(sellerID, title, price, desc, images, location) {
+  let productMap = {
     title: title,
     description: desc,
     price: price,
-    seller_id: sellerID,
+    seller_id: sellerID
   };
-  con.query('INSERT INTO listing SET ?', productsMap[pID], (err, rows) => {
+  if (imgMap[sellerID]) imgMap[sellerID] = imgMap[sellerID].concat(images);
+  else imgMap[sellerID] = images;
+  console.log(`imgMap[${sellerID}]: ${imgMap[sellerID]}`);
+  fs.writeFileSync('./datafiles/imgMap.txt', JSON.stringify(imgMap));
+  con.query("INSERT INTO listing SET ?", productMap, (err, rows) => {
     if (err) throw err;
-    console.log('Data received from Db:\n');
+    console.log("Data received from Db:\n");
     console.log(rows);
   });
-  return pID;
   //fs.writeFileSync("./backend/./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
@@ -184,13 +195,17 @@ The seller will see the listing in his history of items sold
     returns: undefined
 */
 function buy(userID, listingID) {
-  con.query('UPDATE listing SET buyer_id ?' , [userID] , 'WHERE listing_id = ?', [listingID], (err, rows) => {
-    if (err) throw err;
-    console.log('Data received from Db:\n');
-    console.log(rows);
-  });
-
-  
+  con.query(
+    "UPDATE listing SET buyer_id ?",
+    [userID],
+    "WHERE listing_id = ?",
+    [listingID],
+    (err, rows) => {
+      if (err) throw err;
+      console.log("Data received from Db:\n");
+      console.log(rows);
+    }
+  );
 
   //fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
   //fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
@@ -205,7 +220,9 @@ allItemsBought returns the IDs of all the items bought by a buyer
     returns: an array of listing IDs
 */
 async function allItemsBought(buyerID) {
-  var result = await con.query('SELECT * FROM listing WHERE buyer_id = ?', [buyerID]);
+  var result = await con.query("SELECT * FROM listing WHERE buyer_id = ?", [
+    buyerID
+  ]);
   console.log(">>> Items bought by user >>>", result);
   return result;
 }
@@ -216,13 +233,19 @@ allItemsSold returns the IDs of all the items sold by a seller
 */
 async function allItemsSold(sellerID) {
   var listing_id = [];
-  var result = await con.query('SELECT * FROM listing WHERE seller_id = ?', [sellerID]);
-  console.log(">>>", result)
+  var result = await con.query("SELECT * FROM listing WHERE seller_id = ?", [
+    sellerID
+  ]);
+  console.log(">>>", result);
   return result;
 }
 // return items that the user is currently selling.
-async function allitemsSelling(sellerID){
-  var result = await con.query('SELECT * FROM listing WHERE seller_id =?' , [sellerID], 'AND buyer_id IS NULL')
+async function allitemsSelling(sellerID) {
+  var result = await con.query(
+    "SELECT * FROM listing WHERE seller_id =?",
+    [sellerID],
+    "AND buyer_id IS NULL"
+  );
   console.log(">>>", result);
   return result;
 }
@@ -234,7 +257,7 @@ Once an item is sold, it will not be returned by allListings
 async function allListings() {
   // let productIds = Object.keys(productsMap); // array of all productIds in map
   // return productIds.filter(x => !productsMap[x].isSold); // return new array with all products where isSold == true
-  var result = await con.query('SELECT * FROM listing WHERE buyer_id IS NULL');
+  var result = await con.query("SELECT * FROM listing WHERE buyer_id IS NULL");
   return result;
 }
 
@@ -275,7 +298,7 @@ module.exports = {
   itemsSold,
   productsMap,
   userMap,
-  // passMap,
+  imgMap,
   genUID,
   genPID,
   signUp,
