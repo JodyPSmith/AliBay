@@ -11,6 +11,8 @@ import userMap from './placeholderData/user';
 import Navigation from './components/Navigation/Navigation';
 import TestingPage from './Containers/TestingPage';
 
+const Navigator = withRouter(Navigation);
+
 class App extends Component {
     constructor() {
         super();
@@ -31,6 +33,19 @@ class App extends Component {
         this.setState({ isSignedIn: true });
     };
 
+    setSignOut = () => {
+        fetch('/signOut', {
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(json => {
+                if (json.res)
+                    this.setState({
+                        isSignedIn: false
+                    });
+            });
+    };
+
     setItemPage = data => {
         this.setState({
             item: data
@@ -43,23 +58,21 @@ class App extends Component {
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, item, user } = this.state;
-        const Navigator = withRouter(Navigation);
         console.log(window.location.pathname);
         //ternary operator to check what route the page is on... default is home
         return (
             <div>
-                <Navigator setSignIn={this.setSignIn} isSignedIn={isSignedIn} />
+                <Navigator
+                    setSignOut={this.setSignOut}
+                    setSignIn={this.setSignIn}
+                    isSignedIn={isSignedIn}
+                />
                 <Switch>
                     <Route
                         exact
                         path="/"
                         render={routeProps => {
-                            return (
-                                <HomePage
-                                    setSignIn={this.setSignIn}
-                                    isSignedIn={isSignedIn}
-                                />
-                            );
+                            return <HomePage isSignedIn={isSignedIn} />;
                         }}
                     />
                     <Route

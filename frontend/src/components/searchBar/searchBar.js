@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 
 class SearchBar extends Component {
-    submitSearch = (data) => {
-        console.log(this.search.value)
-        //fetch ('/search', {
-
-        // })
+    submitSearch = (data) => {    
+        var search = this.search.value
+        fetch ('/search', {
+            method: "POST",
+            body: JSON.stringify(search),
+            credentials : 'include'
+        })
+        console.log(search)
     }
 
     liveSearch = (data) => {
-        console.log(data.target.value)
+        var search = data.target.value
+        // fetch ('/search', {
+        //     method: "POST",
+        //     body: JSON.stringify(search),
+        //     credentials : 'include'
+        // })
+        console.log(search)
     }
     
     render() {

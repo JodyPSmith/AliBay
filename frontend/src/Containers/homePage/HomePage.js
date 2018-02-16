@@ -3,22 +3,8 @@ import logo from '../../images/Alibay.png';
 import SearchBar from '../../components/searchBar/searchBar';
 import { Link } from 'react-router-dom';
 class HomePage extends Component {
-    componentDidMount() {
-        fetch('/check', {
-            credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res.res);
-                if (res.res) {
-                    //this prop is called in App.js
-                    this.props.setSignIn();
-                }
-            });
-    }
-
     render() {
-        const { isSignedIn, setRoute } = this.props;
+        const { isSignedIn } = this.props;
         return (
             <div
                 className="center"
