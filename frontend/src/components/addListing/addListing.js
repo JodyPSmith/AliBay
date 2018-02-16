@@ -101,6 +101,8 @@ class AddListing extends Component {
                         console.log(image);
                         return (
                             <img
+                                alt="listing images"
+                                key={image}
                                 style={{
                                     maxWidth: '15vh',
 

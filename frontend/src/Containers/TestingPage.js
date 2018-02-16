@@ -8,12 +8,16 @@ class Testing extends Component {
         };
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        fetch('/getImage', {
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(images => this.setState({ images }));
+    }
     render() {
         return (
             <div>
-                <ImageUpload onImageDrop={this.uploadImage} />
-
                 {this.state.images.map((image, i) => {
                     console.log(image);
                     return (
