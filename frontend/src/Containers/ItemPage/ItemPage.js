@@ -19,7 +19,7 @@ class ItemPage extends Component {
             <div id="ItemPage">
                 <Scroll height="80vh">
                     <div className="flex ma5">
-                        <div className="mr5">
+                        <div className="mr5 w-25">
                             <img
                                 style={{
                                     width: 'auto',
@@ -59,8 +59,8 @@ class ItemPage extends Component {
                                 })}
                             </div>
                         </div>
-                        <div>
-                            <div className="flex justify-between">
+                        <div className="w-75">
+                            <div className="flex justify-between ">
                                 <p className="f1 ma0 mb3">{item.name}</p>
                                 <Link to="/confirm">
                                     <button
@@ -78,8 +78,8 @@ class ItemPage extends Component {
                                     </button>
                                 </Link>
                             </div>
-                            <p className="f3 ma0">{item.price}</p>
-                            <p className="f4">{item.desc}</p>
+                            <p className="f3 ma0">${item.price}</p>
+                            <p className="f4">{item.description}</p>
                         </div>
                     </div>
                 </Scroll>

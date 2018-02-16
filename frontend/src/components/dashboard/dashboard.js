@@ -1,35 +1,33 @@
-import React, { Component } from "react";
-import { items } from '../../components/Card/fakeData';
-import CardList from "../Card/CardList.js"
-
+import React, { Component } from 'react';
+import CardList from '../Card/CardList.js';
+import Scroll from '../../Containers/scroll';
 class Dashboard extends Component {
     constructor() {
         super();
-        this.state = {Sold : [], Selling : [], IBought :[]}
+        this.state = { Sold: [], Selling: [], IBought: [] };
     }
 
     componentDidMount = () => {
         // this.setState({iBought : this.getList("IBought"), sold : this.getList("Sold"), selling : this.getList("Selling") })
         // this.getStateList()
-        this.getList("Selling")
-        this.getList("IBought")
-        this.getList("Sold")
+        this.getList('Selling');
+        this.getList('IBought');
+        this.getList('Sold');
         // console.log("this is " , x)
-        
-    }
+    };
 
-    getList =  (type) => {
+    getList = type => {
         return fetch('/items' + type, {
             credentials: 'include'
         })
-        .then(x => x.json())
-        .then(x => {
-            var s ={};
-            s[type] = x;
-            console.log(s)
-            this.setState(s)
-        })
-    }
+            .then(x => x.json())
+            .then(x => {
+                var s = {};
+                s[type] = x;
+                console.log(s);
+                this.setState(s);
+            });
+    };
 
     // getStateList = () => {
     //     this.setState({sold : this.getList("Sold"), iBought : this.getList("IBought"), selling : this.getList("Sold")})
@@ -56,7 +54,6 @@ class Dashboard extends Component {
             </div>
         );
     }
-
 }
 
 export default Dashboard;

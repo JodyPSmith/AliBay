@@ -39,8 +39,6 @@ app.get('/getImage', async (req, res) => {
     res.send({ res: 'ok' });
 });
 
-
-
 //signup / login endpoints----------------------------------------------------------------------------------------
 
 //check for signIn status
@@ -49,7 +47,6 @@ app.get('/check', (req, res) => {
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
 });
-<<<<<<< HEAD
 //-->move this jimmy
 
 app.get('/signOut', (req, res) => {
@@ -59,8 +56,6 @@ app.get('/signOut', (req, res) => {
     console.log('deleted?  ', cookieMap[sessionID]);
     res.send({ res: true });
 });
-=======
->>>>>>> 359435f25b3dd8970315a75847cfbce615edbc56
 
 app.post('/signUp', async (req, res) => {
     let request = req.body;
@@ -124,7 +119,7 @@ app.post('/buy', (req, res) => {
     let request = req.body;
     let buyerID = request.buyerID;
     let listingID = request.listingID;
-    alibay.buy(buyerID, sellerID, listingID);
+    alibay.buy(buyerID, listingID);
     res.send(JSON.stringify({ res: true }));
 });
 
@@ -152,10 +147,9 @@ app.get('/itemsIBought', async (req, res) => {
     // takes cookie, returns array of all items bought buy the user
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
-    // console.log(`sessionID=${sessionID}, userID=${userID}`)
-    console.log('user id is ', userID);
-    console.log(await alibay.allItemsBought(userID));
-    res.send(await alibay.allItemsBought(userID));
+    let result = await alibay.allItemsBought(userID)
+
+    res.send(result);
 });
 
 app.post('/itemsSold', async (req, res) => {
@@ -167,13 +161,13 @@ app.post('/itemsSold', async (req, res) => {
     res.send(ok);
 });
 
-app.post('/itemsSelling', async (req, res) => {
-    // takes single string in body, returns arrray of listing IDs
-    var payload = JSON.parse(req.body.toString());
-    console.log('>>>>>>>', payload.seller_id);
-    var ok = await alibay.allitemsSelling(payload.seller_id);
-    console.log(ok);
-    res.send(ok);
+app.get('/itemsSelling', async (req, res) => {
+    let sellerID = cookieMap[req.cookies.sessionID];
+    console.log('items Selling!!!!!!!!!!!!!!!')
+    console.log('sellerID: ', sellerID)
+    var result = await alibay.allItemsSelling(sellerID);
+    console.log('function result: ', result);
+    res.send(result);
 });
 
 app.get('/itemDescription', (req, res) => {
@@ -190,11 +184,11 @@ app.get('/allListings', (req, res) => {
     res.send(alibay.allListings());
 });
 
-app.post('/search', async (req, res) => {
+app.post('/search', (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
     let request = req.body.toString();
     let searchTerm = request.searchTerm;
-    let results = await alibay.searchForListings(searchTerm);
+    let results = alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 
@@ -202,7 +196,7 @@ app.listen(4000, () => {
     console.log('Listening on port 4000');
 });
 
-// image filewriting
+// image filewriting ---------------------------------------------------------------------------------
 
 app.post('/imgUpload', (req, res) => {
     var fstream;
