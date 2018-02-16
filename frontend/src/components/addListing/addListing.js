@@ -115,7 +115,17 @@ class AddListing extends Component {
                 </div>
 
                 <br />
-                <button onClick={this.createListing}>Add Listing</button>
+                <button
+                    onClick={this.createListing}
+                    style={{
+                        border: 'none',
+                        height: '1vh',
+                        minHeight: '35px',
+                        marginTop: '25%',
+                        background: '#F79521'
+                    }}
+                    className="white shadow-5 br2 pointer dim"
+                    >Add Listing</button>
             </div>
         );
         return newListing;
