@@ -22,7 +22,7 @@ let itemsBought = {};
 // map that keeps track of all the items a user has sold
 let itemsSold = {};
 
-let listingsMap = [];
+
 // map that keeps track of user information
 let userMap = {
     test: {
@@ -46,21 +46,12 @@ let productsMap = {};
 
 // initialize maps from data file
 try {
-<<<<<<< HEAD
-    console.log("Reading files...");
-    itemsBought = JSON.parse(fs.readFileSync("./datafiles/itemsBought.txt"));
-    itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
-    userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
-    // passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
-    productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
-=======
   console.log("Reading files...");
   itemsBought = JSON.parse(fs.readFileSync("./datafiles/itemsBought.txt"));
   itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
   userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
   imgMap = JSON.parse(fs.readFileSync('./datafiles/imgMap.txt'));
   productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
->>>>>>> 81de8c6728045c888c33b25929cbf2388d5f2d71
 } catch (err) {
     console.log("error encountered; data file probably not initialized:");
     console.log(`${err}`);
@@ -329,6 +320,7 @@ Once an item is sold, it will not be returned by searchForListings
 async function searchForListings(searchTerm) {
     // var query = "SELECT * FROM listing";
     console.log(">> SearchTerm in function: ", searchTerm)
+    let listingsMap = [];
     var obj = {};
     //Search query to get all the listings from the database
     var queryResult = await con.query("SELECT * FROM listing");
