@@ -4,18 +4,19 @@ class ConfirmationPage extends Component {
     constructor() {
         super();
         this.state = {
-            confirmed: true
+            confirmed: false
         };
     }
 
     confirmBuying = () => {
+        console.log('props', this.props)
         fetch('/buy', {
             credentials: 'include',
             headers: {'content-type': 'application/json'},
             method: 'POST',
             body: JSON.stringify({
                 //this prop is passed from the root App.js in the this.state.item
-                listingID: this.props.item.listing_ID
+                listingID: this.props.item.listing_id
             })
         })
             .then(res => res.json())
