@@ -63,7 +63,14 @@ class Login extends Component {
                     <br />
                     <button
                         onClick={this.sendLogin}
-                        className="flex flex-column content-center center ma3 f4 dim pa2 w-40 justify-center shadow-5 br1"
+                        style={{
+                            border: 'none',
+                            height: '1vh',
+                            minHeight: '35px',
+                            marginTop: '25%',
+                            background: '#F79521'
+                        }}
+                        className="flex flex-column white pointer dim center ma3 f4 dim pa2 w-40 shadow-5 br1"
                     >
                         {' '}
                         Log In{' '}

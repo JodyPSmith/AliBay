@@ -114,7 +114,14 @@ class Signup extends Component {
                     </div>
                     <br />
                     <button
-                        className="flex justify-center center"
+                        style={{
+                            border: 'none',
+                            height: '1vh',
+                            minHeight: '35px',
+                            marginTop: '25%',
+                            background: '#F79521'
+                        }}
+                        className="flex flex-column f4 white pointer dim center ma2 pa2 w-50 shadow-5 br1"
                         onClick={this.signUp}
                         id="signupPW"
                         size="3"
