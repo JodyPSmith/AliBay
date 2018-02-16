@@ -20,7 +20,7 @@ class CardList extends Component {
                     return (
                         <Link
                             className="hover-orange visited"
-                            to={`/item:${item.id}`}
+                            to={`/item:${item.listing_id}`}
                         >
                             <Card
                                 onClick={() => {

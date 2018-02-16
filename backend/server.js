@@ -39,8 +39,6 @@ app.get('/getImage', async (req, res) => {
     res.send({ res: 'ok' });
 });
 
-
-
 //signup / login endpoints----------------------------------------------------------------------------------------
 
 //check for signIn status
@@ -186,11 +184,11 @@ app.get('/allListings', (req, res) => {
     res.send(alibay.allListings());
 });
 
-app.post('/search', async (req, res) => {
+app.post('/search', (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
     let request = req.body.toString();
     let searchTerm = request.searchTerm;
-    let results = await alibay.searchForListings(searchTerm);
+    let results = alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 
