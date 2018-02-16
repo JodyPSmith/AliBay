@@ -8,6 +8,7 @@ class LoginPage extends Component {
             <div>
                 <img alt="Alibay Logo" src={logo} />
                 <Login
+                    toggleLogin={this.props.toggleLogin}
                     signedIn={this.props.signedIn}
                     setSignIn={this.props.setSignIn}
                 />
