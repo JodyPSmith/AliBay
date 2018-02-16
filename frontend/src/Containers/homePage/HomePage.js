@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import logo from '../../images/Alibay.png';
 import SearchBar from '../../components/searchBar/searchBar';
-
+import { Link } from 'react-router-dom';
 class HomePage extends Component {
+    componentDidMount() {
+        fetch('/check', {
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res.res);
+                if (res.res) {
+                    //this prop is called in App.js
+                    this.props.setSignIn();
+                }
+            });
+    }
+
     render() {
-        const { signedIn, setRoute } = this.props;
+        const { isSignedIn, setRoute } = this.props;
         return (
             <div
                 className="center"
@@ -31,11 +45,14 @@ class HomePage extends Component {
                     className="mt3 center"
                 >
                     <SearchBar onChange={''} />
-                    {!signedIn || (
+                    {!isSignedIn || (
                         <div className="mt3 flex justify-center">
-                            <a onClick={() => setRoute('AddListingPage')} className="dim pointer f4 mr3 ">
+                            <Link
+                                to="/add"
+                                className="dim pointer f4 mr3 near-black link"
+                            >
                                 Selling an item?
-                                </a>
+                            </Link>
                         </div>
                     )}
                 </div>

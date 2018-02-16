@@ -39,6 +39,15 @@ app.get('/getImage', async (req, res) => {
     res.send({ res: 'ok' });
 });
 
+//check for signIn status
+app.get('/check', (req, res) => {
+    console.log('tes');
+    const sessionID = req.cookies.sessionID;
+    if (cookieMap[sessionID]) res.send({ res: true });
+    else res.send({ res: false });
+});
+//---move this jimmy
+
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
     let request = req.body;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ImageUpload from '../components/Imageupload/imageupload';
 class Testing extends Component {
     constructor() {
         super();

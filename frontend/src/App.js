@@ -16,7 +16,7 @@ class App extends Component {
         super();
         this.state = {
             //needed to check if user is signed in
-            isSignedIn: true,
+            isSignedIn: false,
             //placeholder to simulate searching
             hasSearched: true,
             //needed to simulate url change, default is home
@@ -27,8 +27,8 @@ class App extends Component {
         };
     }
 
-    setSignedIn = x => {
-        this.setState({ isSignedIn: x });
+    setSignIn = () => {
+        this.setState({ isSignedIn: true });
     };
 
     setItemPage = data => {
@@ -48,13 +48,18 @@ class App extends Component {
         //ternary operator to check what route the page is on... default is home
         return (
             <div>
-                <Navigator isSignedIn={isSignedIn} />
+                <Navigator setSignIn={this.setSignIn} isSignedIn={isSignedIn} />
                 <Switch>
                     <Route
                         exact
                         path="/"
                         render={routeProps => {
-                            return <HomePage />;
+                            return (
+                                <HomePage
+                                    setSignIn={this.setSignIn}
+                                    isSignedIn={isSignedIn}
+                                />
+                            );
                         }}
                     />
                     <Route
