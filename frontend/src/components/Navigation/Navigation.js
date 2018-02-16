@@ -4,6 +4,9 @@ import Dropdown from './Dropdown';
 import './dropdown.css';
 
 class Navigation extends Component {
+    constructor (props) {
+        super(props);
+    }
     componentDidMount() {
         fetch('/check', {
             credentials: 'include'
@@ -30,24 +33,26 @@ class Navigation extends Component {
         return !isSignedIn ? (
             <div className={css}>
                 {/* this binary operator will display nothing if the route is at the homepage, or the inAppSearch bar if it isnt */}
-                {home || <InAppSearchBar />}
+                {home || <InAppSearchBar searchResult={this.props.searchResult}/>}
                 <nav className="flex justify-end">
                     <div className="ma3 mr4 mt4 ml0">
                         <Dropdown
                             setSignIn={setSignIn}
                             isSignedIn={isSignedIn}
+                            
                         />
                     </div>
                 </nav>
             </div>
         ) : (
             <div className={css}>
-                {home || <InAppSearchBar />}
+                {home || <InAppSearchBar searchResult={this.props.searchResult}/>}
                 <nav className="flex justify-end">
                     <div className="ma3 mr4 mt4 ml0">
                         <Dropdown
                             setSignOut={setSignOut}
                             isSignedIn={isSignedIn}
+                            
                         />
                     </div>
                 </nav>

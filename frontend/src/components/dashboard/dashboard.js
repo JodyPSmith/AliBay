@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CardList from '../Card/CardList.js';
-import Scroll from '../../Containers/scroll';
+// import Scroll from '../../Containers/scroll';
 class Dashboard extends Component {
     constructor() {
         super();
