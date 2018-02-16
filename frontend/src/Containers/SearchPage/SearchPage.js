@@ -5,6 +5,8 @@ import './SearchPage.css';
 import { items } from '../../components/Card/fakeData';
 class SearchPage extends Component {
     render() {
+        //this prop is for displaying the image clicked
+        //TODO: make the search page display items based on search query.
         const { setItemPage } = this.props;
         return (
             <div id="SearchPage" className="">
