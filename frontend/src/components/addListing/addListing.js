@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Imageupload from '../Imageupload/imageupload';
+import { Link } from 'react-router-dom';
+
 class AddListing extends Component {
     constructor() {
         super();
@@ -117,8 +119,10 @@ class AddListing extends Component {
                 </div>
 
                 <br />
+                <Link to='/dashboard'>
                 <button
                     onClick={this.createListing}
+
                     style={{
                         border: 'none',
                         height: '1vh',
@@ -127,8 +131,9 @@ class AddListing extends Component {
                         background: '#F79521'
                     }}
                     className="white shadow-5 br2 pointer dim"
-                    >Add Listing</button>
-            </div>
+                        >Add Listing</button>
+                </Link>
+            </div >
         );
         return newListing;
     }
