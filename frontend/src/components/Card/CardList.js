@@ -7,11 +7,12 @@ class CardList extends Component {
         const { items, setItemPage } = this.props;
         return (
             <div
-                className="flex justify-start center flex-wrap"
+                className="flex pa5 justify-start center flex-wrap"
                 style={{
                     minWidth: '10vw',
                     minHeight: 'auto',
-                    marginLeft: '1vw'
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
                 }}
             >
                 {items.map((item, index) => {
@@ -19,7 +20,7 @@ class CardList extends Component {
                     //items will be fetched through the server, now it is fetched from a fakeData object. See line 3
                     return (
                         <Link
-                            className="hover-orange near-black visited"
+                            className="hover-orange near-black visited "
                             to={`/item:${item.listing_id}`}
                         >
                             <Card
