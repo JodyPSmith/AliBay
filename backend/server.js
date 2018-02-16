@@ -114,11 +114,8 @@ app.post('/login', async (req, res) => {
 app.post('/buy', (req, res) => {
     // takes a JSON object in body, with sellerID, listingID returns object with res:true
     let sessionID = req.cookies.sessionID;
-    let sellerID = cookieMap[sessionID];
-
-    let request = req.body;
-    let buyerID = request.buyerID;
-    let listingID = request.listingID;
+    let buyerID = cookieMap[sessionID];
+    let listingID = req.body.listingID;
     alibay.buy(buyerID, listingID);
     res.send(JSON.stringify({ res: true }));
 });
