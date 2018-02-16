@@ -45,18 +45,6 @@ class ConfirmationPage extends Component {
                                             {user.postal_code}
                                         </p>
                                     </div>
-                                    <div>
-                                        <button
-                                            style={{
-                                                border: 'none',
-                                                height: '4vh',
-                                                minHeight: '35px'
-                                            }}
-                                            className="ma0 pt2 dim pointer bg-red white br2 shadow-5 flex pb2"
-                                        >
-                                            Change
-                                            </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -83,13 +71,12 @@ class ConfirmationPage extends Component {
                                     className="mr4 white shadow-5 br2 pointer dim"
                                 >
                                     Confirm
-                                    </button>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </Scroll>
             </div>
-
         );
     }
 }
