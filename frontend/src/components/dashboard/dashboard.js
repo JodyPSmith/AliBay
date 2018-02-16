@@ -36,32 +36,21 @@ class Dashboard extends Component {
 
     render() {
         return (
-            <div className="ma5">
-                <Scroll height="75vh">
-                    <div className="ma5">
-                        <div className="itemList br3 shadow-1 mv4 pa3">
-                            <h2>Bought Items</h2>
-                            <CardList
-                                items={this.state.IBought}
-                                setItemPage={this.props.setItemPage}
-                            />
-                        </div>
-                        <div className="itemList br3 shadow-1 mv4 pa3">
-                            <h2>Selling Items</h2>
-                            <CardList
-                                items={this.state.Selling}
-                                setItemPage={this.props.setItemPage}
-                            />
-                        </div>
-                        <div className="itemList br3 shadow-1 mv4 pa3">
-                            <h2>Sold Items</h2>
-                            <CardList
-                                items={this.state.Sold}
-                                setItemPage={this.props.setItemPage}
-                            />
-                        </div>
-                    </div>
-                </Scroll>
+            <div>
+                <div className="itemList">
+                    <h2>Selling Items</h2>
+                    <CardList items={this.state.Selling} setItemPage={this.props.setItemPage} />
+                </div>
+
+                <div className="itemList">
+                    <h2>Bought Items</h2>
+                    <CardList items={this.state.IBought} setItemPage={this.props.setItemPage} />
+                </div>
+
+                <div className="itemList">
+                    <h2>Sold Items</h2>
+                    <CardList items={this.state.Sold} setItemPage={this.props.setItemPage} />
+                </div>
             </div>
         );
     }
