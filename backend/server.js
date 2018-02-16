@@ -46,7 +46,7 @@ app.get('/check', (req, res) => {
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
 });
-//---move this jimmy
+//-->move this jimmy
 
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
