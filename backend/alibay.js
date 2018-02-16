@@ -2,6 +2,7 @@ const assert = require('assert');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const mysql = require('promise-mysql');
+var Sifter = require('sifter');
 var con = null;
 mysql
     .createConnection({
@@ -282,19 +283,46 @@ Once an item is sold, it will not be returned by searchForListings
     parameter: [searchTerm] The search string matching listing descriptions
     returns: an array of listing IDs
 */
-function searchForListings(searchTerm) {
-    let allItems = allListings();
-    let results = allItems.filter(x => {
-        return (
-            productsMap[x].description
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-            productsMap[x].title
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-        );
+async function searchForListings(searchTerm) {
+    // var query = "SELECT * FROM listing";
+    var listingsMap = {};
+    //Search query to get all the listings from the database
+    var queryResult = await con.query("SELECT * FROM listing");
+    console.log(queryResult)
+
+
+    // for loop to add the query results into a map to use for sifter
+    for (var i = 0; i < queryResult.length; i++) {
+        var obj = {
+            title: queryResult[i].title,
+            description: queryResult[i].description,
+            price: queryResult[i].price,
+            date_created: queryResult[i].date_created,
+            seller_id: queryResult[i].seller_id,
+            buyer_id: queryResult[i].buyer_id
+        }
+        //push objects to listingsMap
+        listingsMap[queryResult[i].listing_id].push(obj);
+    }
+    //Sifter functions
+    var allListings = new Sifter(listingsMap);
+    var result = allListings.search(searchTerm, {
+        fields: ['title', 'desc'],
+        sort: [{ field: 'title', direction: 'asc' }],
+        limit: 20
     });
-    return results;
+
+    var finalSort = sortedItems = (result) => {
+        let sortedArray = [];
+
+        for (var i = 0; i < result.items.length; i++) {
+            sortedArray.push(itemsMap[result.items[i].id])
+        }
+
+        var answer = JSON.stringify(sortedArray);
+        return answer
+    }
+    return finalSort;
 }
 
 module.exports = {
