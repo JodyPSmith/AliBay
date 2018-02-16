@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 
 class SearchBar extends Component {
-    submitSearch = (data) => {    
-        var search = this.search.value
+    submitSearch = () => {   
+        var search = { "searchTerm" : this.search.value}
+        console.log("this is search var " , search)
         fetch ('/search', {
             method: "POST",
-            body: JSON.stringify(search),
+            body: search,
             credentials : 'include'
         })
         .then(x => x.json())
         .then(y => console.log(y))
-        console.log(JSON.stringify(search))
+    
     }
 
     liveSearch = (data) => {
@@ -47,7 +48,7 @@ class SearchBar extends Component {
                     <button
                         //this param, this.props.onSubmit will submit the input value from above
                         //onClick={onSubmit}
-                        onClick={e => this.submitSearch(e)}
+                        onClick={this.submitSearch}
                         className="f4 link ph3 pv2 dib bg-white dim pointer flex justify-center self-center "
                         style={{
                             // border: 'none',
