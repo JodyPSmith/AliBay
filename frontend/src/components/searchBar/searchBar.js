@@ -8,7 +8,9 @@ class SearchBar extends Component {
             body: JSON.stringify(search),
             credentials : 'include'
         })
-        console.log(search)
+        .then(x => x.json())
+        .then(y => console.log(y))
+        console.log(JSON.stringify(search))
     }
 
     liveSearch = (data) => {

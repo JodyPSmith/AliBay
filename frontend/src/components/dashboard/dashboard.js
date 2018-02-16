@@ -40,13 +40,15 @@ class Dashboard extends Component {
         return (
             <div>
                 <div className="itemList">
-                    <h2>Bought Items</h2>
-                    <CardList items={this.state.IBought} setItemPage={this.props.setItemPage} />
-                </div>
-                <div className="itemList">
                     <h2>Selling Items</h2>
                     <CardList items={this.state.Selling} setItemPage={this.props.setItemPage} />
                 </div>
+
+                <div className="itemList">
+                    <h2>Bought Items</h2>
+                    <CardList items={this.state.IBought} setItemPage={this.props.setItemPage} />
+                </div>
+
                 <div className="itemList">
                     <h2>Sold Items</h2>
                     <CardList items={this.state.Sold} setItemPage={this.props.setItemPage} />
