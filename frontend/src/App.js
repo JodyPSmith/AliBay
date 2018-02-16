@@ -55,6 +55,12 @@ class App extends Component {
     //     this.setState({ route: route });
     // };
 
+    // function to write search result at top level so it can be passed among child components
+    searchResult = (data) => {
+        this.setState({searchResult : data});
+        console.log("these are the items in app " , data)
+    }
+
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
         const { isSignedIn, item, user } = this.state;
@@ -66,6 +72,7 @@ class App extends Component {
                     setSignOut={this.setSignOut}
                     setSignIn={this.setSignIn}
                     isSignedIn={isSignedIn}
+                    searchResult={this.searchResult}
                 />
                 <Switch>
                     <Route
@@ -96,7 +103,7 @@ class App extends Component {
                         exact
                         path="/search"
                         render={routeProps => (
-                            <SearchPage setItemPage={this.setItemPage} />
+                            <SearchPage searchResult={this.state.searchResult} setItemPage={this.setItemPage} />
                         )}
                     />
                     <Route path="/testing" render={() => <TestingPage />} />

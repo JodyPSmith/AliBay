@@ -3,6 +3,9 @@ import SearchBar from './searchBar';
 import miniLogo from '../../images/mini.png';
 import { Link } from 'react-router-dom';
 class InAppSearchBar extends Component {
+    constructor (props) {
+        super(props);
+    }
     render() {
         return (
             <div className="flex w-50 mt2">
@@ -21,7 +24,7 @@ class InAppSearchBar extends Component {
                         }}
                     />
                 </Link>
-                <SearchBar />
+                <SearchBar searchResult={this.props.searchResult}/>
             </div>
         );
     }
