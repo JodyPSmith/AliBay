@@ -112,10 +112,13 @@ app.post('/login', async (req, res) => {
 //user actions that affect product/inventory-----------------------------------------------------------------------
 
 app.post('/buy', (req, res) => {
+    
     // takes a JSON object in body, with sellerID, listingID returns object with res:true
     let sessionID = req.cookies.sessionID;
     let buyerID = cookieMap[sessionID];
+
     let listingID = req.body.listingID;
+
     alibay.buy(buyerID, listingID);
     res.send(JSON.stringify({ res: true }));
 });
@@ -149,13 +152,13 @@ app.get('/itemsIBought', async (req, res) => {
     res.send(result);
 });
 
-app.post('/itemsSold', async (req, res) => {
-    // takes single string in body, returns arrray of listing IDs
-    var payload = JSON.parse(req.body.toString());
-    console.log('>>>>>>>', payload.seller_id);
-    var ok = await alibay.allItemsSold(payload.seller_id);
-    console.log(ok);
-    res.send(ok);
+app.get('/itemsSold', async (req, res) => {
+    let sellerID = cookieMap[req.cookies.sessionID];
+    console.log('items Sold!!!!!!!!!!!!!!!!!!!')
+    console.log('sellerID: ', sellerID)
+    var result = await alibay.allItemsSold(sellerID);
+    console.log('function result: ', result);
+    res.send(result);
 });
 
 app.get('/itemsSelling', async (req, res) => {
@@ -181,18 +184,14 @@ app.get('/allListings', (req, res) => {
     res.send(alibay.allListings());
 });
 
-app.post('/search', (req, res) => {
+app.post('/search', async (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
     console.log(req.body)
     let request = req.body;
     console.log("REQUEST: ", request)
     let searchTerm = request.searchTerm;
-<<<<<<< HEAD
     console.log(">>> search term in serverjs >>> " , searchTerm)
     let results = await alibay.searchForListings(searchTerm);
-=======
-    let results = alibay.searchForListings(searchTerm);
->>>>>>> db71906d87a643b748a341718f5683cfa3fa156f
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 

@@ -11,6 +11,7 @@ class ConfirmationPage extends Component {
     confirmBuying = () => {
         fetch('/buy', {
             credentials: 'include',
+            headers: {'content-type': 'application/json'},
             method: 'POST',
             body: JSON.stringify({
                 //this prop is passed from the root App.js in the this.state.item
