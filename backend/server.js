@@ -39,6 +39,10 @@ app.get('/getImage', async (req, res) => {
     res.send({ res: 'ok' });
 });
 
+
+
+//signup / login endpoints----------------------------------------------------------------------------------------
+
 //check for signIn status
 app.get('/check', (req, res) => {
     console.log('tes');
@@ -46,9 +50,7 @@ app.get('/check', (req, res) => {
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
 });
-//-->move this jimm
 
-//signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
     let request = req.body;
     let fname = request.firstname;
