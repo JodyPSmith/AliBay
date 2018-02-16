@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Scroll from '../../Containers/scroll';
+import { Link } from 'react-router-dom';
+
 class ItemPage extends Component {
     constructor() {
         super();
@@ -60,19 +62,21 @@ class ItemPage extends Component {
                         <div>
                             <div className="flex justify-between">
                                 <p className="f1 ma0 mb3">{item.name}</p>
-                                <button
-                                    className="dim pointer white br1 shadow-5"
-                                    style={{
-                                        background: '#F6841F',
-                                        border: 'none',
-                                        width: '3vw',
-                                        height: '5vh',
-                                        minHeight: '20px',
-                                        minWidth: '60px'
-                                    }}
-                                >
-                                    Buy
+                                <Link to="/confirm">
+                                    <button
+                                        className="dim pointer white br1 shadow-5"
+                                        style={{
+                                            background: '#F6841F',
+                                            border: 'none',
+                                            width: '3vw',
+                                            height: '5vh',
+                                            minHeight: '20px',
+                                            minWidth: '60px'
+                                        }}
+                                    >
+                                        Buy
                                     </button>
+                                </Link>
                             </div>
                             <p className="f3 ma0">{item.price}</p>
                             <p className="f4">{item.desc}</p>

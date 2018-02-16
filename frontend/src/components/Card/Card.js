@@ -15,12 +15,12 @@ class Card extends Component {
                         minWidth: '15vw'
                     }}
                     //the image is linked to the item prop in the parent container -> CardList
-                    src={this.props.item.image[0]}
+                    src={this.props.item.image[0] || null}
                     alt="product"
                 />
                 <div>
                     <h2>{'PRICE'}</h2>
-                    <p>{'SELLER'}</p>
+                    <p>{'TITLE'}</p>
                 </div>
             </div>
         );
