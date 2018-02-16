@@ -141,10 +141,10 @@ app.get('/itemsIBought', async (req, res) => {
     // takes cookie, returns array of all items bought buy the user
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
-    // console.log(`sessionID=${sessionID}, userID=${userID}`)
-    console.log("user id is ", userID)
+
     console.log(await alibay.allItemsBought(userID));
-    res.send(await alibay.allItemsBought(userID));
+    let result = await alibay.allItemsBought(userID)
+    res.send(result);
 });
 
 app.post('/itemsSold', async (req, res) => {
@@ -156,12 +156,11 @@ app.post('/itemsSold', async (req, res) => {
     res.send(ok);
 });
 
-app.post('/itemsSelling', async (req, res) => {
-    // takes single string in body, returns arrray of listing IDs
-    var payload = JSON.parse(req.body.toString());
-    console.log('>>>>>>>', payload.seller_id);
-    var ok = await alibay.allitemsSelling(payload.seller_id);
-    console.log(ok);
+app.get('/itemsSelling', async (req, res) => {
+    let sellerID = cookieMap[req.cookies.sessionID];
+    console.log('sellerID: ', sellerID)
+    var ok = await alibay.allItemsSelling(sellerID);
+    console.log('function result: ', ok);
     res.send(ok);
 });
 
@@ -191,7 +190,7 @@ app.listen(4000, () => {
     console.log('Listening on port 4000');
 });
 
-// image filewriting
+// image filewriting ---------------------------------------------------------------------------------
 
 app.post('/imgUpload', (req, res) => {
     var fstream;
