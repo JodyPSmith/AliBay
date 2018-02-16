@@ -45,10 +45,18 @@ app.get('/getImage', async (req, res) => {
 
 //check for signIn status
 app.get('/check', (req, res) => {
-    console.log('tes');
     const sessionID = req.cookies.sessionID;
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
+});
+//-->move this jimmy
+
+app.get('/signOut', (req, res) => {
+    const sessionID = req.cookies.sessionID;
+    console.log('test /signOut', cookieMap[sessionID]);
+    delete cookieMap[sessionID];
+    console.log('deleted?  ', cookieMap[sessionID]);
+    res.send({ res: true });
 });
 
 app.post('/signUp', async (req, res) => {
@@ -141,7 +149,6 @@ app.get('/itemsIBought', async (req, res) => {
     // takes cookie, returns array of all items bought buy the user
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
-
     console.log(await alibay.allItemsBought(userID));
     let result = await alibay.allItemsBought(userID)
     res.send(result);
@@ -178,11 +185,11 @@ app.get('/allListings', (req, res) => {
     res.send(alibay.allListings());
 });
 
-app.post('/search', (req, res) => {
+app.post('/search', async (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
     let request = req.body.toString();
     let searchTerm = request.searchTerm;
-    let results = alibay.searchForListings(searchTerm);
+    let results = await alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 

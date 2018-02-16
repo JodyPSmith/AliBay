@@ -4,8 +4,21 @@ import Dropdown from './Dropdown';
 import './dropdown.css';
 
 class Navigation extends Component {
+    componentDidMount() {
+        fetch('/check', {
+            credentials: 'include'
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res.res);
+                if (res.res) {
+                    //this prop is called in App.js
+                    this.props.setSignIn();
+                }
+            });
+    }
     render() {
-        const { isSignedIn, location, setSignIn } = this.props;
+        const { isSignedIn, location, setSignIn, setSignOut } = this.props;
         const home = location.pathname === '/';
         //needed ternary operator to change css depending on route
         //otherwise the nav would appear on the wrong side
@@ -32,7 +45,10 @@ class Navigation extends Component {
                 {home || <InAppSearchBar />}
                 <nav className="flex justify-end">
                     <div className="ma3 mr4 mt4 ml0">
-                        <Dropdown isSignedIn={isSignedIn} />
+                        <Dropdown
+                            setSignOut={setSignOut}
+                            isSignedIn={isSignedIn}
+                        />
                     </div>
                 </nav>
             </div>
