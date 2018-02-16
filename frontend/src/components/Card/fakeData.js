@@ -1,8 +1,8 @@
 const items = [
     {
         id: 1,
-        name: 'name',
-        price: 'PRICE',
+        name: 'john',
+        price: 100,
         image: [
             'http://www.gadgetreview.com/wp-content/uploads/2016/01/Epson-Home-Cinema-2040-1.jpg',
             'https://images.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.RM8rcxuODX89feALTsxRowHaFo%26pid%3D15.1&f=1',
@@ -14,9 +14,9 @@ const items = [
         desc:
             'Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu.'
     },{
-        id: 1,
-        name: 'name',
-        price: 'PRICE',
+        id: 2,
+        name: 'bob',
+        price: 200,
         image: [
             'http://www.gadgetreview.com/wp-content/uploads/2016/01/Epson-Home-Cinema-2040-1.jpg',
             'https://images.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.RM8rcxuODX89feALTsxRowHaFo%26pid%3D15.1&f=1',
@@ -28,8 +28,8 @@ const items = [
         desc:
             'Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu. Lorem ipsum dolor sit amet, te quem omnes sed, duo at iuvaret sanctus. Eam omnis epicurei pertinax at. Sanctus scaevola phaedrum nam ad, commune dignissim pri ne. Eum ut feugiat apeirian, legendos pericula eum no, ius habeo dicat tation ex. Pro no semper viderer, autem falli constituto at usu.'
     },{
-        id: 1,
-        name: 'name',
+        id: 3,
+        name: 'sue',
         price: 'PRICE',
         image: [
             'http://www.gadgetreview.com/wp-content/uploads/2016/01/Epson-Home-Cinema-2040-1.jpg',

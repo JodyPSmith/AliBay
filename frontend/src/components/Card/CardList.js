@@ -15,14 +15,17 @@ class CardList extends Component {
                     marginRight: 'auto'
                 }}
             >
-                {items.map((item, index) => {
+                {this.props.items.map((item, index) => {
                     //use map array method to iterate through each index of the items map
                     //items will be fetched through the server, now it is fetched from a fakeData object. See line 3
                     return (
+                        
                         <Link
+                            
                             className="hover-orange near-black visited "
                             to={`/item:${item.listing_id}`}
                         >
+                        {console.log(this.props.searchResult)}
                             <Card
                                 onClick={() => {
                                     setItemPage(item);

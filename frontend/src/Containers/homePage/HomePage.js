@@ -30,7 +30,7 @@ class HomePage extends Component {
                     }}
                     className="mt3 center"
                 >
-                    <SearchBar onChange={''} />
+                    <SearchBar searchResult={this.props.searchResult} onChange={''} />
                     {!isSignedIn || (
                         <div className="mt3 flex justify-center">
                             <Link

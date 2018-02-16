@@ -79,7 +79,7 @@ class App extends Component {
                         exact
                         path="/"
                         render={routeProps => {
-                            return <HomePage isSignedIn={isSignedIn} />;
+                            return <HomePage searchResult={this.searchResult} isSignedIn={isSignedIn} />;
                         }}
                     />
                     <Route
