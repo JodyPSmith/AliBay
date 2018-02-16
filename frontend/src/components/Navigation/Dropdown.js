@@ -73,7 +73,11 @@ class Dropdown extends Component {
                         </Link>
                     )}
                     {!isSignedIn || (
-                        <a onClick={setSignOut} className="pointer dim" to="/dashboard">
+                        <a
+                            onClick={setSignOut}
+                            className="pointer dim"
+                            to="/dashboard"
+                        >
                             Log Out
                         </a>
                     )}
@@ -123,6 +127,7 @@ class Dropdown extends Component {
                         }}
                     >
                         <LoginPage
+                            toggleLogin={this.toggleLoginModal}
                             setSignIn={setSignIn}
                             signedIn={this.props.isSignedIn}
                         />
