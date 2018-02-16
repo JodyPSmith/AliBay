@@ -31,14 +31,6 @@ const generateCookie = () => {
     } else return sessionID; //if sessionID exists, re-generate sessionID
 };
 
-app.get('/getImage', async (req, res) => {
-    let sessionID = req.cookies.sessionID;
-    let userID = cookieMap[sessionID];
-    let result = await alibay.allItemsSelling(userID);
-    console.log('result: ', result);
-    res.send({ res: 'ok' });
-});
-
 //signup / login endpoints----------------------------------------------------------------------------------------
 
 //check for signIn status
@@ -53,7 +45,10 @@ app.get('/signOut', (req, res) => {
     const sessionID = req.cookies.sessionID;
     console.log('test /signOut', cookieMap[sessionID]);
     delete cookieMap[sessionID];
-    console.log('deleted?  ', cookieMap[sessionID]);
+    fs.writeFileSync(
+        __dirname + '/datafiles/cookieMap.txt',
+        JSON.stringify(cookieMap)
+    );
     res.send({ res: true });
 });
 
