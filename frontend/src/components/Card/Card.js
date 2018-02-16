@@ -19,8 +19,8 @@ class Card extends Component {
                     alt="product"
                 />
                 <div>
-                    <h2>{'PRICE'}</h2>
-                    <p>{'TITLE'}</p>
+                    <h2>{this.props.item.title}</h2>
+                    <p className="f3">{`$${this.props.item.price}`}</p>
                 </div>
             </div>
         );
