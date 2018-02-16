@@ -119,7 +119,7 @@ app.post('/buy', (req, res) => {
     let request = req.body;
     let buyerID = request.buyerID;
     let listingID = request.listingID;
-    alibay.buy(buyerID, sellerID, listingID);
+    alibay.buy(buyerID, listingID);
     res.send(JSON.stringify({ res: true }));
 });
 

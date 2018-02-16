@@ -235,29 +235,47 @@ allItemsBought returns the IDs of all the items bought by a buyer
     returns: an array of listing IDs
 */
 async function allItemsBought(buyerID) {
-  var result = await con.query("SELECT * FROM listing WHERE buyer_id = ?", [
-    buyerID
-  ]);
-  console.log(">>> Items bought by user >>>", result);
+  let query = `SELECT * FROM listing WHERE buyer_id = ${buyerID}`
+  let queryRes = await con.query(query);
+  try {
+    imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
+  } catch (err) {
+    console.log("imgMap.txt not found");
+  }
+  let result = queryRes.map(x => {
+    x.image = imgMap[x.listing_id];
+    console.log("array element: ", x);
+    return x;
+  });
   return result;
 }
+
 /* 
 allItemsSold returns the IDs of all the items sold by a seller
     parameter: [sellerID] The ID of the seller
     returns: an array of listing IDs
 */
 async function allItemsSold(sellerID) {
-  var listing_id = [];
-  var result = await con.query("SELECT * FROM listing WHERE seller_id = ?", [
-    sellerID
-  ]);
-  console.log(">>>", result);
+  let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NOT NULL`;
+  let queryRes = await con.query(query);
+  try {
+    imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
+  } catch (err) {
+    console.log("imgMap.txt not found");
+  }
+  let result = queryRes.map(x => {
+    x.image = imgMap[x.listing_id];
+    console.log("array element: ", x);
+    return x;
+  });
   return result;
 }
+
+
 // return items that the user is currently selling.
 async function allItemsSelling(sellerID) {
   let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NULL`;
-  var queryRes = await con.query(query);
+  let queryRes = await con.query(query);
   try {
     imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
   } catch (err) {
