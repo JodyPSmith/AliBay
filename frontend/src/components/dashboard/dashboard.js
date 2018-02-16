@@ -8,7 +8,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount = () => {
-        // this.setState({iBought : this.getList("IBought"), sold : this.getList("Sold"), selling : this.getList("Selling") })
+        this.setState({iBought : this.getList("IBought"), sold : this.getList("Sold"), selling : this.getList("Selling") })
         // this.getStateList()
         this.getList('Selling');
         this.getList('IBought');
@@ -17,6 +17,7 @@ class Dashboard extends Component {
     };
 
     getList = type => {
+        console.log(`type: `, type)
         return fetch('/items' + type, {
             credentials: 'include'
         })
