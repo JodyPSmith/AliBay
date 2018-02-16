@@ -22,7 +22,7 @@ let itemsBought = {};
 // map that keeps track of all the items a user has sold
 let itemsSold = {};
 
-let listingsMap = [];
+
 // map that keeps track of user information
 let userMap = {
     test: {
@@ -46,12 +46,12 @@ let productsMap = {};
 
 // initialize maps from data file
 try {
-  console.log("Reading files...");
-  itemsBought = JSON.parse(fs.readFileSync("./datafiles/itemsBought.txt"));
-  itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
-  userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
-  imgMap = JSON.parse(fs.readFileSync('./datafiles/imgMap.txt'));
-  productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
+    console.log("Reading files...");
+    itemsBought = JSON.parse(fs.readFileSync("./datafiles/itemsBought.txt"));
+    itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
+    userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
+    imgMap = JSON.parse(fs.readFileSync('./datafiles/imgMap.txt'));
+    productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
 } catch (err) {
     console.log("error encountered; data file probably not initialized:");
     console.log(`${err}`);
@@ -166,34 +166,34 @@ This function is incomplete. You need to complete it.
     returns: The ID of the new listing
 */
 async function createListing(sellerID, title, price, desc, images, location) {
-  console.log('CREATING LISTING !!!!!!!!!!')
-  let productMap = {
-    title: title,
-    description: desc,
-    price: price,
-    seller_id: sellerID
-  };
+    console.log('CREATING LISTING !!!!!!!!!!')
+    let productMap = {
+        title: title,
+        description: desc,
+        price: price,
+        seller_id: sellerID
+    };
 
-  con.query("INSERT INTO listing SET ?", productMap, (err, rows) => {
-    if (err) throw err;
-  });
+    con.query("INSERT INTO listing SET ?", productMap, (err, rows) => {
+        if (err) throw err;
+    });
 
-  var query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`;
+    var query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`;
 
-  let queryRes = await con.query(query);
-  let listingID = queryRes[0].listing_id;
-  console.log("listingID:", listingID);
+    let queryRes = await con.query(query);
+    let listingID = queryRes[0].listing_id;
+    console.log("listingID:", listingID);
 
-  if (imgMap[listingID])
-    imgMap[listingID] = imgMap[listingID].concat(
-      images
-    );
-  else imgMap[listingID] = images;
+    if (imgMap[listingID])
+        imgMap[listingID] = imgMap[listingID].concat(
+            images
+        );
+    else imgMap[listingID] = images;
 
-console.log('writing to imgMap.txt!', imgMap)
-  fs.writeFileSync("./datafiles/imgMap.txt", JSON.stringify(imgMap));
-console.log('after writing: ', JSON.parse(fs.readFileSync('./datafiles/imgMap.txt')))
-  fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
+    console.log('writing to imgMap.txt!', imgMap)
+    fs.writeFileSync("./datafiles/imgMap.txt", JSON.stringify(imgMap));
+    console.log('after writing: ', JSON.parse(fs.readFileSync('./datafiles/imgMap.txt')))
+    fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
 /* 
@@ -209,15 +209,15 @@ The seller will see the listing in his history of items sold
     returns: undefined
 */
 function buy(buyerID, listingID) {
-  console.log('buyer', buyerID, 'listing', listingID)
-  console.log('ATTEMPTING BUY')
-  let query =  `UPDATE listing SET buyer_id = ${buyerID} WHERE listing_id = ${listingID}`;
-  con.query(query,
-    (err, rows) => {
-      if (err) throw err;
-      console.log("Data received from Db:\n");
-    }
-  );
+    console.log('buyer', buyerID, 'listing', listingID)
+    console.log('ATTEMPTING BUY')
+    let query = `UPDATE listing SET buyer_id = ${buyerID} WHERE listing_id = ${listingID}`;
+    con.query(query,
+        (err, rows) => {
+            if (err) throw err;
+            console.log("Data received from Db:\n");
+        }
+    );
 
     //fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
     //fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
@@ -232,19 +232,19 @@ allItemsBought returns the IDs of all the items bought by a buyer
     returns: an array of listing IDs
 */
 async function allItemsBought(buyerID) {
-  let query = `SELECT * FROM listing WHERE buyer_id = ${buyerID}`
-  let queryRes = await con.query(query);
-  try {
-    imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
-  } catch (err) {
-    console.log("imgMap.txt not found");
-  }
-  let result = queryRes.map(x => {
-    x.image = imgMap[x.listing_id];
-    return x;
-  });
-  console.log('ALL ITEMS BOUGHT !!! ', result)
-  return result;
+    let query = `SELECT * FROM listing WHERE buyer_id = ${buyerID}`
+    let queryRes = await con.query(query);
+    try {
+        imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
+    } catch (err) {
+        console.log("imgMap.txt not found");
+    }
+    let result = queryRes.map(x => {
+        x.image = imgMap[x.listing_id];
+        return x;
+    });
+    console.log('ALL ITEMS BOUGHT !!! ', result)
+    return result;
 }
 
 /* 
@@ -253,38 +253,38 @@ allItemsSold returns the IDs of all the items sold by a seller
     returns: an array of listing IDs
 */
 async function allItemsSold(sellerID) {
-  let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NOT NULL`;
-  let queryRes = await con.query(query);
-  try {
-    imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
-  } catch (err) {
-    console.log("imgMap.txt not found");
-  }
-  let result = queryRes.map(x => {
-    x.image = imgMap[x.listing_id];
-    return x;
-  });
-  console.log('ALL ITEMS SOLD !!! ', result)
-  return result;
+    let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NOT NULL`;
+    let queryRes = await con.query(query);
+    try {
+        imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
+    } catch (err) {
+        console.log("imgMap.txt not found");
+    }
+    let result = queryRes.map(x => {
+        x.image = imgMap[x.listing_id];
+        return x;
+    });
+    console.log('ALL ITEMS SOLD !!! ', result)
+    return result;
 }
 
 
 // return items that the user is currently selling.
 async function allItemsSelling(sellerID) {
-  let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NULL`;
-  let queryRes = await con.query(query);
-  try {
-    imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
-  } catch (err) {
-    console.log("imgMap.txt not found");
-  }
+    let query = `SELECT * FROM listing WHERE seller_id = ${sellerID} AND buyer_id IS NULL`;
+    let queryRes = await con.query(query);
+    try {
+        imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
+    } catch (err) {
+        console.log("imgMap.txt not found");
+    }
 
-  let result = queryRes.map(x => {
-    x.image = imgMap[x.listing_id];
-    return x;
-  });
-  console.log('ALL ITEMS SELLING !!! ', result)
-  return result;
+    let result = queryRes.map(x => {
+        x.image = imgMap[x.listing_id];
+        return x;
+    });
+    console.log('ALL ITEMS SELLING !!! ', result)
+    return result;
 }
 /*
 allListings returns the IDs of all the listings currently on the market
@@ -318,15 +318,14 @@ Once an item is sold, it will not be returned by searchForListings
     returns: an array of listing IDs
 */
 async function searchForListings(searchTerm) {
-    // var query = "SELECT * FROM listing";
-    console.log(">> SearchTerm in function: ", searchTerm)
+    let listingsMap = [];
     var obj = {};
     //Search query to get all the listings from the database
     var queryResult = await con.query("SELECT * FROM listing");
-    //console.log(queryResult)
+
     // for loop to add the query results into a map to use for sifter
     for (var i = 0; i < queryResult.length; i++) {
-        
+
         obj = {
             listing_id: queryResult[i].listing_id,
             title: queryResult[i].title,
@@ -336,15 +335,12 @@ async function searchForListings(searchTerm) {
             seller_id: queryResult[i].seller_id,
             buyer_id: queryResult[i].buyer_id
         }
-        console.log(">>> OBJECT >>> " ,obj)
-       // push objects to listingsMap
-        console.log('>> listing id >> ', queryResult[i].listing_id)
+        // push objects to listingsMap
         listingsMap.push(obj);
 
     }
-    var allListings = new Sifter(listingsMap);
-    // console.log(">>> ALL LISTINGS : " , allListings);
-    var result = allListings.search(searchTerm, {
+    var sifterObj = new Sifter(listingsMap);
+    var result = sifterObj.search(searchTerm, {
         fields: ['title', 'description'],
         sort: [{ field: 'title', direction: 'asc' }],
         limit: 20
@@ -352,17 +348,18 @@ async function searchForListings(searchTerm) {
 
     var sortedItems = (result) => {
         let sortedArray = [];
-    
+
         for (var i = 0; i < result.items.length; i++) {
             sortedArray.push(listingsMap[result.items[i].id])
         }
-    
+
         var answer = JSON.stringify(sortedArray);
         return answer
     }
+    var finalResults = sortedItems(result);
+    console.log(">>>> FINAL RESULTS >>>> " , finalResults)
+    return finalResults;
 
-    return sortedItems(result);
-    
 }
 
 

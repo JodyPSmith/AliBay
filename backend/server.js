@@ -31,14 +31,6 @@ const generateCookie = () => {
     } else return sessionID; //if sessionID exists, re-generate sessionID
 };
 
-app.get('/getImage', async (req, res) => {
-    let sessionID = req.cookies.sessionID;
-    let userID = cookieMap[sessionID];
-    let result = await alibay.allItemsSelling(userID);
-    console.log('result: ', result);
-    res.send({ res: 'ok' });
-});
-
 //signup / login endpoints----------------------------------------------------------------------------------------
 
 //check for signIn status
@@ -53,7 +45,10 @@ app.get('/signOut', (req, res) => {
     const sessionID = req.cookies.sessionID;
     console.log('test /signOut', cookieMap[sessionID]);
     delete cookieMap[sessionID];
-    console.log('deleted?  ', cookieMap[sessionID]);
+    fs.writeFileSync(
+        __dirname + '/datafiles/cookieMap.txt',
+        JSON.stringify(cookieMap)
+    );
     res.send({ res: true });
 });
 
@@ -186,12 +181,10 @@ app.get('/allListings', (req, res) => {
 
 app.post('/search', async (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
-    console.log(req.body)
+    let results = []
     let request = req.body;
-    console.log("REQUEST: ", request)
     let searchTerm = request.searchTerm;
-    console.log(">>> search term in serverjs >>> " , searchTerm)
-    let results = await alibay.searchForListings(searchTerm);
+    results = await alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 
