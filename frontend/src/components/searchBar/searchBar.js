@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 
 class SearchBar extends Component {
     submitSearch = () => {   
-        var search = { "searchTerm" : this.search.value}
+        var search = { searchTerm : this.search.value}
         console.log("this is search var " , search)
         fetch ('/search', {
             method: "POST",
-            body: search,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(search),
             credentials : 'include'
         })
         .then(x => x.json())
