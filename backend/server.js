@@ -190,12 +190,8 @@ app.post('/search', async (req, res) => {
     let request = req.body;
     console.log("REQUEST: ", request)
     let searchTerm = request.searchTerm;
-<<<<<<< HEAD
     console.log(">>> search term in serverjs >>> " , searchTerm)
     let results = await alibay.searchForListings(searchTerm);
-=======
-    let results = alibay.searchForListings(searchTerm);
->>>>>>> 81de8c6728045c888c33b25929cbf2388d5f2d71
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
 
