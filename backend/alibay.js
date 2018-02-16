@@ -50,7 +50,7 @@ try {
   itemsBought = JSON.parse(fs.readFileSync("./datafiles/itemsBought.txt"));
   itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
   userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
-  // passMap = JSON.parse(fs.readFileSync('./datafiles/passMap.txt'));
+  imgMap = JSON.parse(fs.readFileSync('./datafiles/imgMap.txt'));
   productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
 } catch (err) {
   console.log("error encountered; data file probably not initialized:");
@@ -166,6 +166,7 @@ This function is incomplete. You need to complete it.
     returns: The ID of the new listing
 */
 async function createListing(sellerID, title, price, desc, images, location) {
+  console.log('CREATING LISTING !!!!!!!!!!')
   let productMap = {
     title: title,
     description: desc,
@@ -175,26 +176,23 @@ async function createListing(sellerID, title, price, desc, images, location) {
 
   con.query("INSERT INTO listing SET ?", productMap, (err, rows) => {
     if (err) throw err;
-    console.log("Data received from Db:\n");
-    console.log(rows);
   });
 
   var query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`;
 
-  let listingID = await con.query(query);
-  console.log("listingID:", listingID[0].listing_id);
+  let queryRes = await con.query(query);
+  let listingID = queryRes[0].listing_id;
+  console.log("listingID:", listingID);
 
-  if (imgMap[listingID[0].listing_id])
-    imgMap[listingID[0].listing_id] = imgMap[listingID[0].listing_id].concat(
+  if (imgMap[listingID])
+    imgMap[listingID] = imgMap[listingID].concat(
       images
     );
-  else imgMap[listingID[0].listing_id] = images;
+  else imgMap[listingID] = images;
 
-  console.log(
-    `imgMap[${listingID[0].listing_id}]: ${imgMap[listingID[0].listing_id]}`
-  );
-
+console.log('writing to imgMap.txt!', imgMap)
   fs.writeFileSync("./datafiles/imgMap.txt", JSON.stringify(imgMap));
+console.log('after writing: ', JSON.parse(fs.readFileSync('./datafiles/imgMap.txt')))
   fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
@@ -210,16 +208,14 @@ The seller will see the listing in his history of items sold
      [listingID] The ID of listing
     returns: undefined
 */
-function buy(userID, listingID) {
-  con.query(
-    "UPDATE listing SET buyer_id ?",
-    [userID],
-    "WHERE listing_id = ?",
-    [listingID],
+function buy(buyerID, listingID) {
+  console.log('buyer', buyerID, 'listing', listingID)
+  console.log('ATTEMPTING BUY')
+  let query =  `UPDATE listing SET buyer_id = ${buyerID} WHERE listing_id = ${listingID}`;
+  con.query(query,
     (err, rows) => {
       if (err) throw err;
       console.log("Data received from Db:\n");
-      console.log(rows);
     }
   );
 
@@ -245,9 +241,9 @@ async function allItemsBought(buyerID) {
   }
   let result = queryRes.map(x => {
     x.image = imgMap[x.listing_id];
-    console.log("array element: ", x);
     return x;
   });
+  console.log('ALL ITEMS BOUGHT !!! ', result)
   return result;
 }
 
@@ -266,9 +262,9 @@ async function allItemsSold(sellerID) {
   }
   let result = queryRes.map(x => {
     x.image = imgMap[x.listing_id];
-    console.log("array element: ", x);
     return x;
   });
+  console.log('ALL ITEMS SOLD !!! ', result)
   return result;
 }
 
@@ -285,9 +281,9 @@ async function allItemsSelling(sellerID) {
 
   let result = queryRes.map(x => {
     x.image = imgMap[x.listing_id];
-    console.log("array element: ", x);
     return x;
   });
+  console.log('ALL ITEMS SELLING !!! ', result)
   return result;
 }
 /*
