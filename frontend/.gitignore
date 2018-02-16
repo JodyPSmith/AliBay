@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /backend/jody-test.js
+/backend/datafiles
 # testing
 /coverage
 
