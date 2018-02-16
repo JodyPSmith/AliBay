@@ -182,11 +182,8 @@ app.get('/allListings', (req, res) => {
 app.post('/search', async (req, res) => {
     // returns new array where description includes search term ***To be optimized later***
     let results = []
-    console.log(req.body)
     let request = req.body;
-    console.log("REQUEST: ", request)
     let searchTerm = request.searchTerm;
-    console.log(">>> search term in serverjs >>> " , searchTerm)
     results = await alibay.searchForListings(searchTerm);
     res.send(results); // return the array (could be empty) to be processed in front-end
 });
