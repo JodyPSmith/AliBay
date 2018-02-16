@@ -29,7 +29,7 @@ class Login extends Component {
                 if (y.res === true) {
                     this.setState({ loginStat: 'yes' });
                     //this prop is called first here, passed up to LoginPage, then passed to the dropdown component, then passed to the navigation component, then passed to App.js where it's called -> sorry Jody for messing with your code, just wanted to see if it worked!
-                    setTimeout(() => this.props.setSignIn(), 2500);
+                    this.props.setSignIn();
                 } else {
                     this.setState({ loginStat: 'failed' });
                     setTimeout(() => this.setState({ loginStat: 'no' }), 2000);
