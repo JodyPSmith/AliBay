@@ -44,7 +44,7 @@ class Dropdown extends Component {
     }
     render() {
         const { loginIsOpen, signUpIsOpen } = this.state;
-        const { isSignedIn, setSignIn } = this.props;
+        const { isSignedIn, setSignIn, setSignOut } = this.props;
         return (
             <div className="dropdown">
                 <a
@@ -71,6 +71,11 @@ class Dropdown extends Component {
                         <Link className="pointer dim" to="/add">
                             Add Listing
                         </Link>
+                    )}
+                    {!isSignedIn || (
+                        <a onClick={setSignOut} className="pointer dim" to="/dashboard">
+                            Log Out
+                        </a>
                     )}
                     {isSignedIn || (
                         <a

@@ -41,12 +41,19 @@ app.get('/getImage', async (req, res) => {
 
 //check for signIn status
 app.get('/check', (req, res) => {
-    console.log('tes');
     const sessionID = req.cookies.sessionID;
     if (cookieMap[sessionID]) res.send({ res: true });
     else res.send({ res: false });
 });
-//-->move this jimm
+//-->move this jimmy
+
+app.get('/signOut', (req, res) => {
+    const sessionID = req.cookies.sessionID;
+    console.log('test /signOut', cookieMap[sessionID]);
+    delete cookieMap[sessionID];
+    console.log('deleted?  ', cookieMap[sessionID]);
+    res.send({ res: true });
+});
 
 //signup / login endpoints----------------------------------------------------------------------------------------
 app.post('/signUp', async (req, res) => {
@@ -140,7 +147,7 @@ app.get('/itemsIBought', async (req, res) => {
     let sessionID = req.cookies.sessionID;
     let userID = cookieMap[sessionID];
     // console.log(`sessionID=${sessionID}, userID=${userID}`)
-    console.log("user id is ", userID)
+    console.log('user id is ', userID);
     console.log(await alibay.allItemsBought(userID));
     res.send(await alibay.allItemsBought(userID));
 });
