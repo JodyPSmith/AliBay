@@ -61,7 +61,7 @@ class ItemPage extends Component {
                         </div>
                         <div className="w-75">
                             <div className="flex justify-between ">
-                                <p className="f1 ma0 mb3">{item.name}</p>
+                                <p className="f1 ma0 mb3">{item.title}</p>
                                 <Link to="/confirm">
                                     <button
                                         className="dim pointer white br1 shadow-5"

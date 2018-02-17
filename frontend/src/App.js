@@ -25,7 +25,8 @@ class App extends Component {
             home: true,
             //needed to pass in data from specific item page
             item: items[0],
-            user: userMap.test
+            user: userMap.test,
+            searchResult : []
         };
     }
 

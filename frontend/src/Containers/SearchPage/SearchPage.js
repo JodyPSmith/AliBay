@@ -10,10 +10,10 @@ class SearchPage extends Component {
         const { setItemPage } = this.props;
         return (
             <div id="SearchPage" className="">
-                {console.log("this is my search array " , this.props.searchResult)}
-                {console.log("this is items from fake data ", items)}
+                {console.log("this is my param " , this.props)}
+
                 {/* <Scroll height="71vh"> */}
-                    <CardList searchResult={this.props.searchResult} items={items} setItemPage={setItemPage} />
+                    <CardList items={this.props.searchResult} setItemPage={setItemPage} />
                 {/* </Scroll> */}
             </div>
         );
