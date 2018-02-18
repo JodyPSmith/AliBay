@@ -153,8 +153,7 @@ function getUserID(username) {
 }
 
 async function fetchUser(userID) {
-  console.log("fetch user ID", userID);
-  let query = `SELECT address, city, province, country, email, first_name as fname, last_name as lname, postal_code as pcode FROM users WHERE id = ${userID}`;
+  let query = `SELECT address, city, province, country, email, id, first_name as fname, last_name as lname, postal_code as pcode FROM users WHERE id = ${userID}`;
   let queryRes = await con.query(query);
   return queryRes[0];
 }
@@ -175,7 +174,8 @@ async function createListing(sellerID, title, price, desc, images, location) {
     title: title,
     description: desc,
     price: price,
-    seller_id: sellerID
+    seller_id: sellerID,
+    location: location
   };
 
   con.query("INSERT INTO listing SET ?", productMap, (err, rows) => {
@@ -319,7 +319,7 @@ async function searchForListings(searchTerm) {
   var obj = {};
   //Search query to get all the listings from the database
   var queryResult = await con.query(
-    "SELECT * FROM listing WHERE buyer_id IS NOT NULL"
+    "SELECT * FROM listing WHERE buyer_id IS NULL"
   );
 
   // for loop to add the query results into a map to use for sifter

@@ -11,7 +11,7 @@ const history = createBrowserHistory();
 
 ReactDOM.render(
   <BrowserRouter history={history}>
-    <App />
+    <App history={history} />
   </BrowserRouter>,
   document.getElementById("root")
 );
