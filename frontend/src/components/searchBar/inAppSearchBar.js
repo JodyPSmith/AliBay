@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SearchBar from './searchBar';
 import miniLogo from '../../images/mini.png';
 class InAppSearchBar extends Component {

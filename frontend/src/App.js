@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Switch, Route, withRouter, Link } from 'react-router';
+import { Switch, Route, withRouter } from 'react-router';
 import Dashboard from './components/dashboard/dashboard';
 import AddListingPage from './Containers/AddListingPage/AddListingPage';
 import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
 import ConfirmationPage from './Containers/ConfirmationPage/ConfirmationPage';
-import { items } from './components/Card/fakeData';
+// import { items } from './components/Card/fakeData';
 import userMap from './placeholderData/user';
 import Navigation from './components/Navigation/Navigation';
 import TestingPage from './Containers/TestingPage';

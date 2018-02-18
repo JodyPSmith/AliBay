@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Login from '../login/login';
 class Signup extends Component {
     constructor() {
         super();
