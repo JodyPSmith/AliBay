@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans Condensed', sans-serif
+    font-family: 'Open Sans Condensed', sans-serif;
 }
 
 textarea {
@@ -34,4 +34,8 @@ input {
 
 .visited:visited {
     color: grey;
+}
+
+input {
+    width: 20vw;
 }

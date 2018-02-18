@@ -42,40 +42,42 @@ class Login extends Component {
         let loginPage = (
             <div>
                 <div>
-                    <h1 className="flex justify-center f3">
+                    <h1 className="flex flex-wrap justify-center f3">
                         {' '}
                         Please Login here{' '}
                     </h1>
-                    <input
-                        className="flex f5 ma2 dim pa2 w-100 mw-100 center shadow-5 bn"
-                        //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
-                        id="loginName"
-                        placeholder="Enter username here"
-                        ref={r => (this.loginName = r)}
-                    />
-                    <input
-                        className="flex f5 ma2 dim pa2 w-100 mw-100 center shadow-5 bn"
-                        //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
-                        id="loginPW"
-                        type="password"
-                        placeholder="Enter password here"
-                        ref={r => (this.loginPW = r)}
-                    />
-                    <br />
-                    <button
-                        onClick={this.sendLogin}
-                        style={{
-                            border: 'none',
-                            height: '1vh',
-                            minHeight: '35px',
-                            marginTop: '25%',
-                            background: '#F79521'
-                        }}
-                        className="flex flex-column white pointer dim center ma3 f4 dim pa2 w-40 shadow-5 br1"
-                    >
-                        {' '}
-                        Log In{' '}
-                    </button>
+                    <div className="">
+                        <input
+                            className="flex mv3 dim pa2 center shadow-5 bn"
+                            type="text"
+                            //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
+                            id="loginName"
+                            placeholder="Enter username here"
+                            ref={r => (this.loginName = r)}
+                        />
+                        <input
+                            className="flex f5 dim pa2  center shadow-5 bn"
+                            //className="f4 dim m10 pa2 w-90 center shadow-5 br1"
+                            id="loginPW"
+                            type="password"
+                            placeholder="Enter password here"
+                            ref={r => (this.loginPW = r)}
+                        />
+                        <button
+                            onClick={this.sendLogin}
+                            style={{
+                                border: 'none',
+                                height: '1vh',
+                                minHeight: '35px',
+                                marginTop: '25%',
+                                background: '#F79521'
+                            }}
+                            className="flex flex-column white pointer dim center ma3 f4 dim pa2 w-40 shadow-5 br1"
+                        >
+                            {' '}
+                            Log In{' '}
+                        </button>
+                    </div>
                 </div>
             </div>
         );

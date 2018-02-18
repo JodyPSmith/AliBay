@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-
+import Login from '../login/login';
 class Signup extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            signedUp: false
+        };
     }
 
     signUp = () => {
@@ -28,8 +30,18 @@ class Signup extends Component {
                   },
                   body: JSON.stringify(data)
               })
-                  .then(x => x.text())
-                  .then(y => console.log(y))
+                  .then(res => res.json())
+                  .then(json => {
+                      console.log(json);
+                      if (json.res) {
+                          this.setState({ signedUp: true });
+
+                          setTimeout(() => {
+                              this.props.toggleSignUp();
+                              this.props.toggleLogin();
+                          }, 2000);
+                      }
+                  })
             : console.log('password mismatch');
     };
 
@@ -131,7 +143,13 @@ class Signup extends Component {
                 </div>
             </div>
         );
-        return signupPage;
+        return !this.state.signedUp ? (
+            signupPage
+        ) : (
+            <div>
+                <h2 className="center">Sign up successful!</h2>
+            </div>
+        );
     }
 }
 

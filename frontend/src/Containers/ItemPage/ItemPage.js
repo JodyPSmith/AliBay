@@ -11,6 +11,7 @@ class ItemPage extends Component {
     }
     componentDidMount() {
         this.setState({ image: this.props.item.image[0] });
+        console.log(this.props.item);
     }
     render() {
         //imports Item from the App.js state

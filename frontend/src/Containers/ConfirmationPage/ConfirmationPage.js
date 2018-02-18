@@ -1,19 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class ConfirmationPage extends Component {
-<<<<<<< HEAD
     constructor() {
         super();
         this.state = {
             confirmed: false
         };
     }
+
     componentDidMount() {
-        console.log(this.props);
+        console.log('confirm buying props', this.props);
     }
 
     confirmBuying = () => {
-        console.log('props', this.props);
         fetch('/buy', {
             credentials: 'include',
             headers: { 'content-type': 'application/json' },
@@ -27,88 +26,17 @@ class ConfirmationPage extends Component {
             .then(json => {
                 if (json.res) this.setState({ confirmed: true });
             });
-=======
-  constructor() {
-    super();
-    this.state = {
-      confirmed: false
->>>>>>> 6475cf7c9acf267b604712600a7f59e21d44b3f7
     };
-  }
+    render() {
+        const { item, user } = this.props;
 
-  componentDidMount() {
-    console.log("confirm buying props", this.props);
-  }
-
-  confirmBuying = () => {
-    fetch("/buy", {
-      credentials: "include",
-      headers: { "content-type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        //this prop is passed from the root App.js in the this.state.item
-        listingID: this.props.item.listing_id
-      })
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.res) this.setState({ confirmed: true });
-      });
-  };
-  render() {
-    const { item, user } = this.props;
-
-    return (
-      <div
-        id="ItemPage flex content-center"
-        style={{
-          height: "60vh"
-        }}
-      >
-        {!this.state.confirmed ? (
-          <div className="flex flex-column items-center mt5">
+        return (
             <div
-              className="flex shadow-1"
-              style={{
-                width: "45vw"
-              }}
+                id="ItemPage flex content-center"
+                style={{
+                    height: '60vh'
+                }}
             >
-              <img alt="product" className="w-40 h-auto" src={item.image[0]} />
-              <div>
-                <p className="f2 ma3 mt4 b">{item.price}</p>
-                <p className="f3 ma3">{item.title}</p>
-              </div>
-            </div>
-            <div
-              className="shadow-1 mt3"
-              style={{
-                width: "45vw"
-              }}
-            >
-              <div className="ma4">
-                {" "}
-                <p className="f2 b">
-                  {user.fname} {user.lname}
-                </p>
-                <div className="flex justify-between">
-                  <div>
-                    {" "}
-                    <p className="f3 ma0">
-                      {user.address} {user.city} {user.province}
-                      {` `}
-                      {user.pcode}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="flex shadow-1 mt3 justify-between"
-              style={{
-                width: "45vw"
-              }}
-            >
-<<<<<<< HEAD
                 {!this.state.confirmed ? (
                     <div className="flex flex-column items-center mt5">
                         <div
@@ -120,13 +48,11 @@ class ConfirmationPage extends Component {
                             <img
                                 alt="product"
                                 className="w-40 h-auto"
-                                src={`http://localhost:4000/${
-                                    item.image ? item.image[0] : null
-                                }`}
+                                src={item.image[0]}
                             />
                             <div>
                                 <p className="f2 ma3 mt4 b">{item.price}</p>
-                                <p className="f3 ma3">{item.name}</p>
+                                <p className="f3 ma3">{item.title}</p>
                             </div>
                         </div>
                         <div
@@ -138,7 +64,7 @@ class ConfirmationPage extends Component {
                             <div className="ma4">
                                 {' '}
                                 <p className="f2 b">
-                                    {user.first_name} {user.last_name}
+                                    {user.fname} {user.lname}
                                 </p>
                                 <div className="flex justify-between">
                                     <div>
@@ -147,7 +73,7 @@ class ConfirmationPage extends Component {
                                             {user.address} {user.city}{' '}
                                             {user.province}
                                             {` `}
-                                            {user.postal_code}
+                                            {user.pcode}
                                         </p>
                                     </div>
                                 </div>
@@ -162,41 +88,36 @@ class ConfirmationPage extends Component {
                             <div>
                                 <h1 className="ml4">Confirm to buy</h1>
                             </div>
-=======
-              <div>
-                <h1 className="ml4">Confirm to buy</h1>
-              </div>
->>>>>>> 6475cf7c9acf267b604712600a7f59e21d44b3f7
 
-              <div>
-                {" "}
-                <button
-                  onClick={this.confirmBuying}
-                  style={{
-                    border: "none",
-                    height: "4vh",
-                    minHeight: "35px",
-                    marginTop: "25%",
-                    background: "#F79521"
-                  }}
-                  className="mr4 white shadow-5 br2 pointer dim"
-                >
-                  Confirm
-                </button>
-              </div>
+                            <div>
+                                {' '}
+                                <button
+                                    onClick={this.confirmBuying}
+                                    style={{
+                                        border: 'none',
+                                        height: '4vh',
+                                        minHeight: '35px',
+                                        marginTop: '25%',
+                                        background: '#F79521'
+                                    }}
+                                    className="mr4 white shadow-5 br2 pointer dim"
+                                >
+                                    Confirm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="ma5 shadow-1 pa5 w-50 center flex self-center mv7">
+                        <p className="f3 center">
+                            Order Confirmed! Please check {user.email} for
+                            shipping information.
+                        </p>
+                    </div>
+                )}
             </div>
-          </div>
-        ) : (
-          <div className="ma5 shadow-1 pa5 w-50 center flex self-center mv7">
-            <p className="f3 center">
-              Order Confirmed! Please check {user.email} for shipping
-              information.
-            </p>
-          </div>
-        )}
-      </div>
-    );
-  }
+        );
+    }
 }
 
 export default ConfirmationPage;
