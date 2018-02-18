@@ -152,6 +152,13 @@ function getUserID(username) {
   return ret;
 }
 
+async function fetchUser(userID) {
+  console.log("fetch user ID", userID);
+  let query = `SELECT address, city, province, country, email, first_name as fname, last_name as lname, postal_code as pcode FROM users WHERE id = ${userID}`;
+  let queryRes = await con.query(query);
+  return queryRes[0];
+}
+
 //Functions that write to file
 
 /* 
@@ -164,7 +171,6 @@ This function is incomplete. You need to complete it.
     returns: The ID of the new listing
 */
 async function createListing(sellerID, title, price, desc, images, location) {
-  console.log("CREATING LISTING !!!!!!!!!!");
   let productMap = {
     title: title,
     description: desc,
@@ -187,10 +193,6 @@ async function createListing(sellerID, title, price, desc, images, location) {
 
   console.log("writing to imgMap.txt!", imgMap);
   fs.writeFileSync("./datafiles/imgMap.txt", JSON.stringify(imgMap));
-  console.log(
-    "after writing: ",
-    JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"))
-  );
   fs.writeFileSync("./datafiles/productsMap.txt", JSON.stringify(productsMap));
 }
 
@@ -316,7 +318,9 @@ async function searchForListings(searchTerm) {
   let listingsMap = [];
   var obj = {};
   //Search query to get all the listings from the database
-  var queryResult = await con.query("SELECT * FROM listing");
+  var queryResult = await con.query(
+    "SELECT * FROM listing WHERE buyer_id IS NOT NULL"
+  );
 
   // for loop to add the query results into a map to use for sifter
   for (var i = 0; i < queryResult.length; i++) {
@@ -332,15 +336,13 @@ async function searchForListings(searchTerm) {
     // push objects to listingsMap
     listingsMap.push(obj);
   }
-  
-  console.log('imageMap', imgMap)
 
   let listingsArr = listingsMap.map(x => {
     x.image = imgMap[x.listing_id];
     return x;
   });
 
-  console.log('listingsArr ', listingsArr)
+  console.log("listingsArr ", listingsArr);
 
   var sifterObj = new Sifter(listingsArr);
   var result = sifterObj.search(searchTerm, {
@@ -384,6 +386,6 @@ module.exports = {
   allItemsSold,
   allListings,
   getItemDescription,
-  searchForListings
-  // Add all the other functions that need to be exported
+  searchForListings,
+  fetchUser
 };

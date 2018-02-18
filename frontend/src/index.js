@@ -1,16 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import './index.css';
-import 'tachyons';
-import 'react-responsive';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import registerServiceWorker from "./registerServiceWorker";
+import "./index.css";
+import "tachyons";
+import "react-responsive";
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
-    document.getElementById('root')
+  <BrowserRouter history={history}>
+    <App />
+  </BrowserRouter>,
+  document.getElementById("root")
 );
 registerServiceWorker();
