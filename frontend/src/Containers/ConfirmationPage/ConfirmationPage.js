@@ -7,12 +7,15 @@ class ConfirmationPage extends Component {
             confirmed: false
         };
     }
+    componentDidMount() {
+        console.log(this.props);
+    }
 
     confirmBuying = () => {
-        console.log('props', this.props)
+        console.log('props', this.props);
         fetch('/buy', {
             credentials: 'include',
-            headers: {'content-type': 'application/json'},
+            headers: { 'content-type': 'application/json' },
             method: 'POST',
             body: JSON.stringify({
                 //this prop is passed from the root App.js in the this.state.item
@@ -45,7 +48,9 @@ class ConfirmationPage extends Component {
                             <img
                                 alt="product"
                                 className="w-40 h-auto"
-                                src={item.image[0]}
+                                src={`http://localhost:4000/${
+                                    item.image ? item.image[0] : null
+                                }`}
                             />
                             <div>
                                 <p className="f2 ma3 mt4 b">{item.price}</p>

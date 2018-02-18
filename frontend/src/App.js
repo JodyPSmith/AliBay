@@ -6,10 +6,9 @@ import SearchPage from './Containers/SearchPage/SearchPage';
 import ItemPage from './Containers/ItemPage/ItemPage';
 import HomePage from './Containers/homePage/HomePage';
 import ConfirmationPage from './Containers/ConfirmationPage/ConfirmationPage';
-import { items } from './components/Card/fakeData';
 import userMap from './placeholderData/user';
 import Navigation from './components/Navigation/Navigation';
-import TestingPage from './Containers/TestingPage';
+// import TestingPage from './Containers/TestingPage';
 
 const Navigator = withRouter(Navigation);
 
@@ -24,9 +23,9 @@ class App extends Component {
             //needed to simulate url change, default is home
             home: true,
             //needed to pass in data from specific item page
-            item: items[0],
+            item: {},
             user: userMap.test,
-            searchResult : []
+            searchResult: []
         };
     }
 
@@ -57,10 +56,10 @@ class App extends Component {
     // };
 
     // function to write search result at top level so it can be passed among child components
-    searchResult = (data) => {
-        this.setState({searchResult : data});
-        console.log("these are the items in app " , data)
-    }
+    searchResult = data => {
+        this.setState({ searchResult: data });
+        console.log('these are the items in app ', data);
+    };
 
     render() {
         // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
@@ -80,7 +79,12 @@ class App extends Component {
                         exact
                         path="/"
                         render={routeProps => {
-                            return <HomePage searchResult={this.searchResult} isSignedIn={isSignedIn} />;
+                            return (
+                                <HomePage
+                                    searchResult={this.searchResult}
+                                    isSignedIn={isSignedIn}
+                                />
+                            );
                         }}
                     />
                     <Route
@@ -104,10 +108,12 @@ class App extends Component {
                         exact
                         path="/search"
                         render={routeProps => (
-                            <SearchPage searchResult={this.state.searchResult} setItemPage={this.setItemPage} />
+                            <SearchPage
+                                searchResult={this.state.searchResult}
+                                setItemPage={this.setItemPage}
+                            />
                         )}
                     />
-                    <Route path="/testing" render={() => <TestingPage />} />
                     <Route
                         exact
                         path="/dashboard"
@@ -119,7 +125,6 @@ class App extends Component {
                             />
                         )}
                     />
-                    <Route path="/testing" render={() => <TestingPage />} />
                 </Switch>
             </div>
         );

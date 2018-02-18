@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 
 class SearchBar extends Component {
     constructor(props) {
         super(props);
-        this.search = "";
-        this.state = {}
+        this.search = '';
+        this.state = {};
     }
     submitSearch = () => {
         if (this.props.homepage === true) {
-            console.log("from homepage")
+            console.log('from homepage');
         } else {
-            var search = { searchTerm: this.search.value }
-            console.log("this is search var ", search)
+            var search = { searchTerm: this.search.value };
+            console.log('this is search var ', search);
             fetch('/search', {
-                method: "POST",
+                method: 'POST',
                 headers: {
                     'content-type': 'application/json'
                 },
@@ -22,10 +21,11 @@ class SearchBar extends Component {
                 credentials: 'include'
             })
                 .then(x => x.json())
-                .then(y => { this.props.searchResult(y) })
-            
+                .then(y => {
+                    this.props.searchResult(y);
+                });
         }
-    }
+    };
 
     // liveSearch = (data) => {
     //     var search = data.target.value
@@ -45,7 +45,7 @@ class SearchBar extends Component {
                 <div className="center flex justify-center w-100">
                     <input
                         //this param, this.props.onInputChange will detect the input value, and be used to pass it to the fetch query in the parent container
-                        //ie: search for "books", parent container will receive "books" and POST it to the server ? 
+                        //ie: search for "books", parent container will receive "books" and POST it to the server ?
 
                         //onChange={onInputChange}
                         //onChange={e => this.liveSearch(e)}
@@ -57,12 +57,11 @@ class SearchBar extends Component {
                             minWidth: '350px'
                         }}
                     />
-                    
+
                     <button
                         //this param, this.props.onSubmit will submit the input value from above
                         //onClick={onSubmit}
                         onClick={this.submitSearch}
-
                         className="f4 link ph3 pv2 dib bg-white dim pointer flex justify-center self-center "
                         style={{
                             // border: 'none',
@@ -80,7 +79,6 @@ class SearchBar extends Component {
                     >
                         Go
                     </button>
-                   
                 </div>
             </div>
         );
