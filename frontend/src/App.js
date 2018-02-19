@@ -40,8 +40,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(user => {
-        console.log("json: ", user);
-        this.setState({ userInfo: user });
+        this.setState({ userInfo: user.user });
       });
   };
 
@@ -77,7 +76,7 @@ class App extends Component {
 
   render() {
     // object destructuring to clean code up. It takes all the params in the curly braces and applies this.state to them
-    const { isSignedIn, item, user, userInfo, searchResult } = this.state;
+    const { isSignedIn, item, userInfo, searchResult } = this.state;
     console.log(window.location.pathname);
     //ternary operator to check what route the page is on... default is home
     return (
@@ -98,6 +97,7 @@ class App extends Component {
                 <HomePage
                   searchResult={this.searchResult}
                   isSignedIn={isSignedIn}
+                  user={userInfo}
                 />
               );
             }}
@@ -105,7 +105,7 @@ class App extends Component {
           <Route
             exact
             path="/item:itemID"
-            render={() => <ItemPage item={item} user={userInfo.user} />}
+            render={() => <ItemPage item={item} user={userInfo} />}
           />
           <Route
             exact
@@ -113,7 +113,7 @@ class App extends Component {
             render={() => (
               <SellerPage
                 item={item}
-                user={userInfo.user}
+                user={userInfo}
                 setItemPage={this.setItemPage}
               />
             )}
@@ -121,7 +121,7 @@ class App extends Component {
           <Route
             exact
             path="/confirm"
-            render={() => <ConfirmationPage user={userInfo.user} item={item} />}
+            render={() => <ConfirmationPage user={userInfo} item={item} />}
           />
           <Route
             exact
@@ -145,12 +145,11 @@ class App extends Component {
             render={() => (
               <Dashboard
                 item={item}
-                user={userInfo.user}
+                user={userInfo}
                 setItemPage={this.setItemPage}
               />
             )}
           />
-          {/* <Route path="/testing" render={() => <TestingPage />} /> */}
         </Switch>
       </div>
     );
