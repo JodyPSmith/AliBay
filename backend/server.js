@@ -33,16 +33,19 @@ const generateCookie = () => {
 
 //signup / login endpoints----------------------------------------------------------------------------------------
 
-//check for signIn status
-app.get("/check", async (req, res) => {
-  console.log(req.cookies);
-  const sessionID = req.cookies.sessionID;
-  console.log({ sessionID });
-  let userID = cookieMap[sessionID];
-  console.log("userID", userID);
-  if (userID != undefined) {
+//check for signIn status and return user details minus password
+app.post("/check", async (req, res) => {
+  console.log("/check endpoint request body:", req.body);
+  let userID;
+  if (!req.body.userID) {
+    const sessionID = req.cookies.sessionID;
+    userID = cookieMap[sessionID];
+    console.log("userID", userID);
+  } else {
+    userID = req.body.userID;
+  }
+  if (userID) {
     let user = await alibay.fetchUser(userID);
-    console.log(`user before sending: `, user);
     res.send({ res: true, user });
   } else res.send({ res: false });
 });
@@ -95,16 +98,16 @@ app.post("/login", async (req, res) => {
   let payload = req.body;
   let username = payload.username;
   let password = payload.password;
-  var test = await alibay.login(username, password);
-  if (test.result) {
+  let queryRes = await alibay.login(username, password);
+  if (queryRes.result) {
     let sessionID = generateCookie();
-    cookieMap[sessionID] = test.id;
+    cookieMap[sessionID] = queryRes.id;
     fs.writeFileSync(
       __dirname + "/datafiles/cookieMap.txt",
       JSON.stringify(cookieMap)
     );
     res.set("Set-Cookie", "sessionID=" + sessionID);
-    res.send({ res: true, sessionID: sessionID }); //if successful, will send JSON object with sessionID
+    res.send({ res: true, sessionID: sessionID }); //if successful, will send JSON object with sessionID and userInfo
   } else {
     res.send({ res: false }); //if failed login, send JSON object with sessionID false
   }
@@ -159,9 +162,16 @@ app.get("/itemsSold", async (req, res) => {
   res.send(result);
 });
 
-app.get("/itemsSelling", async (req, res) => {
-  let sellerID = cookieMap[req.cookies.sessionID];
+app.post("/itemsSelling", async (req, res) => {
+  console.log("items selling reqbody", req.body);
+  let seller;
+  if (req.body.sellerID) {
+    sellerID = req.body.sellerID;
+  } else {
+    sellerID = cookieMap[req.cookies.sessionID];
+  }
   var result = await alibay.allItemsSelling(sellerID);
+  console.log("ITEMS SELLING", result);
   res.send(result);
 });
 

@@ -17,10 +17,10 @@ mysql
 
 // Maps:
 // map that keeps track of all the items a user has bought
-let itemsBought = {};
+// let itemsBought = {};
 
 // map that keeps track of all the items a user has sold
-let itemsSold = {};
+// let itemsSold = {};
 
 // map that keeps track of user information
 let userMap = {
@@ -40,15 +40,9 @@ let userMap = {
 //map that keeps track of images by listing
 let imgMap = {};
 
-// map that keeps track of all products
-let productsMap = {};
-
 // initialize maps from data file
 try {
   console.log("Reading files...");
-  // itemsSold = JSON.parse(fs.readFileSync("./datafiles/itemsSold.txt"));
-  // userMap = JSON.parse(fs.readFileSync("./datafiles/userMap.txt"));
-  // productsMap = JSON.parse(fs.readFileSync("./datafiles/productsMap.txt"));
   imgMap = JSON.parse(fs.readFileSync("./datafiles/imgMap.txt"));
 } catch (err) {
   console.log("error encountered; data file probably not initialized:");
@@ -58,13 +52,6 @@ try {
 /*
 Before implementing the login functionality, use this function to generate a new UID every time.
 */
-function genUID() {
-  return Math.floor(Math.random() * 100000000);
-}
-
-function genPID() {
-  return `P${Math.floor(Math.random() * 10000000)}`;
-}
 
 //Sign-up/Login functions
 
@@ -94,17 +81,11 @@ async function signUp(
       postal_code: pcode,
       country: country
     };
-    // itemsBought[userID] = [];
-    // itemsSold[userID] = [];
     con.query("INSERT INTO users SET ?", userInfo, (err, rows) => {
       if (err) throw err;
       console.log("Data inserted into Db:\n");
       console.log(rows);
     });
-    // fs.writeFileSync("././datafiles/itemsBought.txt", JSON.stringify(itemsBought));
-    // fs.writeFileSync("././datafiles/itemsSold.txt", JSON.stringify(itemsSold));
-    // fs.writeFileSync("././datafiles/userMap.txt", JSON.stringify(userMap));
-    // fs.writeFileSync("././datafiles/passMap.txt", JSON.stringify(passMap));
     console.log(`user created`);
     return true;
   } else {
@@ -119,7 +100,7 @@ async function login(username, password) {
     [username]
   );
   console.log(">>> LOGIN RESULT >> ", result[0].password);
-  if (result[0] !== undefined) {
+  if (result[0]) {
     var bool = bcrypt.compareSync(password, result[0].password);
     return { id: result[0].id, result: bool };
   } else {
@@ -160,15 +141,6 @@ async function fetchUser(userID) {
 
 //Functions that write to file
 
-/* 
-createListing adds a new listing to our global state.
-This function is incomplete. You need to complete it.
-    parameters: 
-      [sellerID] The ID of the seller
-      [price] The price of the item
-      [desc] A desc describing the item
-    returns: The ID of the new listing
-*/
 async function createListing(sellerID, title, price, desc, images, location) {
   let productMap = {
     title: title,
@@ -182,7 +154,7 @@ async function createListing(sellerID, title, price, desc, images, location) {
     if (err) throw err;
   });
 
-  var query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`;
+  let query = `SELECT listing_id FROM listing WHERE seller_id = ${sellerID} AND title = "${title}"`;
 
   let queryRes = await con.query(query);
   let listingID = queryRes[0].listing_id;
@@ -289,8 +261,6 @@ Once an item is sold, it will not be returned by allListings
     returns: an array of listing IDs
 */
 async function allListings() {
-  // let productIds = Object.keys(productsMap); // array of all productIds in map
-  // return productIds.filter(x => !productsMap[x].isSold); // return new array with all products where isSold == true
   var result = await con.query("SELECT * FROM listing WHERE buyer_id IS NULL");
   return result;
 }
@@ -368,17 +338,11 @@ async function searchForListings(searchTerm) {
 }
 
 module.exports = {
-  itemsBought,
-  itemsSold,
-  productsMap,
   userMap,
   imgMap,
-  genUID,
-  genPID,
   signUp,
   login,
   checkUsername,
-  getUserID,
   createListing,
   buy,
   allItemsBought,

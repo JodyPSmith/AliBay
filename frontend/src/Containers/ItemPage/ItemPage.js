@@ -6,13 +6,30 @@ class ItemPage extends Component {
   constructor() {
     super();
     this.state = {
-      image: ""
+      image: [],
+      seller: {},
+      user: {}
     };
   }
   componentDidMount() {
+    this.checkSeller(this.props.item.seller_id);
     this.setState({ image: this.props.item.image[0] });
     console.log("props: ", this.props);
   }
+
+  checkSeller = userID => {
+    fetch("/check", {
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({ userID })
+    })
+      .then(res => res.json())
+      .then(seller => {
+        console.log("check Seller: ", seller);
+        this.setState({ seller: seller.user });
+      });
+  };
+
   render() {
     //imports Item from the App.js state
     const { item, user } = this.props;
@@ -85,6 +102,34 @@ class ItemPage extends Component {
               <p className="f4">{item.description}</p>
               {item.location && <p className="f5">{item.location}</p>}
             </div>
+            {item.buyer_id && (
+              <p className="dark-red">Bought by {item.buyer_id}</p>
+            )}
+          </div>
+          <div>
+            {item.seller_id === user.id ? (
+              <p
+                className="dark-grey"
+                style={{
+                  margin: "4em"
+                }}
+              >
+                This is one of your own products. To see all your listings and
+                purchase history, visit your dashboard.
+              </p>
+            ) : (
+              <p
+                style={{
+                  margin: "4em"
+                }}
+              >
+                This item is being sold by
+                <Link to={`/seller${this.state.seller.id}`}>
+                  {" " + this.state.seller.fname} {this.state.seller.lname}
+                </Link>
+                , of {this.state.seller.country}
+              </p>
+            )}
           </div>
         </Scroll>
       </div>

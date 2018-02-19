@@ -6,12 +6,10 @@ import SearchPage from "./Containers/SearchPage/SearchPage";
 import ItemPage from "./Containers/ItemPage/ItemPage";
 import HomePage from "./Containers/homePage/HomePage";
 import ConfirmationPage from "./Containers/ConfirmationPage/ConfirmationPage";
-// import { items } from './components/Card/fakeData';
+import SellerPage from "./Containers/SellerPage/SellerPage";
 import userMap from "./placeholderData/user";
 import Navigation from "./components/Navigation/Navigation";
 import TestingPage from "./Containers/TestingPage";
-
-const Navigator = withRouter(Navigation);
 
 class App extends Component {
   constructor() {
@@ -25,15 +23,20 @@ class App extends Component {
       home: true,
       //needed to pass in data from specific item page
       item: [],
-      user: userMap.test,
-      userInfo: [],
+      userInfo: {},
       searchResult: []
     };
   }
 
   componentDidMount = () => {
+    this.checkUser();
+  };
+
+  checkUser = userID => {
     fetch("/check", {
-      credentials: "include"
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify({ userID })
     })
       .then(res => res.json())
       .then(user => {
@@ -66,9 +69,6 @@ class App extends Component {
       item: data
     });
   };
-  // setRoute = route => {
-  //     this.setState({ route: route });
-  // };
 
   // function to write search result at top level so it can be passed among child components
   searchResult = data => {
@@ -82,7 +82,8 @@ class App extends Component {
     //ternary operator to check what route the page is on... default is home
     return (
       <div>
-        <Navigator
+        <Navigation
+          checkUser={this.checkUser}
           setSignOut={this.setSignOut}
           setSignIn={this.setSignIn}
           isSignedIn={isSignedIn}
@@ -105,6 +106,17 @@ class App extends Component {
             exact
             path="/item:itemID"
             render={() => <ItemPage item={item} user={userInfo.user} />}
+          />
+          <Route
+            exact
+            path="/seller:sellerID"
+            render={() => (
+              <SellerPage
+                item={item}
+                user={userInfo.user}
+                setItemPage={this.setItemPage}
+              />
+            )}
           />
           <Route
             exact
@@ -133,7 +145,7 @@ class App extends Component {
             render={() => (
               <Dashboard
                 item={item}
-                user={user}
+                user={userInfo.user}
                 setItemPage={this.setItemPage}
               />
             )}
