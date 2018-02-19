@@ -20,6 +20,7 @@ class ItemPage extends Component {
   checkSeller = userID => {
     fetch("/check", {
       credentials: "include",
+      headers: { "content-type": "application/json" },
       method: "POST",
       body: JSON.stringify({ userID })
     })
@@ -131,9 +132,12 @@ class ItemPage extends Component {
                   margin: "4em"
                 }}
               >
-                This item is being sold by
-                <Link to={`/seller${this.state.seller.id}`}>
-                  {" " + this.state.seller.fname} {this.state.seller.lname}
+                This item is being sold by{" "}
+                <Link
+                  className="no-underline orange"
+                  to={`/seller${this.state.seller.id}`}
+                >
+                  {this.state.seller.fname} {this.state.seller.lname}
                 </Link>
                 , of {this.state.seller.country}
               </p>

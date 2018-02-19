@@ -11,30 +11,34 @@ class SellerPage extends Component {
   componentDidMount = () => {
     console.log("Seller Page props", this.props);
     this.getInventory(this.props.match.params.sellerID);
+    this.getSeller(this.props.match.params.sellerID);
   };
 
-  getInventory = async sellerID => {
-    let selling = await fetch("/itemsSelling", {
+  getInventory = sellerID => {
+    console.log("SELLER ID:", sellerID);
+    fetch("/itemsSelling", {
       credentials: "include",
       headers: { "content-type": "application/json" },
       method: "POST",
-      body: { sellerID: sellerID }
+      body: JSON.stringify({ sellerID: sellerID })
     })
       .then(res => res.json())
-      .then(itemList => itemList);
+      .then(itemList => {
+        this.setState({ selling: itemList });
+      });
+  };
 
-    let sellerInfo = await fetch("/check", {
+  getSeller = sellerID => {
+    fetch("/check", {
       credentials: "include",
       headers: { "content-type": "application/json" },
       method: "POST",
-      body: JSON.stringify({ userID: this.props.match.params.sellerID })
+      body: JSON.stringify({ userID: sellerID })
     })
       .then(res => res.json())
       .then(seller => {
-        return seller.user;
+        this.setState({ sellerInfo: seller.user });
       });
-    console.log("SELLING", selling, "SELLER INFO", sellerInfo);
-    this.setState({ selling, sellerInfo });
   };
 
   render() {

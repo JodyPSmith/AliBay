@@ -8,18 +8,16 @@ class Dashboard extends Component {
   }
 
   componentDidMount = () => {
-    // this.getStateList();
     this.getList("Selling");
     this.getList("IBought");
     this.getList("Sold");
-    // console.log("this is " , x)
   };
 
   getList = type => {
     console.log(`type: `, type);
     return fetch("/items" + type, {
       credentials: "include",
-      header: { "content-type": "application/json" },
+      headers: { "content-type": "application/json" },
       method: "POST",
       body: {}
     })
@@ -32,15 +30,6 @@ class Dashboard extends Component {
         this.setState(s);
       });
   };
-
-  // getStateList = () => {
-  //   this.setState({
-  //     sold: this.getList("Sold"),
-  //     iBought: this.getList("IBought"),
-  //     selling: this.getList("Sold")
-  //   });
-  //   this.soldArray.push(this.state.sold);
-  // };
 
   render() {
     return (

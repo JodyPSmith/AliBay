@@ -88,9 +88,9 @@ app.post("/signUp", async (req, res) => {
       country
     )
   ) {
-    res.send("signup success");
+    res.send({ res: true });
   } else {
-    res.send("signup failed");
+    res.send({ res: false });
   }
 });
 app.post("/login", async (req, res) => {
@@ -163,15 +163,14 @@ app.post("/itemsSold", async (req, res) => {
 });
 
 app.post("/itemsSelling", async (req, res) => {
-  console.log("items selling reqbody", req.body);
-  let seller;
+  console.log("ITEMS SELLING REQ BODY", req.body);
+  let sellerID;
   if (req.body.sellerID) {
     sellerID = req.body.sellerID;
   } else {
     sellerID = cookieMap[req.cookies.sessionID];
   }
   var result = await alibay.allItemsSelling(sellerID);
-  console.log("ITEMS SELLING", result);
   res.send(result);
 });
 
