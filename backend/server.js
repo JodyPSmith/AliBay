@@ -146,7 +146,7 @@ app.post("/createListing", (req, res) => {
 
 // itemInfo that takes sessionID ---------------------------------------------------------------------
 
-app.get("/itemsIBought", async (req, res) => {
+app.post("/itemsIBought", async (req, res) => {
   // takes cookie, returns array of all items bought buy the user
   let sessionID = req.cookies.sessionID;
   let userID = cookieMap[sessionID];
@@ -155,7 +155,7 @@ app.get("/itemsIBought", async (req, res) => {
   res.send(result);
 });
 
-app.get("/itemsSold", async (req, res) => {
+app.post("/itemsSold", async (req, res) => {
   let sellerID = cookieMap[req.cookies.sessionID];
   console.log("sellerID: ", sellerID);
   var result = await alibay.allItemsSold(sellerID);

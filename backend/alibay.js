@@ -134,7 +134,7 @@ function getUserID(username) {
 }
 
 async function fetchUser(userID) {
-  let query = `SELECT address, city, province, country, email, id, first_name as fname, last_name as lname, postal_code as pcode FROM users WHERE id = ${userID}`;
+  let query = `SELECT address, city, province, country, email, id, username, first_name as fname, last_name as lname, postal_code as pcode FROM users WHERE id = ${userID}`;
   let queryRes = await con.query(query);
   return queryRes[0];
 }
@@ -252,7 +252,6 @@ async function allItemsSelling(sellerID) {
     x.image = imgMap[x.listing_id];
     return x;
   });
-  console.log("ALL ITEMS SELLING !!! ", result);
   return result;
 }
 /*

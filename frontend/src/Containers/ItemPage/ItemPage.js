@@ -103,7 +103,15 @@ class ItemPage extends Component {
               {item.location && <p className="f5">{item.location}</p>}
             </div>
             {item.buyer_id && (
-              <p className="dark-red">Bought by {item.buyer_id}</p>
+              <p className="dark-red">
+                Bought by{" "}
+                <Link
+                  className="dark-red no-underline"
+                  to={`/seller${this.state.seller.id}`}
+                >
+                  {this.state.seller.username}
+                </Link>
+              </p>
             )}
           </div>
           <div>
